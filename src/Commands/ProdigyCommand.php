@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ProdigyPHP\Prodigy\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ProdigyCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'prodigy';
 
     public $description = 'My command';
 

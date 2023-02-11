@@ -19,7 +19,7 @@
     verbose="true"
 >
     <testsuites>
-        <testsuite name="VendorName Test Suite">
+        <testsuite name="ProdigyPHP Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
