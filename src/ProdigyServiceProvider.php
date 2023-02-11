@@ -5,6 +5,7 @@ namespace ProdigyPHP\Prodigy;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
+use Livewire\Livewire;
 
 class ProdigyServiceProvider extends PackageServiceProvider
 {
@@ -21,5 +22,11 @@ class ProdigyServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigration('create_prodigy_table')
             ->hasCommand(ProdigyCommand::class);
+    }
+
+    public function bootingPackage(): void
+    {
+        Livewire::component('prodigy-page', ProdigyPage::class);
+        Livewire::component('prodigy-editor', Editor::class);
     }
 }
