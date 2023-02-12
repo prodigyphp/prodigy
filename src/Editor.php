@@ -39,23 +39,32 @@ class Editor extends Component {
 
     public function getBlocks()
     {
-        $path = resource_path('views/components/blocks');
-        $files = collect(File::allFiles($path));
-        $directories = collect(File::directories($path));
+
+        $files = collect(config('prodigy.block_paths'))->map(function ($path) {
+            $absolute_path = base_path($path);
+            return collect(File::allFiles($absolute_path));
+        })->flatten();
+
+        $directories = collect(config('prodigy.block_paths'))->map(function ($path) {
+            $absolute_path = base_path($path);
+            return collect(File::directories($absolute_path));
+        })->flatten();
+
 
 
         $this->groups = $directories->map(function ($directory) {
             $slugged_name = basename($directory); // goes from /components/blocks/group-name to 'group-name'
             return [
                 'slug' => $slugged_name,
+                'key' => 'TODO',
                 'title' => Str::of($slugged_name)->replace('-', ' ')->title()->toString()
             ];
         });
 
-        $this->groups->prepend(
+        $this->groups->push(
             [
                 'slug' => 'blocks',
-                'title' => 'General Blocks'
+                'title' => 'Uncategorized'
             ]
         );
 

@@ -12,4 +12,10 @@ return [
     |
     */
     'include_css' => false,
+
+    'block_paths' => [
+        'vendor/prodigyphp/prodigy/resources/views/blocks', // Standard prodigy blocks
+        'resources/views/components/blocks' // custom blocks
+        // register blocks from other packages here...
+    ]
 ];

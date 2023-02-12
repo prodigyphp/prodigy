@@ -3,6 +3,7 @@
 namespace ProdigyPHP\Prodigy;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
@@ -11,6 +12,8 @@ use ProdigyPHP\Prodigy\Models\Page;
 use Symfony\Component\Console\Input\Input;
 
 class ProdigyPage extends Component {
+
+    use AuthorizesRequests;
 
     public ?Page $page;
 
@@ -21,6 +24,7 @@ class ProdigyPage extends Component {
     public array $temp;
 
     public $cssPath = __DIR__ . '/../public/prodigy.css';
+    public $jsPath = __DIR__ . '/../public/prodigy.js';
 
     protected $listeners = ['editingBlock' => '$refresh', 'stopEditingPage'];
 
@@ -56,6 +60,10 @@ class ProdigyPage extends Component {
     public static function canEdit(): bool
     {
         return (Auth::check());
+    }
+
+    public function addBlock($block_key) {
+        dd($block_key);
     }
 
     /**
