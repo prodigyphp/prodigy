@@ -10,7 +10,7 @@ class Page extends Model
     use HasFactory;
     protected $guarded = [];
 
-    protected $table = 'prodigy_page';
+    protected $table = 'prodigy_pages';
 
     public function blocks()
     {

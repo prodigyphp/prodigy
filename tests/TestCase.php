@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Schema;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use ProdigyPHP\Prodigy\ProdigyServiceProvider;
 
@@ -22,6 +23,7 @@ class TestCase extends Orchestra
     {
         return [
             ProdigyServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 
@@ -31,9 +33,8 @@ class TestCase extends Orchestra
 
         Schema::dropAllTables();
 
-        /*
         $migration = include __DIR__.'/../database/migrations/create_prodigy_table.php.stub';
         $migration->up();
-        */
+
     }
 }

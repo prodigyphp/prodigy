@@ -3,9 +3,16 @@ import laravel from 'laravel-vite-plugin'
 
 export default defineConfig({
     plugins: [
-        laravel({
-            input: ['resources/css/prodigy.css', 'resources/js/prodigy.js'],
-            refresh: true,
-        }),
+        laravel([
+                'resources/css/prodigy.css',
+                'resources/js/prodigy.js'
+            ]
+        ),
     ],
+    resolve: {
+        alias: {
+            'styles': '/resources/css/settings.css',
+            'scripts': '/resources/js/prodigy.js',
+        },
+    },
 })

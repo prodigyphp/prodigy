@@ -20,11 +20,14 @@ class ProdigyPage extends Component {
 
     public array $temp;
 
+    public $cssPath = __DIR__ . '/../public/prodigy.css';
+
     protected $listeners = ['editingBlock' => '$refresh', 'stopEditingPage'];
 
-    public function mount(string $wildcard)
+    public function mount(string $wildcard = null)
     {
-        $this->page = Page::where('slug', $wildcard)->first();
+
+        $this->page = $this->getPage($wildcard);
 
         // Show edit screen if user can edit, and has requested edit access.
         $this->editing = $this->canEdit() && request('editing');
@@ -34,6 +37,15 @@ class ProdigyPage extends Component {
             abort(404);
         }
 
+    }
+
+    public function getPage(string $wildcard = null) : Page|null
+    {
+        if ($wildcard) {
+            return Page::where('slug', $wildcard)->first();
+        } else {
+            return Page::where('slug', request()->path())->first();
+        }
     }
 
     /**
@@ -54,7 +66,7 @@ class ProdigyPage extends Component {
         $url = Str::of(request()->header('Referer'));
 
 
-        if($startEditing) {
+        if ($startEditing) {
             $url = $url->append('?editing=true');
         } else {
             $url = $url->remove('?editing=true');

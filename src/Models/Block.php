@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Block extends Model {
 
-//    use HasFactory; // not sure where this lives.
+    use HasFactory; // not sure where this lives.
 
     protected $table = 'prodigy_blocks';
 

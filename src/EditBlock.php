@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Models\Block;
+use Symfony\Component\Yaml\Yaml;
 
 class EditBlock extends Component {
 
@@ -17,11 +18,13 @@ class EditBlock extends Component {
 
     protected function rules()
     {
-        if(!$this->schema) { return [];}
+        if (!$this->schema) {
+            return [];
+        }
 
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
-            $rules["block.content.{$attribute}"]= $element['rules'];
+            $rules["block.content.{$attribute}"] = $element['rules'];
         }
 
         return $rules;
@@ -31,30 +34,37 @@ class EditBlock extends Component {
     public function mount(Block $block)
     {
         $this->block = $block;
-        $this->schema = $this->getSchema($block);
+        $this->schema = $this->getSchema($block) ?? []; // if content field is empty (as opposed to []), it'll error.
 
-        $this->ensureBlockHasAContentField();
+//        $this->ensureBlockHasAContentField();
     }
 
     /**
      * @return void
      * If the content field is empty (as opposed to []), it'll throw an error.
      */
-    public function ensureBlockHasAContentField() {
-        if(!$this->block->content) {
-            $this->block->content = [];
-        }
-    }
+//    public function ensureBlockHasAContentField()
+//    {
+//        if (!$this->block->content) {
+//            $this->block->content = [];
+//        }
+//    }
 
     public function getSchema(Block $block): array|null
     {
         $search_key = Str::of($block->key)->replace('.', '/'); // converts block.header to block/header.
-        $path = resource_path("views/components/{$search_key}.json");
+        $path = resource_path("views/components/{$search_key}.yml");
 
         if (File::isFile($path)) {
-            $file_string = file_get_contents($path);
-            return json_decode($file_string, true);
+            return Yaml::parseFile($path);
         }
+
+        // try .yaml as well
+        $path = resource_path("views/components/{$search_key}.yaml");
+        if (File::isFile($path)) {
+            return Yaml::parseFile($path);
+        }
+
 
         return null;
     }
