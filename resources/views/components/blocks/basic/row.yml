@@ -1,0 +1,29 @@
+fields:
+  width:
+    type: dropdown
+    options:
+      - Full Width
+      - Fixed
+    rules: required
+    help: Define the wideness of your content section
+
+  content_width:
+    type: dropdown
+    options:
+      - Full Width
+      - Fixed
+    help: Define the wideness of your content section
+
+    bg_group:
+      type: group
+      label: Background
+
+    bg_type:
+      type: dropdown
+      options:
+        - None
+        - Color
+        - Photo
+
+#  children:
+#    type: children

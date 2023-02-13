@@ -10,27 +10,22 @@
             @endif
 
             @if($schema)
-                @foreach($schema['fields'] as $attribute => $element)
-
-                    <div class="pro-mb-4">
-                        <label class="pro-text-sm pro-text-gray-500 pro-block">
-                            {{ str($attribute)->title() }}
-                        </label>
-                        <input type="text" wire:model="block.content.{{$attribute}}"
-                               value="{{ $block->content[$attribute] ?? null }}"
-                               class="pro-w-full pro-rounded-sm pro-border-gray-200 pro-shadow-sm">
-                    </div>
+                @foreach($schema['fields'] as $key => $meta)
+                    {{ $this->getField($key, $meta) }}
                 @endforeach
             @else
                 No editable fields found.
             @endif
+
         </div>
     </div>
     <div class="pro-flex pro-gap-2 pro-p-2 pro-w-full">
-        <button wire:click="save" class="pro-bg-white pro-flex-grow pro-px-2 pro-py-2 pro-rounded-md hover:pro-ring-2 hover:pro-ring-blue-300">
+        <button wire:click="save"
+                class="pro-bg-white pro-flex-grow pro-px-2 pro-py-2 pro-rounded-md hover:pro-ring-2 hover:pro-ring-blue-300">
             Save
         </button>
-        <button wire:click="close" class="pro-bg-white pro-flex-grow pro-px-2 pro-py-2 pro-rounded-md hover:pro-ring-2 hover:pro-ring-blue-300">
+        <button wire:click="close"
+                class="pro-bg-white pro-flex-grow pro-px-2 pro-py-2 pro-rounded-md hover:pro-ring-2 hover:pro-ring-blue-300">
             Cancel
         </button>
     </div>

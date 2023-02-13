@@ -3,6 +3,7 @@
 namespace ProdigyPHP\Prodigy;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\Compilers\BladeCompiler;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -42,27 +43,31 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     protected function configureComponents()
     {
 		$this->callAfterResolving(BladeCompiler::class, function () {
-			$this->registerComponent('inner');
-			$this->registerComponent('wrapper');
+			$this->registerComponent('structure.inner');
+			$this->registerComponent('structure.wrapper');
+			$this->registerComponent('blocks.row');
 		});
 	}
 
     protected function registerComponent(string $component)
     {
-        Blade::component('prodigy::components.'.$component, 'mypackage-'.$component);
+        Blade::component('prodigy::components.'.$component, 'prodigy-'.$component);
     }
 
     /**
-     * Register the Blade form components.
+     * Register the Prodigy gate.
      *
-     * @return $this
+     * This gate determines who can access Prodigy in non-local environments.
+     *
+     * @return void
      */
-//    private function registerComponents(): self
-//    {
-//        Blade::componentNamespace('ProdigyPHP\\Prodigy\\', config('library.prefix.form'));
-//        Blade::componentNamespace('TomSix\\Components\\View\\Components\\Navigation', config('library.prefix.navigation'));
-//
-//        return $this;
-//    }
+    protected function gate()
+    {
+        Gate::define('viewProdigy', function ($user) {
+            return in_array($user->email, [
+                'stephen@bate-man.com'
+            ]);
+        });
+    }
 
 }

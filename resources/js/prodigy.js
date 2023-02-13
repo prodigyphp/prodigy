@@ -3,5 +3,4 @@
 // window.Alpine = Alpine
 // Alpine.start()
 
-require ('@shopify/draggable')
-
+require('@shopify/draggable')

@@ -1,5 +1,10 @@
 <?php
 
+use ProdigyPHP\Prodigy\BlockGroups\CustomBlocksGroup;
+use ProdigyPHP\Prodigy\BlockGroups\ProdigyBlocksGroup;
+use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
+use ProdigyPHP\Prodigy\FieldTypes\Text;
+
 return [
 
     /*
@@ -13,9 +18,19 @@ return [
     */
     'include_css' => false,
 
+    'custom_blocks_path' => 'resources/views/components/blocks',
+
     'block_paths' => [
-        'vendor/prodigyphp/prodigy/resources/views/blocks', // Standard prodigy blocks
-        'resources/views/components/blocks' // custom blocks
+        ProdigyBlocksGroup::class,
+        CustomBlocksGroup::class,
+
         // register blocks from other packages here...
+    ],
+
+    'fields' => [
+        'text' => Text::class,
+        'dropdown' => Dropdown::class
+
+        // register more fields here...
     ]
 ];

@@ -18,7 +18,6 @@ return new class extends Migration
         Schema::create('prodigy_blocks', function (Blueprint $table) {
             $table->id();
             $table->string('key');
-            $table->integer('order')->nullable();
             $table->json('content')->nullable();
             $table->json('meta')->nullable();
             $table->timestamps();
@@ -28,6 +27,7 @@ return new class extends Migration
             $table->id();
             $table->integer('block_id');
             $table->integer('page_id');
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
     }

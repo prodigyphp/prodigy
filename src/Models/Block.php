@@ -5,10 +5,13 @@ namespace ProdigyPHP\Prodigy\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
 
 class Block extends Model {
 
-    use HasFactory; // not sure where this lives.
+    use HasFactory;
+
+    // not sure where this lives.
 
     protected $table = 'prodigy_blocks';
 
@@ -28,5 +31,11 @@ class Block extends Model {
     {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
     }
+
+    protected static function newFactory() : BlockFactory
+    {
+        return new BlockFactory();
+    }
+
 
 }

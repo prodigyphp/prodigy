@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use ProdigyPHP\Prodigy\Database\Factories\PageFactory;
 
 class Page extends Model
 {
@@ -15,5 +16,10 @@ class Page extends Model
     public function blocks()
     {
         return $this->belongsToMany(Block::class, 'prodigy_block_page');
+    }
+
+    protected static function newFactory() : PageFactory
+    {
+        return new PageFactory();
     }
 }
