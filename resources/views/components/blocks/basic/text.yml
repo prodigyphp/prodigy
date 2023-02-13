@@ -1,8 +1,4 @@
 fields:
-  title:
+  text:
     type: string
-    rules: required|numeric
-
-  subtitle:
-    type: string
-    rules: required|numeric
+    rules: required

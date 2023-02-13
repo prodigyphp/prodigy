@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('key');
             $table->json('content')->nullable();
             $table->json('meta')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('prodigy_blocks')->cascadeOnDelete();
+            $table->boolean('is_global')->nullable();
+            $table->string('global_title')->nullable();
             $table->timestamps();
         });
 

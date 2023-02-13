@@ -32,6 +32,10 @@ class Block extends Model {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
     }
 
+    public function children() {
+        return $this->hasMany(Block::class,'parent_id');
+    }
+
     protected static function newFactory() : BlockFactory
     {
         return new BlockFactory();

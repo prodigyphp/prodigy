@@ -1,4 +1,7 @@
 fields:
+  title:
+    type: text
+
   width:
     type: dropdown
     options:

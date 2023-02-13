@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
+use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Field;
 use ProdigyPHP\Prodigy\Models\Block;
 use Symfony\Component\Yaml\Yaml;
@@ -28,7 +29,9 @@ class EditBlock extends Component {
 
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
-            $rules["block.content.{$attribute}"] = $element['rules'];
+            if (isset($element['rules'])) {
+                $rules["block.content.{$attribute}"] = $element['rules'];
+            }
         }
 
         return $rules;
@@ -45,20 +48,41 @@ class EditBlock extends Component {
 
     public function getSchema(Block $block): array|null
     {
-        $search_key = Str::of($block->key)->replace('.', '/'); // converts block.header to block/header.
-        $path = resource_path("views/components/{$search_key}.yml");
+        $path = $this->getPathOfBlockSchema($block);
+
 
         if (File::isFile($path)) {
             return Yaml::parseFile($path);
         }
 
         // try .yaml as well
-        $path = resource_path("views/components/{$search_key}.yaml");
+        $path = Str::of($path)->replaceLast('yml', 'yaml');
         if (File::isFile($path)) {
             return Yaml::parseFile($path);
         }
 
         return null;
+    }
+
+    //
+    protected function getPathOfBlockSchema(Block $block): string
+    {
+        $key = Str::of($block->key);
+        $search_key = $key->replace('.', '/');
+
+        // It's a package block, so we need to get the right namespace from the declaration.
+        if ($key->contains("::")) {
+            $namespace = $key->before("::");
+            $blockGroup = collect(config('prodigy.block_paths'))
+                ->map(fn(string $blockGroup) => (new $blockGroup))
+                ->filter(fn(BlockGroup $blockGroup) => $blockGroup->namespace == $namespace)
+                ->firstOrFail();
+            $search_key = $search_key->remove("{$namespace}::blocks");
+            return base_path("{$blockGroup->path}{$search_key}.yml");
+        }
+
+        // It's a regular local path, so we can just use the key.
+        return resource_path("views/components/{$search_key}.yml");
     }
 
     /**

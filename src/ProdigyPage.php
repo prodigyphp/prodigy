@@ -91,7 +91,7 @@ class ProdigyPage extends Component {
 
     public function render()
     {
-        $this->blocks = $this->page->blocks()->orderBy('order', 'asc')->get();
+        $this->blocks = $this->page->blocks()->with('children')->orderBy('order', 'asc')->get();
 
         return view('prodigy::prodigy-page');
     }

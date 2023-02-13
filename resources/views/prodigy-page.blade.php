@@ -25,8 +25,16 @@
                     @if($this->canFindView("{$block->key}"))
                         <x-prodigy::structure.wrapper wire:key="{{ $block->id }}">
                             <x-prodigy::structure.inner :editing="$editing" :block="$block">
-                                <x-dynamic-component :component="$block->key"
-                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])"></x-dynamic-component>
+
+                                @if($block->key == 'prodigy::blocks.basic.row')
+                                    <x-prodigy::blocks.basic.row :block="$block">
+                                    </x-prodigy::blocks.basic.row>
+                                @else
+                                    <x-dynamic-component :component="$block->key"
+                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
+                                </x-dynamic-component>
+                                @endif
+
                             </x-prodigy::structure.inner>
                         </x-prodigy::structure.wrapper>
 
