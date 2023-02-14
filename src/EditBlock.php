@@ -29,9 +29,8 @@ class EditBlock extends Component {
 
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
-            if (isset($element['rules'])) {
-                $rules["block.content.{$attribute}"] = $element['rules'];
-            }
+            $rules["block.content.{$attribute}"] = $element['rules'] ?? '';
+
         }
 
         return $rules;
