@@ -44,6 +44,12 @@ class ProdigyPage extends Component {
 
     }
 
+    /**
+     * There are two kinds of routing, wildcard and page-based. This tries to pull
+     * in the wildcard route, which would be set in the URL. Otherwise, it just
+     * ties it to the particular page, if someone dropped <x-prodigy-page> on
+     * the page.
+     */
     public function getPage(string $wildcard = null) : Page|null
     {
         if ($wildcard) {

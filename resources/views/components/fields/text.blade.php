@@ -6,5 +6,5 @@
     </label>
     <input type="text" wire:model="block.content.{{$key}}"
            value="{{ $block->content[$key] ?? null }}"
-           class="pro-w-full pro-rounded-sm pro-border-gray-200 pro-shadow-sm">
+           class="text-sm pro-w-full pro-rounded-sm pro-border-gray-300 bg-gray-50 pro-shadow-sm">
 </div>

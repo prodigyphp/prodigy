@@ -85,16 +85,18 @@ class EditBlock extends Component {
     }
 
     /**
-     * @param $key
-     * @param $meta
-     * @return View
-     *
      * Gets the field, loads the view, and sends to the browser.
      */
-    public function getField($key, $meta): View
+    public function getField($key, $data): View|null
     {
-        $field = $this->fields[$meta['type']];
-        return (new $field)->make($key, $meta);
+        $field = $this->fields[$data['type']] ?? null;
+
+        if (!$field) {
+            return null;
+        }
+
+        return (new $field)->make($key, $data);
+
     }
 
     public function save()

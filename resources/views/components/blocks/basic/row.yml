@@ -17,16 +17,16 @@ fields:
       - Fixed
     help: Define the wideness of your content section
 
-    bg_group:
-      type: group
-      label: Background
+  background_group:
+    type: group
+    label: Background
 
-    bg_type:
-      type: dropdown
-      options:
-        - None
-        - Color
-        - Photo
+  background_type:
+    type: dropdown
+    options:
+      - None
+      - Color
+      - Photo
 
 #  children:
 #    type: children

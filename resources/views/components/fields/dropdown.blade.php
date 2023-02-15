@@ -1,11 +1,21 @@
-@props(['key', 'meta'])
+@props(['key', 'data'])
 
-<div class="pro-mb-4">
-    <label class="pro-text-sm pro-text-gray-500 pro-block">
-        {{ str($key)->title() }}
-    </label>
-    <select name="" id=""></select>
-{{--    <input type="text" wire:model="block.content.{{$key}}"--}}
-{{--           value="{{ $block->content[$key] ?? null }}"--}}
-{{--           class="pro-w-full pro-rounded-sm pro-border-gray-200 pro-shadow-sm">--}}
-</div>
+<x-prodigy::editor.field-wrapper>
+    <x-prodigy::editor.label
+            :label="$key"
+            for="block.content.{{$key}}"
+            :help="$data['help'] ?? ''">
+
+    </x-prodigy::editor.label>
+    <select
+            class="pro-w-full bg-gray-50 pro-border pro-border-gray-300 pro-text-gray-900 pro-text-sm pro-rounded-sm focus:pro-ring-blue-500 focus:pro-border-blue-500 pro-block pro-p-2.5"
+            name="block.content.{{$key}}"
+            id="block.content.{{$key}}"
+            wire:model="block.content.{{$key}}">
+
+        @foreach($data['options'] as $option)
+            <option value="{{ Str::of($option)->slug() }}">{{ $option }}</option>
+        @endforeach
+
+    </select>
+</x-prodigy::editor.field-wrapper>
