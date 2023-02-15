@@ -1,8 +1,8 @@
 <div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full">
     <div class="pro-flex-grow pro-overflow-scroll">
-        <div class="p-4">
+        <div class="p-4 pro-flex pro-flex-wrap">
+            <div class="pro-text-lg pro-mb-4 pro-w-full">{{ $block->title }}</div>
 
-            <div class="pro-text-lg pro-mb-4">{{ $block->title }}</div>
             @if($errors->isNotEmpty())
                 @foreach($errors->all() as $error)
                     <p class="pro-text-red-500 pro-text-sm mb-2">{{ $error }}</p>

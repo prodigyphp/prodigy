@@ -1,10 +1,12 @@
 @props(['key', 'meta'])
 
-<div class="pro-mb-4">
-    <label class="pro-text-sm pro-text-gray-500 pro-block">
-        {{ str($key)->title() }}
-    </label>
+<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100">
+    <x-prodigy::editor.label
+            :label="$data['label'] ?? $key"
+            for="block.content.{{$key}}"
+            :help="$data['help'] ?? ''">
+    </x-prodigy::editor.label>
     <input type="text" wire:model="block.content.{{$key}}"
            value="{{ $block->content[$key] ?? null }}"
            class="text-sm pro-w-full pro-rounded-sm pro-border-gray-300 bg-gray-50 pro-shadow-sm">
-</div>
+</x-prodigy::editor.field-wrapper>

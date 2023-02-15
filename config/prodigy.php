@@ -3,6 +3,7 @@
 use ProdigyPHP\Prodigy\BlockGroups\CustomBlocksGroup;
 use ProdigyPHP\Prodigy\BlockGroups\ProdigyBlocksGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
+use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Text;
 
 return [
@@ -29,7 +30,8 @@ return [
 
     'fields' => [
         'text' => Text::class,
-        'dropdown' => Dropdown::class
+        'dropdown' => Dropdown::class,
+        'group' => Group::class,
 
         // register more fields here...
     ]

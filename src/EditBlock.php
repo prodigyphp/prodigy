@@ -29,7 +29,15 @@ class EditBlock extends Component {
 
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
+
             $rules["block.content.{$attribute}"] = $element['rules'] ?? '';
+
+            // iterate over fields in groups as well.
+            if($element['type'] == 'group') {
+                foreach($element['fields'] as $field_key => $field_element) {
+                    $rules["block.content.{$field_key}"] = $field_element['rules'] ?? '';
+                }
+            }
 
         }
 

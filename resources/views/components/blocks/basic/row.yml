@@ -1,17 +1,17 @@
 fields:
-  title:
-    type: text
-
   width:
     type: dropdown
+    label: Row Width
     options:
       - Full Width
       - Fixed
+    width: 50
     rules: required
     help: Define the wideness of your content section
 
   content_width:
     type: dropdown
+    width: 50
     options:
       - Full Width
       - Fixed
@@ -20,13 +20,11 @@ fields:
   background_group:
     type: group
     label: Background
-
-  background_type:
-    type: dropdown
-    options:
-      - None
-      - Color
-      - Photo
-
-#  children:
-#    type: children
+    fields:
+      background_type:
+        type: dropdown
+        label: Type
+        options:
+          - None
+          - Color
+          - Photo
