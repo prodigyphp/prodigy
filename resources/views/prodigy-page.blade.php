@@ -6,9 +6,11 @@
         @endisset
 
         @isset($jsPath)
-            <script>{!! file_get_contents($jsPath) !!}</script>
-            <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+                <script>{!! file_get_contents($jsPath) !!}</script>
         @endisset
+
+        <script src="/vendor/prodigy/ckeditor.js"></script>
+
         <livewire:prodigy-editor :page="$page"></livewire:prodigy-editor>
         <div class="pro-order-2 pro-absolute pro-inset-0 lg:pro-relative lg:pro-min-h-screen lg:pro-max-h-screen lg:pro-inset-auto pro-bg-white pro-flex-grow pro-overflow-scroll">
             @endif

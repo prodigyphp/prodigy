@@ -36,22 +36,26 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         Livewire::component('prodigy-edit-block', EditBlock::class);
 
         // load blade components
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'prodigy');
-		$this->configureComponents();
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'prodigy');
+        $this->configureComponents();
+
+        $this->publishes([
+            __DIR__ . '/../public' => public_path('vendor/prodigy'),
+        ], 'prodigy');
     }
 
     protected function configureComponents()
     {
-		$this->callAfterResolving(BladeCompiler::class, function () {
-			$this->registerComponent('structure.inner');
-			$this->registerComponent('structure.wrapper');
-			$this->registerComponent('blocks.row');
-		});
-	}
+        $this->callAfterResolving(BladeCompiler::class, function () {
+            $this->registerComponent('structure.inner');
+            $this->registerComponent('structure.wrapper');
+            $this->registerComponent('blocks.row');
+        });
+    }
 
     protected function registerComponent(string $component)
     {
-        Blade::component('prodigy::components.'.$component, 'prodigy-'.$component);
+        Blade::component('prodigy::components.' . $component, 'prodigy-' . $component);
     }
 
     /**

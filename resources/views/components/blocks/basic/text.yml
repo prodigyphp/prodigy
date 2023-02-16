@@ -2,3 +2,6 @@ fields:
   text:
     type: string
     rules: required
+
+  text_editor:
+    type: texteditor

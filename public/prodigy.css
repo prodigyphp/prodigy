@@ -498,9 +498,6 @@ video {
 .pro-order-2 {
   order: 2;
 }
-.pro-float-left {
-  float: left;
-}
 .pro-mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -510,11 +507,8 @@ video {
 .pro-mb-4 {
   margin-bottom: 1rem;
 }
-.pro-mt-2 {
-  margin-top: 0.5rem;
-}
-.pro-mt-4 {
-  margin-top: 1rem;
+.pro-mr-1 {
+  margin-right: 0.25rem;
 }
 .pro-block {
   display: block;
@@ -531,6 +525,9 @@ video {
 .pro-hidden {
   display: none;
 }
+.pro-h-5 {
+  height: 1.25rem;
+}
 .pro-h-full {
   height: 100%;
 }
@@ -540,11 +537,21 @@ video {
 .pro-min-h-screen {
   min-height: 100vh;
 }
+.pro-w-5 {
+  width: 1.25rem;
+}
 .pro-w-full {
   width: 100%;
 }
 .pro-flex-grow {
   flex-grow: 1;
+}
+.pro--rotate-90 {
+  --tw-rotate: -90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.pro-transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .pro-cursor-grab {
   cursor: grab;
@@ -561,14 +568,8 @@ video {
 .pro-gap-2 {
   gap: 0.5rem;
 }
-.pro-gap-4 {
-  gap: 1rem;
-}
 .pro-overflow-scroll {
   overflow: scroll;
-}
-.pro-rounded-lg {
-  border-radius: 0.5rem;
 }
 .pro-rounded-md {
   border-radius: 0.375rem;
@@ -587,12 +588,6 @@ video {
 }
 .pro-border-r {
   border-right-width: 1px;
-}
-.pro-border-t-2 {
-  border-top-width: 2px;
-}
-.pro-border-t-4 {
-  border-top-width: 4px;
 }
 .pro-border-t-8 {
   border-top-width: 8px;
@@ -639,14 +634,6 @@ video {
 .pro-bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.pro-bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
-.pro-bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 .pro-p-2 {
   padding: 0.5rem;
@@ -696,9 +683,6 @@ video {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
-.pro-font-semibold {
-  font-weight: 600;
-}
 .pro-font-medium {
   font-weight: 500;
 }
@@ -746,6 +730,10 @@ video {
 
 .test {
     background: green;
+}
+
+.hover\:pro-cursor-default:hover {
+  cursor: default;
 }
 
 .hover\:pro-border-blue-400:hover {

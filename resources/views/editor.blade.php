@@ -16,7 +16,6 @@
     </header>
     <section class="pro-relative pro-flex-grow">
 
-
         <div class="pro-px-4">
             @foreach($groups as $group)
                 <div class="pro-group pro-pt-4">

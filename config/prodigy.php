@@ -5,6 +5,7 @@ use ProdigyPHP\Prodigy\BlockGroups\ProdigyBlocksGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Text;
+use ProdigyPHP\Prodigy\FieldTypes\TextEditor;
 
 return [
 
@@ -32,6 +33,7 @@ return [
         'text' => Text::class,
         'dropdown' => Dropdown::class,
         'group' => Group::class,
+        'texteditor' => TextEditor::class
 
         // register more fields here...
     ]
