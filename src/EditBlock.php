@@ -29,19 +29,49 @@ class EditBlock extends Component {
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
 
-            $rules["block.content.{$attribute}"] = $element['rules'] ?? '';
+
+            // check for subfields at the top level
+            if ($subfields = $this->getSubFields($element['type'])) {
+                foreach ($subfields as $subfield => $subfield_rules_string) {
+                    $rules["block.content.{$attribute}.{$subfield}"] = $subfield_rules_string;
+                }
+            } else {
+                $rules["block.content.{$attribute}"] = $element['rules'] ?? '';
+            }
 
             // iterate over fields in groups as well.
             if ($element['type'] == 'group') {
                 foreach ($element['fields'] as $field_key => $field_element) {
-                    $rules["block.content.{$field_key}"] = $field_element['rules'] ?? '';
+
+
+                    // check for subfields at the group level
+                    if ($subfields = $this->getSubFields($field_element['type'])) {
+                        foreach ($subfields as $subfield => $subfield_rules_string) {
+                            $rules["block.content.{$field_key}.{$subfield}"] = $subfield_rules_string;
+                        }
+                    } else {
+                        $rules["block.content.{$field_key}"] = $field_element['rules'] ?? '';
+                    }
                 }
+
             }
 
         }
 
+//        info($rules);
         return $rules;
 
+    }
+
+    /**
+     * Each field class has a property "subfields" which can be set to an array.
+     * That array contains [key => rules] where rules are Laravel validation
+     * rules and key is the name of the subfield. This is used for when a field
+     * needs to handle logic for displaying  multidimensional fields.
+     */
+    public function getSubFields(string $field_slug): array
+    {
+        return (new $this->fields[$field_slug])->subfields;
     }
 
     public function mount(Block $block)
@@ -111,7 +141,7 @@ class EditBlock extends Component {
         }
 
         // Side load the block ID to be able to upload images.
-        if($data['type'] == 'image') {
+        if ($data['type'] == 'image') {
             $data['block_id'] = $this->block->id;
         }
 
@@ -149,7 +179,6 @@ class EditBlock extends Component {
 
     public function save()
     {
-        dd($this->block->content);
         $this->validate();
 
 

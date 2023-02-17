@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" {{ $attributes->merge(['class' => '']) }} fill="currentColor" style="enable-background:new 0 0 20 20" viewBox="0 0 20 20"><path d="M5 1.25h10v1.5H5zM5 17.25h10v1.5H5zM17.25 5h1.5v10h-1.5zM1.25 5h1.5v10h-1.5z"/></svg>

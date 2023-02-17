@@ -5,17 +5,24 @@ fields:
     options:
       - Full Width
       - Fixed
-    width: 50
+    width: 33
     rules: required
     help: Define the wideness of your content section
 
   content_width:
     type: dropdown
-    width: 50
+    width: 33
     options:
       - Full Width
       - Fixed
+    show: width:full-width
     help: Define the wideness of your content section
+
+  max_width:
+    type: text
+    width: 34
+    show: content_width:fixed|width:fixed
+    rules: numeric|nullable
 
   background_group:
     type: group
@@ -23,15 +30,37 @@ fields:
     fields:
       background_type:
         type: dropdown
-        label: Type
+        label: None
         options:
           - None
           - Color
           - Photo
       background_photo:
         type: image
-        rules: image
+        show: background_type:photo
+      background_attachment:
+        type: dropdown
+        label: Attachment
+        options:
+          - Scroll
+          - Fixed
+        width: 33
+        show: background_type:photo
+      background_size:
+        type: dropdown
+        label: Size
+        options:
+          - Auto
+          - Contain
+          - Cover
+        width: 33
         show: background_type:photo
       background_color:
         type: color
         show: background_type:color|background_type:photo
+  spacing_group:
+    type: group
+    label: Spacing
+    fields:
+      margin:
+        type: pixelgroup

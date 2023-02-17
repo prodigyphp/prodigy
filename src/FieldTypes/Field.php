@@ -11,6 +11,8 @@ abstract class Field {
      */
     public $name;
 
+    public array $subfields = [];
+
     public function make(string $key, array $meta)
     {
         return void;

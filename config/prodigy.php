@@ -6,6 +6,7 @@ use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Image;
+use ProdigyPHP\Prodigy\FieldTypes\PixelGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Text;
 use ProdigyPHP\Prodigy\FieldTypes\TextEditor;
 
@@ -37,7 +38,8 @@ return [
         'group' => Group::class,
         'texteditor' => TextEditor::class,
         'color' => Color::class,
-        'image' => Image::class
+        'image' => Image::class,
+        'pixelgroup' => PixelGroup::class,
 
         // register more fields here...
     ]

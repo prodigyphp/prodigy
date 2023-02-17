@@ -1,7 +1,7 @@
 @props(['key', 'data'])
 
-<div class="pro-w-full" x-data="{ expanded: true }">
-    <div @click="expanded = ! expanded" class=" mb-2 pro-border-t-8 pro-border-gray-200 px-2 pt-4">
+<div class="pro-w-full pro-py-4 pro-border-t-8 pro-border-gray-200" x-data="{ expanded: true }">
+    <div @click="expanded = ! expanded" class=" px-2 pb-2">
         <svg :class="{ 'pro--rotate-90': !expanded }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
              fill="currentColor" class="pro-w-5 pro-h-5 pro-inline-block pro-mr-1 pro-transform pro-transition">
             <path fill-rule="evenodd"
@@ -13,7 +13,7 @@
         </span>
     </div>
 
-    <div x-show="expanded">
+    <div x-show="expanded" class="pro-flex pro-flex-wrap">
 
         @forelse($data['fields'] as $key => $meta)
             {{ $this->getField($key, $meta) }}

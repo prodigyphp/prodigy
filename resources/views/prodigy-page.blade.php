@@ -25,7 +25,7 @@
 
                 @foreach($blocks as $block)
                     @if($this->canFindView("{$block->key}"))
-                        <x-prodigy::structure.wrapper wire:key="{{ $block->id }}">
+                        <x-prodigy::structure.wrapper wire:key="{{ $block->id }}"  :editing="$editing" :block="$block">
                             <x-prodigy::structure.inner :editing="$editing" :block="$block">
 
                                 @if($block->key == 'prodigy::blocks.basic.row')

@@ -1,5 +1,15 @@
-@props(['editing' => false, 'block'])
-<div class="inner {{ ($editing) ? 'pro-group pro-relative' : '' }}">
+@props(['editing' => false, 'block', 'styles' => ''])
+
+@php
+     if(
+         $block->content->has('width', 'content_width', 'max_width') &&
+         $block->content['content_width'] == 'fixed' &&
+         $block->content['width'] != 'fixed') {
+            $styles = "margin-left: auto; margin-right:auto; max-width:{$block->content['max_width']}px";
+     }
+@endphp
+
+<div class="inner {{ ($editing) ? 'pro-group pro-relative' : '' }}" style="{{ $styles }}">
     @if($editing)
         <div wire:click="$emit('editBlock', {{ $block->id }})" class="pro-absolute pro-inset-0 group-hover:pro-border-2 group-hover:pro-border-blue-400" style="z-index:998;"></div>
         <div class="pro-absolute pro-bg-blue-500 pro-text-white pro-gap-2 pro-hidden group-hover:pro-flex" style="z-index: 999;">
