@@ -78,13 +78,13 @@ class EditBlock extends Component {
         $this->block = $block;
         $this->fields = config('prodigy.fields');
         $this->schema = $this->getSchema($block) ?? []; // if content field is empty (as opposed to []), it'll error.
+        $this->schema = array_merge_recursive($this->schema, $this->getStandardSchema()); // add all the normal fields.
     }
 
 
     public function getSchema(Block $block): array|null
     {
         $path = $this->getPathOfBlockSchema($block);
-
 
         if (File::isFile($path)) {
             return Yaml::parseFile($path);
@@ -97,6 +97,12 @@ class EditBlock extends Component {
         }
 
         return null;
+    }
+
+    public function getStandardSchema(): array
+    {
+        $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/standard-schema.yml');
+        return Yaml::parseFile($path);
     }
 
     //

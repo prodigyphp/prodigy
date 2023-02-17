@@ -70,11 +70,3 @@ fields:
       background_color:
         type: color
         show: background_type:color|background_type:photo
-  spacing_group:
-    type: group
-    label: Spacing
-    fields:
-      margin:
-        type: pixelgroup
-      padding:
-        type: pixelgroup

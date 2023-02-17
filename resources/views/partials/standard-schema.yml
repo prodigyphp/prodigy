@@ -1,0 +1,10 @@
+fields:
+
+  spacing_group:
+    type: group
+    label: Spacing
+    fields:
+      margin:
+        type: pixelgroup
+      padding:
+        type: pixelgroup

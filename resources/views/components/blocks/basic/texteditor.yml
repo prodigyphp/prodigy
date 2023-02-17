@@ -1,0 +1,5 @@
+fields:
+  text:
+    type: texteditor
+    label: none
+    rules: nullable
