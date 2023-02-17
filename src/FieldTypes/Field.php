@@ -2,6 +2,8 @@
 
 namespace ProdigyPHP\Prodigy\FieldTypes;
 
+use ProdigyPHP\Prodigy\Models\Block;
+
 abstract class Field {
 
     /**
@@ -13,9 +15,9 @@ abstract class Field {
 
     public array $subfields = [];
 
-    public function make(string $key, array $meta)
+    public function make(string $key, array $meta, Block|null $block)
     {
-        return void;
+        return;
     }
 
 }

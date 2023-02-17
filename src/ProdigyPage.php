@@ -27,7 +27,7 @@ class ProdigyPage extends Component {
     public $cssPath = __DIR__ . '/../public/prodigy.css';
     public $jsPath = __DIR__ . '/../public/prodigy.js';
 
-    protected $listeners = ['editBlock' => '$refresh', 'stopEditingPage'];
+    protected $listeners = ['editBlock' => '$refresh', 'stopEditingPage', 'startEditingPage'];
 
     public function mount(string $wildcard = null)
     {
@@ -90,6 +90,10 @@ class ProdigyPage extends Component {
         return redirect($url);
     }
 
+    public function startEditingPage()
+    {
+        return $this->editPage(true);
+    }
     public function stopEditingPage()
     {
         return $this->editPage(false);

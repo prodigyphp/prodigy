@@ -7,6 +7,7 @@ use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Image;
 use ProdigyPHP\Prodigy\FieldTypes\PixelGroup;
+use ProdigyPHP\Prodigy\FieldTypes\Range;
 use ProdigyPHP\Prodigy\FieldTypes\Text;
 use ProdigyPHP\Prodigy\FieldTypes\TextEditor;
 
@@ -32,6 +33,12 @@ return [
         // register blocks from other packages here...
     ],
 
+    'default' => [
+        'unit' => 'px',
+        'padding' => '20', // px units are implied.
+        'max_width' => '1500' // px units are implied.
+    ],
+
     'fields' => [
         'text' => Text::class,
         'dropdown' => Dropdown::class,
@@ -40,7 +47,8 @@ return [
         'color' => Color::class,
         'image' => Image::class,
         'pixelgroup' => PixelGroup::class,
+        'range' => Range::class
 
         // register more fields here...
-    ]
+    ],
 ];

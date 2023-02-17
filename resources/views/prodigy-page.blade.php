@@ -6,7 +6,7 @@
         @endisset
 
         @isset($jsPath)
-                <script>{!! file_get_contents($jsPath) !!}</script>
+            <script>{!! file_get_contents($jsPath) !!}</script>
         @endisset
 
         <script src="/vendor/prodigy/ckeditor.js"></script>
@@ -18,23 +18,31 @@
             <main>
 
                 @if(Auth::check() && !$editing)
-                    <button class="pro-shadow-xl pro-rounded-sm pro-bg-white pro-fixed pro-top-2 pro-left-2 pro-py-1 pro-px-2 pro-border pro-border-gray-100 pro-text-gray-600 hover:pro-border-blue-400"
-                            wire:click="editPage" style="z-index:999;">Edit Page
+                    <button wire:click="startEditingPage"
+                            style="z-index:999;position: fixed; top:0; left:0;">
+                        <x-prodigy::icons.arrow-down-right-mini></x-prodigy::icons.arrow-down-right-mini>
                     </button>
+                    <script>
+                        document.onkeydown = function (e) {
+                            if (e.keyCode == 27) {
+                                window.livewire.emit('startEditingPage')
+                            }
+                        };
+                    </script>
                 @endif
 
                 @foreach($blocks as $block)
                     @if($this->canFindView("{$block->key}"))
-                        <x-prodigy::structure.wrapper wire:key="{{ $block->id }}"  :editing="$editing" :block="$block">
+                        <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
                             <x-prodigy::structure.inner :editing="$editing" :block="$block">
 
                                 @if($block->key == 'prodigy::blocks.basic.row')
-                                    <x-prodigy::blocks.basic.row :block="$block">
+                                    <x-prodigy::blocks.basic.row :block="$block" :editing="$editing">
                                     </x-prodigy::blocks.basic.row>
                                 @else
                                     <x-dynamic-component :component="$block->key"
-                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
-                                </x-dynamic-component>
+                                                         :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
+                                    </x-dynamic-component>
                                 @endif
 
                             </x-prodigy::structure.inner>

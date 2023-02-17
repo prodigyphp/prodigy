@@ -1,7 +1,5 @@
 fields:
   text:
-    type: string
+    type: text
+    label: none
     rules: required
-
-  text_editor:
-    type: texteditor

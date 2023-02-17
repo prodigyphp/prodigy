@@ -2,6 +2,8 @@
 
 namespace ProdigyPHP\Prodigy\FieldTypes;
 
+use ProdigyPHP\Prodigy\Models\Block;
+
 class PixelGroup extends Field {
 
 
@@ -14,8 +16,8 @@ class PixelGroup extends Field {
         'left' => 'nullable|numeric',
     ];
 
-    public function make($key, array $data)
+    public function make($key, array $data, Block|null $block)
     {
-        return view('prodigy::components.fields.pixelgroup', ['key' => $key, 'data' => $data]);
+        return view('prodigy::components.fields.pixelgroup', ['key' => $key, 'data' => $data, 'block' => $block]);
     }
 }

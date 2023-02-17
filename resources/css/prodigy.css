@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-.test {
-    background: green;
+
+.property-top-line, .property-right-line, .property-bottom-line, .property-left-line {
+    position: relative;
+}
+.property-top-line:after, .property-right-line:after, .property-bottom-line:after, .property-left-line:after {
+    content: " ";
+    position: absolute;
+    background: #4B5563;
+    border-radius: 2px;
+}
+
+.property-top-line:after{
+    left: 50%;
+    margin-left: -10px;
+    top: 4px;
+    width: 20px;
+    height: 2px;
+}
+.property-right-line:after{
+    top: 50%;
+    margin-top: -10px;
+    right: 4px;
+    width: 2px;
+    height: 20px;
+}
+
+.property-bottom-line:after {
+    left: 50%;
+    margin-left: -10px;
+    bottom: 4px;
+    width: 20px;
+    height: 2px;
+}
+
+.property-left-line:after {
+    top: 50%;
+    margin-top: -10px;
+    left: 4px;
+    width: 2px;
+    height: 20px;
 }

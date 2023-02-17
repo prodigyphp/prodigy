@@ -24,6 +24,18 @@ fields:
     show: content_width:fixed|width:fixed
     rules: numeric|nullable
 
+  columns:
+    type: dropdown
+    rules: numeric
+    default: 1
+    options:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+
   background_group:
     type: group
     label: Background
@@ -63,4 +75,6 @@ fields:
     label: Spacing
     fields:
       margin:
+        type: pixelgroup
+      padding:
         type: pixelgroup

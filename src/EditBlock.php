@@ -29,11 +29,10 @@ class EditBlock extends Component {
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
 
-
             // check for subfields at the top level
             if ($subfields = $this->getSubFields($element['type'])) {
                 foreach ($subfields as $subfield => $subfield_rules_string) {
-                    $rules["block.content.{$attribute}.{$subfield}"] = $subfield_rules_string;
+                    $rules["block.content.{$attribute}_{$subfield}"] = $subfield_rules_string;
                 }
             } else {
                 $rules["block.content.{$attribute}"] = $element['rules'] ?? '';
@@ -47,7 +46,7 @@ class EditBlock extends Component {
                     // check for subfields at the group level
                     if ($subfields = $this->getSubFields($field_element['type'])) {
                         foreach ($subfields as $subfield => $subfield_rules_string) {
-                            $rules["block.content.{$field_key}.{$subfield}"] = $subfield_rules_string;
+                            $rules["block.content.{$field_key}_{$subfield}"] = $subfield_rules_string;
                         }
                     } else {
                         $rules["block.content.{$field_key}"] = $field_element['rules'] ?? '';
@@ -145,7 +144,7 @@ class EditBlock extends Component {
             $data['block_id'] = $this->block->id;
         }
 
-        return (new $field_name)->make($key, $data);
+        return (new $field_name)->make($key, $data, $this->block);
 
     }
 
