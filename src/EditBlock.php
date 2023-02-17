@@ -7,19 +7,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
-use ProdigyPHP\Prodigy\FieldTypes\Field;
 use ProdigyPHP\Prodigy\Models\Block;
 use Symfony\Component\Yaml\Yaml;
 
 class EditBlock extends Component {
 
+    use WithFileUploads;
+
     public Block $block;
-
     public $schema;
-
     public array $fields;
-
 
     protected function rules()
     {
@@ -33,8 +32,8 @@ class EditBlock extends Component {
             $rules["block.content.{$attribute}"] = $element['rules'] ?? '';
 
             // iterate over fields in groups as well.
-            if($element['type'] == 'group') {
-                foreach($element['fields'] as $field_key => $field_element) {
+            if ($element['type'] == 'group') {
+                foreach ($element['fields'] as $field_key => $field_element) {
                     $rules["block.content.{$field_key}"] = $field_element['rules'] ?? '';
                 }
             }
@@ -95,21 +94,64 @@ class EditBlock extends Component {
     /**
      * Gets the field, loads the view, and sends to the browser.
      */
-    public function getField($key, $data): View|null
+    public function getField($key, array $data): View|null
     {
-        $field = $this->fields[$data['type']] ?? null;
+        $field_name = $this->fields[$data['type']] ?? null;
 
-        if (!$field) {
+        if (!$field_name) {
             return null;
         }
 
-        return (new $field)->make($key, $data);
+        // Check the conditionals to decide if we should render the field at all.
+        // We need a "show" key to test against.
+        if (array_key_exists('show', $data)) {
+            if (!$this->testConditionalLogic($data['show'])) {
+                return null;
+            }
+        }
 
+        // Side load the block ID to be able to upload images.
+        if($data['type'] == 'image') {
+            $data['block_id'] = $this->block->id;
+        }
+
+        return (new $field_name)->make($key, $data);
+
+    }
+
+    public function testConditionalLogic(string|array $rules): bool
+    {
+        // Convert a string into an array, delimited by |
+        if (is_string($rules)) {
+            $rules = explode('|', $rules);
+        }
+
+        $metaCollection = collect($this->block->content);
+
+        // Iterate over each rule
+        foreach ($rules as $rule) {
+            $key = str($rule)->before(':')->toString(); // key is before the :
+            $rule_value = str($rule)->after(':')->toString(); // value is after the :
+
+//                info([$key, $value, $this->block->content->contains($key, $value), $this->block->content]);
+            // If we can find the key and value, it passes
+            if ($this->block->content->has($key)) {
+                $current_value = $this->block->content[$key];
+                if ($current_value == $rule_value) {
+                    return true;
+                }
+            }
+        }
+
+        // Otherwise, it fails.
+        return false;
     }
 
     public function save()
     {
+        dd($this->block->content);
         $this->validate();
+
 
         $this->block->save();
         $this->close();

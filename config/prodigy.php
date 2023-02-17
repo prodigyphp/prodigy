@@ -2,8 +2,10 @@
 
 use ProdigyPHP\Prodigy\BlockGroups\CustomBlocksGroup;
 use ProdigyPHP\Prodigy\BlockGroups\ProdigyBlocksGroup;
+use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
+use ProdigyPHP\Prodigy\FieldTypes\Image;
 use ProdigyPHP\Prodigy\FieldTypes\Text;
 use ProdigyPHP\Prodigy\FieldTypes\TextEditor;
 
@@ -33,7 +35,9 @@ return [
         'text' => Text::class,
         'dropdown' => Dropdown::class,
         'group' => Group::class,
-        'texteditor' => TextEditor::class
+        'texteditor' => TextEditor::class,
+        'color' => Color::class,
+        'image' => Image::class
 
         // register more fields here...
     ]

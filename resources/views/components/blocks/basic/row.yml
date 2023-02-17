@@ -28,3 +28,10 @@ fields:
           - None
           - Color
           - Photo
+      background_photo:
+        type: image
+        rules: image
+        show: background_type:photo
+      background_color:
+        type: color
+        show: background_type:color|background_type:photo

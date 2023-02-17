@@ -5,6 +5,7 @@ namespace ProdigyPHP\Prodigy;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\Compilers\BladeCompiler;
+use ProdigyPHP\Prodigy\Livewire\PhotoUploader;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
@@ -34,6 +35,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         Livewire::component('prodigy-page', ProdigyPage::class);
         Livewire::component('prodigy-editor', Editor::class);
         Livewire::component('prodigy-edit-block', EditBlock::class);
+        Livewire::component('prodigy-photo-uploader', PhotoUploader::class);
 
         // load blade components
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'prodigy');

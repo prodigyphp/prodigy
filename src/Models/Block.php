@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Block extends Model {
+class Block extends Model implements HasMedia {
 
     use HasFactory;
+    use InteractsWithMedia;
 
     // not sure where this lives.
 
@@ -32,13 +37,45 @@ class Block extends Model {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
     }
 
-    public function children() {
-        return $this->hasMany(Block::class,'parent_id');
+    public function children()
+    {
+        return $this->hasMany(Block::class, 'parent_id');
     }
 
-    protected static function newFactory() : BlockFactory
+    protected static function newFactory(): BlockFactory
     {
         return new BlockFactory();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300);
+
+        $this
+            ->addMediaConversion('large')
+            ->width(2500)
+            ->height(2500)
+            ->queued();
+
+        $this
+            ->addMediaConversion('medium')
+            ->width(1500)
+            ->height(1500)
+            ->queued();
+
+        $this
+            ->addMediaConversion('small')
+           ->width(750)
+            ->height(750)
+            ->queued();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('prodigy_photos');
     }
 
 
