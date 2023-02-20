@@ -1,9 +1,8 @@
 <?php
 
-namespace ProdigyPHP\Prodigy;
+namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
@@ -18,7 +17,9 @@ class Editor extends Component {
 
     public ?Block $editing_block;
 
-    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock'];
+    public string $editorState = 'blocksList'; // blocksList, pagesList, or blockEditor
+
+    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock', 'updateState'];
 
     public function mount(Page $page)
     {
@@ -27,14 +28,14 @@ class Editor extends Component {
 
     public function render()
     {
-        $this->groups = $this->getBlocks();
-        return view('prodigy::editor');
+        return view('prodigy::livewire.editor');
     }
 
     public function editBlock($id)
     {
         $this->editing_block = null; // clear anything else out first.
         $this->editing_block = Block::find($id);
+        $this->editorState = 'blockEditor';
     }
 
     public function insertBlock($blockKey)
@@ -55,17 +56,9 @@ class Editor extends Component {
         $this->emit('$refresh');
     }
 
-    public function getBlocks()
+    public function updateState(string $stateString)
     {
-        return collect(config('prodigy.block_paths'))
-            ->map(fn(string $blockGroup) => (new $blockGroup))
-            ->map(function (BlockGroup $blockGroup) {
-                return [
-                    'title' => $blockGroup->title,
-                    'folders' => $blockGroup->getFolders()
-                ];
-            });
-
+        $this->editorState = $stateString;
     }
 
 }

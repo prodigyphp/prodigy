@@ -2,9 +2,16 @@ fields:
 
   spacing_group:
     type: group
-    label: Spacing
+    label: Spacing / Visibility
     fields:
       margin:
         type: pixelgroup
       padding:
         type: pixelgroup
+      show_on_page:
+        type: dropdown
+        label: Show on Page
+        default: show
+        options:
+          - Show
+          - Hide

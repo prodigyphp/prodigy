@@ -1,3 +1,8 @@
+
+@section('title')
+{{ $page->title }}
+@endsection
+
 <div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }}">
 
     @if($editing)

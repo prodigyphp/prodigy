@@ -699,6 +699,12 @@ video {
 .pro-pt-4 {
   padding-top: 1rem;
 }
+.pro-pb-4 {
+  padding-bottom: 1rem;
+}
+.pro-pt-1 {
+  padding-top: 0.25rem;
+}
 .pro-text-center {
   text-align: center;
 }

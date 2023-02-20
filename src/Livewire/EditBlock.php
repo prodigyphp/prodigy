@@ -1,8 +1,7 @@
 <?php
 
-namespace ProdigyPHP\Prodigy;
+namespace ProdigyPHP\Prodigy\Livewire;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -185,20 +184,18 @@ class EditBlock extends Component {
     public function save()
     {
         $this->validate();
-
-
         $this->block->save();
         $this->close();
     }
 
     public function close()
     {
-        $this->emit('editBlock', null); // passing null kills the edit.
+        $this->emit('updateState', 'blocksList');
     }
 
     public function render()
     {
-        return view('prodigy::edit-block');
+        return view('prodigy::livewire.edit-block');
     }
 
 }
