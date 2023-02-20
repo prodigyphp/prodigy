@@ -1,19 +1,19 @@
 @props(['key', 'data'])
 
-<div class="pro-w-full pro-py-4 pro-border-t-8 pro-border-gray-200" x-data="{ expanded: true }">
-    <div @click="expanded = ! expanded" class=" px-2 pb-2">
-        <svg :class="{ 'pro--rotate-90': !expanded }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-             fill="currentColor" class="pro-w-5 pro-h-5 pro-inline-block pro-mr-1 pro-transform pro-transition">
+<div class="pro-w-full pro-pb-4" x-data="{ expanded: true }">
+    <div @click="expanded = ! expanded" class=" px-2 pb-2 pro-bg-gray-200 pro-mx-[-1rem] pro-py-2">
+        <svg :class="{ 'pro--rotate-90': !expanded }" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 20 20"
+             fill="currentColor"
+             class="pro-w-5 pro-h-5 pro-inline-block pro-transform pro-transition">
             <path fill-rule="evenodd"
                   d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
                   clip-rule="evenodd"/>
         </svg>
-        <span class="pro-bg-gray-100 pro-py-3 pro-text-sm pro-font-medium pro-inline-block hover:pro-cursor-default">
-            {{ str($data['label'] ?? $key)->replace('_', ' ')->title() }}
-        </span>
+        <span class=" pro-text-sm pro-font-medium pro-inline-block hover:pro-cursor-default">{{ str($data['label'] ?? $key)->replace('_', ' ')->title() }}</span>
     </div>
 
-    <div x-show="expanded" class="pro-flex pro-flex-wrap">
+    <div x-show="expanded" class="pro-flex pro-flex-wrap pro-pt-1">
 
         @forelse($data['fields'] as $key => $meta)
             {{ $this->getField($key, $meta) }}

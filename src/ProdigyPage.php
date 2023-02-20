@@ -27,7 +27,7 @@ class ProdigyPage extends Component {
     public $cssPath = __DIR__ . '/../public/prodigy.css';
     public $jsPath = __DIR__ . '/../public/prodigy.js';
 
-    protected $listeners = ['editBlock' => '$refresh', 'stopEditingPage', 'startEditingPage'];
+    protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'stopEditingPage', 'startEditingPage'];
 
     public function mount(string $wildcard = null)
     {

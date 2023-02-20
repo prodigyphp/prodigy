@@ -495,6 +495,10 @@ video {
 .pro-m-px {
   margin: 1px;
 }
+.pro-mx-\[-1rem\] {
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
 .pro-mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -506,6 +510,9 @@ video {
 }
 .pro-mr-1 {
   margin-right: 0.25rem;
+}
+.pro-mr-px {
+  margin-right: 1px;
 }
 .pro-block {
   display: block;

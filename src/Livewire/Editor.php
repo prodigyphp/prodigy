@@ -58,6 +58,7 @@ class Editor extends Component {
 
     public function updateState(string $stateString)
     {
+        $this->emit('fireGlobalRefresh');
         $this->editorState = $stateString;
     }
 
