@@ -169,7 +169,7 @@ class EditBlock extends Component {
 
 //                info([$key, $value, $this->block->content->contains($key, $value), $this->block->content]);
             // If we can find the key and value, it passes
-            if ($this->block->content->has($key)) {
+            if ($this->block->content?->has($key)) {
                 $current_value = $this->block->content[$key];
                 if ($current_value == $rule_value) {
                     return true;
@@ -184,6 +184,8 @@ class EditBlock extends Component {
     public function save()
     {
         $this->validate();
+        $this->block->content = $this->block->content->filter(); // removes null values so we don't fill the db with null.
+
         $this->block->save();
         $this->close();
     }

@@ -4,9 +4,11 @@ namespace ProdigyPHP\Prodigy;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
+use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
 use ProdigyPHP\Prodigy\Livewire\PageEditor;
 use ProdigyPHP\Prodigy\Livewire\EditBlock;
@@ -66,6 +68,19 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     protected function registerComponent(string $component)
     {
         Blade::component('prodigy::components.' . $component, 'prodigy-' . $component);
+    }
+
+    public function packageRegistered()
+    {
+        Route::namespace('Laravel\Nova\Http\Controllers')
+            ->prefix(Prodigy::path())
+            ->middleware([
+                'web'
+            ])
+            ->group(function () {
+                Route::get('/login', [LoginController::class, 'index']);
+                Route::post('/login', [LoginController::class, 'login'])->name('prodigy.login');
+            });
     }
 
     /**

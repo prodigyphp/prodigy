@@ -10,8 +10,8 @@
         @forelse($pages as $page_item)
             <a
                     @class([
-        'pro-bg-gray-200' => ($page_item->slug == $page->slug),
-        'pro-py-3 pro-flex pro-items-center pro-w-full hover:pro-bg-gray-200 pro-px-4'
+        'pro-bg-gray-700/10' => ($page_item->slug == $page->slug),
+        'pro-py-3 pro-text-sm pro-font-regular pro-flex pro-items-center pro-w-full hover:pro-bg-gray-700/10 pro-px-4'
         ])
                     href="/{{ $page_item->slug  }}?editing=true">
 
@@ -22,9 +22,9 @@
             </a>
         @empty
             <p class="pro-mb-4">No pages found.</p>
-            <x-prodigy::editor.btn class="pro-flex-grow" wire:click="$emit('createPage')">
+            <x-prodigy::editor.button class="pro-flex-grow" wire:click="$emit('createPage')">
                 Create One
-            </x-prodigy::editor.btn>
+            </x-prodigy::editor.button>
         @endforelse
     </div>
 </div>

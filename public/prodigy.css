@@ -527,6 +527,9 @@ video {
 .pro-mb-8 {
   margin-bottom: 2rem;
 }
+.pro-mt-3 {
+  margin-top: 0.75rem;
+}
 .pro-block {
   display: block;
 }
@@ -547,6 +550,9 @@ video {
 }
 .pro-h-full {
   height: 100%;
+}
+.pro-h-screen {
+  height: 100vh;
 }
 .pro-max-h-screen {
   max-height: 100vh;
@@ -569,6 +575,9 @@ video {
 .pro-w-6 {
   width: 1.5rem;
 }
+.pro-max-w-xl {
+  max-width: 36rem;
+}
 .pro-flex-grow {
   flex-grow: 1;
 }
@@ -582,6 +591,12 @@ video {
 .pro-cursor-grab {
   cursor: grab;
 }
+.pro-list-inside {
+  list-style-position: inside;
+}
+.pro-list-disc {
+  list-style-type: disc;
+}
 .pro-grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -593,6 +608,9 @@ video {
 }
 .pro-items-center {
   align-items: center;
+}
+.pro-justify-center {
+  justify-content: center;
 }
 .pro-gap-1 {
   gap: 0.25rem;
@@ -680,6 +698,16 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.pro-bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
+.pro-bg-gray-700\/20 {
+  background-color: rgb(64 64 64 / 0.2);
+}
+.pro-bg-gray-700\/10 {
+  background-color: rgb(64 64 64 / 0.1);
+}
 .pro-p-2 {
   padding: 0.5rem;
 }
@@ -741,6 +769,9 @@ video {
 .pro-text-center {
   text-align: center;
 }
+.pro-font-sans {
+  font-family: Mona Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 .pro-text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -762,6 +793,9 @@ video {
 }
 .pro-font-semibold {
   font-weight: 600;
+}
+.pro-font-bold {
+  font-weight: 700;
 }
 .pro-text-black\/50 {
   color: rgb(0 0 0 / 0.5);
@@ -789,6 +823,14 @@ video {
 .pro-text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(64 64 64 / var(--tw-text-opacity));
+}
+.pro-text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+.pro-antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .pro-shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -876,6 +918,16 @@ video {
 .hover\:pro-bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 229 229 / var(--tw-bg-opacity));
+}
+.hover\:pro-bg-gray-700\/20:hover {
+  background-color: rgb(64 64 64 / 0.2);
+}
+.hover\:pro-bg-gray-700\/10:hover {
+  background-color: rgb(64 64 64 / 0.1);
+}
+.hover\:pro-bg-blue-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
 .hover\:pro-text-blue-500:hover {
   --tw-text-opacity: 1;

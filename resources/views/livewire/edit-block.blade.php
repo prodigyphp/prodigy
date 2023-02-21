@@ -20,11 +20,11 @@
         </div>
     </div>
     <div class="pro-flex pro-gap-2 pro-p-2 pro-w-full">
-        <x-prodigy::editor.btn class="pro-flex-grow" wire:click="save">
+        <x-prodigy::editor.button class="pro-flex-grow" wire:click="save">
             Save
-        </x-prodigy::editor.btn>
-        <x-prodigy::editor.btn class="pro-flex-grow" wire:click="close">
+        </x-prodigy::editor.button>
+        <x-prodigy::editor.button class="pro-flex-grow" wire:click="close">
             Cancel
-        </x-prodigy::editor.btn>
+        </x-prodigy::editor.button>
     </div>
 </div>

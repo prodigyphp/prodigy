@@ -2,7 +2,7 @@
 
 @php
     // @var Collection
-    $fields = $block->content;
+    $fields = $block->content ?? collect(); // prevents calling "has" on undefined.
 
         // initialize variables to nothing.
         $margin_units = config('prodigy.default.unit', 'px');

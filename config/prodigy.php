@@ -24,6 +24,16 @@ return [
     */
     'include_css' => false,
 
+    /**
+     * The main page within your application that is managed by prodigy.
+     */
+    'home' => '/how-it-works',
+
+    /**
+     * Custom prodigy paths.
+     */
+    'path' => 'prodigy',
+
     'custom_blocks_path' => 'resources/views/components/blocks',
 
     'block_paths' => [

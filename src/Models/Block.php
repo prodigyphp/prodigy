@@ -4,6 +4,8 @@ namespace ProdigyPHP\Prodigy\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
 use Spatie\Image\Manipulations;
@@ -37,10 +39,11 @@ class Block extends Model implements HasMedia {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
     }
 
-    public function children()
+    public function children() : BelongsToMany
     {
-        return $this->hasMany(Block::class, 'parent_id');
+        return $this->belongsToMany(Block::class, 'prodigy_block_row', 'row_block_id', 'block_id')->withPivot('column', 'order')->orderByPivot('order');
     }
+
 
     protected static function newFactory(): BlockFactory
     {

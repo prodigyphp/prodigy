@@ -45,7 +45,7 @@
                         @continue
                     @endif
 
-                    @if(!$editing && $block->content->has('show_on_page') && $block->content['show_on_page'] == 'hide')
+                    @if(!$editing && $block->content?->has('show_on_page') && $block->content['show_on_page'] == 'hide')
                         @continue
                     @endif
 

@@ -2,7 +2,7 @@
 
 @php
     if(
-        $block->content->has('width', 'content_width', 'max_width') &&
+        $block->content?->has('width', 'content_width', 'max_width') &&
         $block->content['content_width'] == 'fixed' &&
         $block->content['width'] != 'fixed') {
            $styles = "margin-left: auto; margin-right:auto; max-width:{$block->content['max_width']}px";
