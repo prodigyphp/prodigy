@@ -2,4 +2,4 @@ fields:
   text:
     type: text
     label: none
-    rules: required
+    rules: nullable

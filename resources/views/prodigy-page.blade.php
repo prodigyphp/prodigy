@@ -62,41 +62,23 @@
                             @endif
 
                         </x-prodigy::structure.inner>
+                        @if($editing)
+                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order" />
+                        @endif
                     </x-prodigy::structure.wrapper>
 
-                    @if($editing)
-                        <div
-                                x-data="{dragging: false}"
-                                x-on:dragover.prevent="$el.classList.add('pro-bg-blue-400')"
-                                x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-400')"
-                                x-on:drop.prevent="
-                                      block_key = event.dataTransfer.getData('text/plain');
-                                      $wire.addBlock(block_key);
-                                      $el.classList.remove('pro-bg-blue-400');"
-                                class="dropzone pro-rounded-md pro-mb-2 pro p-12 pro-border-2 pro-border-gray-600 pro-border-dashed"></div>
-                    @endif
                 @empty
                     @if($editing)
-                        <div
-                                x-data="{dragging: false}"
-                                x-on:dragover.prevent="$el.classList.add('pro-bg-blue-400'); $el.classList.remove('pro-bg-gray-100')"
-                                x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-400'); $el.classList.add('pro-bg-gray-100')"
-                                x-on:drop.prevent="
-                                      block_key = event.dataTransfer.getData('text/plain');
-                                      $wire.addBlock(block_key);
-                                      $el.classList.remove('pro-bg-blue-400');"
-                                class="dropzone pro-rounded-md pro-mb-2 pro p-12 pro-border-2 pro-border-black/50 pro-border-dashed pro-text-black/50 pro-bg-gray-100 pro-p-20 pro-m-4 pro-text-center">
+
+                        <x-prodigy::structure.dropzone block_order="0">
                             Drag and drop a block.
-                        </div>
+                        </x-prodigy::structure.dropzone>
                     @endif
                 @endforelse
             </main>
 
             @if($editing)
-
                 <div class="pb-20"></div>
         </div>
     @endif
-
-
 </div>

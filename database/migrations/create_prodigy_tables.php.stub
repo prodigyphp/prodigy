@@ -31,7 +31,7 @@ return new class extends Migration
             $table->id();
             $table->integer('block_id');
             $table->integer('page_id');
-            $table->integer('order')->nullable();
+            $table->integer('order');
             $table->timestamps();
         });
 

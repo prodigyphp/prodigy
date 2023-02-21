@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
 use Livewire\Component;
+use ProdigyPHP\Prodigy\Actions\AddBlockAction;
 use ProdigyPHP\Prodigy\Models\Page;
 use Symfony\Component\Console\Input\Input;
 
@@ -69,8 +70,16 @@ class ProdigyPage extends Component {
         return (Auth::check());
     }
 
-    public function addBlock($block_key) {
-        dd($block_key);
+    public function addBlock($block_key, $block_order, $column_index = null, $column_order = null) {
+        $block = (new AddBlockAction($block_key))
+            ->forPage($this->page)
+            ->atPagePosition($block_order)
+            ->intoColumn($column_index)
+            ->atColumnPosition($column_order)
+            ->execute();
+
+        // Opens the editor once it's been created.
+        $this->emit('editBlock', $block->id);
     }
 
     /**
@@ -101,7 +110,7 @@ class ProdigyPage extends Component {
 
     public function render()
     {
-        $this->blocks = $this->page->blocks()->with('children')->orderBy('order', 'asc')->get();
+        $this->blocks = $this->page->blocks()->with('children')->withPivot('order')->orderBy('order', 'asc')->get();
 
         return view('prodigy::prodigy-page');
     }

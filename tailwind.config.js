@@ -18,4 +18,7 @@ module.exports = {
             }
         },
     },
+    safelist: [
+        'pro-grid-cols-2', 'pro-grid-cols-3', 'pro-grid-cols-4', 'pro-grid-cols-5', 'pro-grid-cols-6',
+    ]
 }
