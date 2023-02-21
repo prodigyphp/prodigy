@@ -16,10 +16,11 @@ class Editor extends Component {
     public Collection $groups;
 
     public ?Block $editing_block;
+    public ?Page $editing_page;
 
-    public string $editorState = 'blocksList'; // blocksList, pagesList, or blockEditor
+    public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
 
-    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock', 'updateState'];
+    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock', 'updateState', 'createPage', 'editPage'];
 
     public function mount(Page $page)
     {
@@ -60,6 +61,23 @@ class Editor extends Component {
     {
         $this->emit('fireGlobalRefresh');
         $this->editorState = $stateString;
+    }
+
+    public function createPage()
+    {
+        $this->editing_page = null;
+        $this->updateState('pageEditor');
+    }
+
+    public function editPage(int $page_id)
+    {
+        $page = Page::findOrfail($page_id);
+
+        // @TODO
+        // $this->authorize('access_prodigy');
+
+        $this->editing_page = $page;
+        $this->updateState('pageEditor');
     }
 
 }

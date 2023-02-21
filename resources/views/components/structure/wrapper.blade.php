@@ -62,6 +62,11 @@
          if($fields->has('background_color', 'background_type') && ($fields['background_type'] != 'none') ) {
              $styles .= "background-color: {$fields['background_color']};";
          }
+
+         // Hide if set to hide, but only when not editing
+         if(!$editing && $fields->has('show_on_page') && $fields['show_on_page']) {
+             $styles.="";
+         }
 @endphp
 
 <div class="wrapper" style="{{ $styles }}">

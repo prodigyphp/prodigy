@@ -8,6 +8,7 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
+use ProdigyPHP\Prodigy\Livewire\PageEditor;
 use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\Editor;
 use ProdigyPHP\Prodigy\Livewire\PagesList;
@@ -41,6 +42,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         Livewire::component('prodigy-edit-block', EditBlock::class);
         Livewire::component('prodigy-blocks-list', BlocksList::class);
         Livewire::component('prodigy-pages-list', PagesList::class);
+        Livewire::component('prodigy-page-edit', PageEditor::class);
         Livewire::component('prodigy-photo-uploader', PhotoUploader::class);
 
         // load blade components

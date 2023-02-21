@@ -1,6 +1,5 @@
-
 @section('title')
-{{ $page->title }}
+    {{ $page->title }}
 @endsection
 
 <div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }}">
@@ -8,6 +7,11 @@
     @if($editing)
         @isset($cssPath)
             <style>{!! file_get_contents($cssPath) !!}</style>
+            <style>
+                body {
+                    padding-left: 28rem;
+                }
+            </style>
         @endisset
 
         @isset($jsPath)
@@ -36,39 +40,56 @@
                     </script>
                 @endif
 
-                @foreach($blocks as $block)
-                    @if($this->canFindView("{$block->key}"))
-                        <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
-                            <x-prodigy::structure.inner :editing="$editing" :block="$block">
+                @forelse($blocks as $block)
+                    @if(!$this->canFindView("{$block->key}"))
+                        @continue
+                    @endif
 
-                                @if($block->key == 'prodigy::blocks.basic.row')
-                                    <x-prodigy::blocks.basic.row :block="$block" :editing="$editing">
-                                    </x-prodigy::blocks.basic.row>
-                                @else
-                                    <x-dynamic-component :component="$block->key"
-                                                         :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
-                                    </x-dynamic-component>
-                                @endif
+                    @if(!$editing && $block->content->has('show_on_page') && $block->content['show_on_page'] == 'hide')
+                        @continue
+                    @endif
 
-                            </x-prodigy::structure.inner>
-                        </x-prodigy::structure.wrapper>
+                    <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
+                        <x-prodigy::structure.inner :editing="$editing" :block="$block">
 
-                        @if($editing)
-                            <div
-                                    x-data="{dragging: false}"
-                                    x-on:dragover.prevent="$el.classList.add('pro-bg-blue-400')"
-                                    x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-400')"
-                                    x-on:drop.prevent="
+                            @if($block->key == 'prodigy::blocks.basic.row')
+                                <x-prodigy::blocks.basic.row :block="$block" :editing="$editing">
+                                </x-prodigy::blocks.basic.row>
+                            @else
+                                <x-dynamic-component :component="$block->key"
+                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
+                                </x-dynamic-component>
+                            @endif
+
+                        </x-prodigy::structure.inner>
+                    </x-prodigy::structure.wrapper>
+
+                    @if($editing)
+                        <div
+                                x-data="{dragging: false}"
+                                x-on:dragover.prevent="$el.classList.add('pro-bg-blue-400')"
+                                x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-400')"
+                                x-on:drop.prevent="
                                       block_key = event.dataTransfer.getData('text/plain');
                                       $wire.addBlock(block_key);
                                       $el.classList.remove('pro-bg-blue-400');"
-                                    class="dropzone pro-rounded-md pro-mb-2 pro p-12 pro-border-2 pro-border-gray-600 pro-border-dashed">
-                                &nbsp;
-
-                            </div>
-                        @endif
+                                class="dropzone pro-rounded-md pro-mb-2 pro p-12 pro-border-2 pro-border-gray-600 pro-border-dashed"></div>
                     @endif
-                @endforeach
+                @empty
+                    @if($editing)
+                        <div
+                                x-data="{dragging: false}"
+                                x-on:dragover.prevent="$el.classList.add('pro-bg-blue-400'); $el.classList.remove('pro-bg-gray-100')"
+                                x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-400'); $el.classList.add('pro-bg-gray-100')"
+                                x-on:drop.prevent="
+                                      block_key = event.dataTransfer.getData('text/plain');
+                                      $wire.addBlock(block_key);
+                                      $el.classList.remove('pro-bg-blue-400');"
+                                class="dropzone pro-rounded-md pro-mb-2 pro p-12 pro-border-2 pro-border-black/50 pro-border-dashed pro-text-black/50 pro-bg-gray-100 pro-p-20 pro-m-4 pro-text-center">
+                            Drag and drop a block.
+                        </div>
+                    @endif
+                @endforelse
             </main>
 
             @if($editing)

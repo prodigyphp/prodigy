@@ -2,6 +2,7 @@ fields:
 
   spacing_group:
     type: group
+    expanded: false
     label: Spacing / Visibility
     fields:
       margin:
