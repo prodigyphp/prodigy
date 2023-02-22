@@ -6,8 +6,10 @@ fields:
     label: Spacing / Visibility
     fields:
       margin:
+        width: 50
         type: pixelgroup
       padding:
+        width: 50
         type: pixelgroup
       show_on_page:
         type: dropdown

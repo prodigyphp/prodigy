@@ -8,8 +8,7 @@ class PixelGroup extends Field {
 
 
     public array $subfields = [
-        'united_values' => 'boolean', // boolean. true means keep values together and use all, false means use individual values.
-        'all' => 'nullable|numeric',
+        'united_values' => 'nullable|boolean', // boolean. true means keep values together and use all, false means use individual values.
         'top' => 'nullable|numeric',
         'right' => 'nullable|numeric',
         'bottom' => 'nullable|numeric',

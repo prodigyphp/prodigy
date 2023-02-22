@@ -7040,6 +7040,22 @@ exports.Plugins = Plugins;
 // }
 
 __webpack_require__(/*! @shopify/draggable */ "./node_modules/@shopify/draggable/lib/draggable.bundle.js");
+showDropzone = function showDropzone() {
+  document.querySelectorAll('.prodigy-dropzone').forEach(function (x) {
+    return x.classList.add('prodigy-highlight-dropzone');
+  });
+};
+hideDropzone = function hideDropzone() {
+  document.querySelectorAll('.prodigy-dropzone').forEach(function (x) {
+    return x.classList.remove('prodigy-highlight-dropzone');
+  });
+};
+deleteBlock = function deleteBlock(id) {
+  var response = confirm("Permanently delete?");
+  if (response) {
+    Livewire.emit('deleteBlock', id);
+  }
+};
 
 /***/ }),
 

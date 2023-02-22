@@ -9,20 +9,21 @@
                     @if(!$this->canFindView("{$block->key}"))
                         @continue
                     @endif
-                    @if(!$editing && $child->content->has('show_on_page') && $child->content['show_on_page'] == 'hide')
+                    @if(!$editing && $child->content?->has('show_on_page') && $child->content['show_on_page'] == 'hide')
                         @continue
                     @endif
 
-                    <x-prodigy::structure.inner :editing="$editing" :block="$child">
-                        <x-dynamic-component :component="$child->key"
-                                             :attributes="new Illuminate\View\ComponentAttributeBag($child->content?->all() ?? [])"></x-dynamic-component>
-
+                    <x-prodigy::structure.inner :editing="$editing" :block="$child" is_column="true">
                         @if($editing)
-                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order" :column_index="$column_index"></x-prodigy::structure.dropzone>
+                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order" style="minimal" :column_index="$column_index"/>
                         @endif
-                    </x-prodigy::structure.inner>
+                        <x-dynamic-component :component="$child->key"
+                                             :attributes="new Illuminate\View\ComponentAttributeBag($child->content?->all() ?? [])" />
 
+                    </x-prodigy::structure.inner>
                 @endforeach
+
+                <x-prodigy::structure.dropzone :block_order="$block->pivot->order" :column_index="$column_index"/>
             </div>
         @endforeach
 
