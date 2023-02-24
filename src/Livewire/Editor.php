@@ -20,7 +20,7 @@ class Editor extends Component {
 
     public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
 
-    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock', 'updateState', 'createPage', 'editPage'];
+    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
 
     public function mount(Page $page)
     {
@@ -39,6 +39,16 @@ class Editor extends Component {
         $this->editorState = 'blockEditor';
     }
 
+    public function addChildBlockThenEdit($key, $parent_block_id) : void
+    {
+        $block = Block::find($parent_block_id);
+        $child_block = $block->repeaterChildren()->create([
+            'key' => $key
+        ]);
+
+        $this->editBlock($child_block->id);
+    }
+
     public function insertBlock($blockKey)
     {
         $block = Block::where('key', $blockKey)->get()->first();
@@ -53,6 +63,15 @@ class Editor extends Component {
 
     public function deleteBlock($id)
     {
+        $block = Block::find($id);
+
+        $block->pages()->detach();
+
+        // detach from the page
+        //
+        // update the order on the page to reflect the missing block.
+
+        $block->rows()->
         $this->page->blocks()->detach($id);
         $this->emit('$refresh');
     }

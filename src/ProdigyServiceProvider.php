@@ -10,6 +10,7 @@ use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
 use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
+use ProdigyPHP\Prodigy\Livewire\EditChildBlock;
 use ProdigyPHP\Prodigy\Livewire\PageEditor;
 use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\Editor;
@@ -42,6 +43,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         Livewire::component('prodigy-page', ProdigyPage::class);
         Livewire::component('prodigy-editor', Editor::class);
         Livewire::component('prodigy-edit-block', EditBlock::class);
+        Livewire::component('prodigy-edit-child-block', EditChildBlock::class);
         Livewire::component('prodigy-blocks-list', BlocksList::class);
         Livewire::component('prodigy-pages-list', PagesList::class);
         Livewire::component('prodigy-page-edit', PageEditor::class);

@@ -192,7 +192,14 @@ class EditBlock extends Component {
 
     public function close()
     {
-        $this->emit('updateState', 'blocksList');
+
+        // If it's inside a repeater, go back to editing the repeater.
+        if ($this->block->repeaterParent) {
+            $this->emit('editBlock', $this->block->repeaterParent->id);
+        // Otherwise go back to the blocks list.
+        } else {
+            $this->emit('updateState', 'blocksList');
+        }
     }
 
     public function render()

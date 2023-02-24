@@ -1,0 +1,13 @@
+fields:
+  columns:
+    type: dropdown
+    options:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+  items:
+    type: repeater
+    key: prodigy::blocks.basic.content-grid-item

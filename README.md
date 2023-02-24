@@ -1,5 +1,26 @@
 # Package for the Prodigy page builder.
 
+
+## Installation problems
+- Couldn't find migration stub
+- how do we install media library?
+- "blocks" directory doesn't exist.
+- adding new photos should remove the old photo. since it just adds a new one, it doesn't update.
+- clicking "home" to edit home on the pages list breaks because it's "//?editing=true"
+- new rows need to allow content width to be not set.
+- columns should default to 1. right now it's unset.
+
+`composer require prodigyphp/prodigy`
+```bash
+php artisan vendor:publish --tag="prodigy-migrations"
+php artisan migrate
+```
+
+```bash
+php artisan vendor:publish --tag="prodigy-config"
+```
+
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/prodigyphp/prodigy.svg?style=flat-square)](https://packagist.org/packages/prodigyphp/prodigy)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/prodigyphp/prodigy/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/prodigyphp/prodigy/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/prodigyphp/prodigy/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/prodigyphp/prodigy/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
@@ -19,6 +40,7 @@ You can publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --tag="prodigy-migrations"
+php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 

@@ -534,8 +534,14 @@ video {
 .pro-left-\[-2px\] {
   left: -2px;
 }
+.pro-top-\[0\.2rem\] {
+  top: 0.2rem;
+}
 .pro-z-\[1000\] {
   z-index: 1000;
+}
+.pro-z-\[1001\] {
+  z-index: 1001;
 }
 .pro-order-1 {
   order: 1;
@@ -548,6 +554,9 @@ video {
 }
 .pro-m-\[-11\%\] {
   margin: -11%;
+}
+.pro-m-4 {
+  margin: 1rem;
 }
 .pro-mx-\[-1rem\] {
   margin-left: -1rem;
@@ -595,6 +604,12 @@ video {
 }
 .pro-mt-\[-4px\] {
   margin-top: -4px;
+}
+.pro-mr-2 {
+  margin-right: 0.5rem;
+}
+.pro-mt-2 {
+  margin-top: 0.5rem;
 }
 .pro-block {
   display: block;
@@ -784,6 +799,9 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
+.pro-bg-black\/50 {
+  background-color: rgb(0 0 0 / 0.5);
+}
 .pro-bg-none {
   background-image: none;
 }
@@ -846,8 +864,20 @@ video {
 .pro-pl-5 {
   padding-left: 1.25rem;
 }
+.pro-pl-2 {
+  padding-left: 0.5rem;
+}
+.pro-pr-4 {
+  padding-right: 1rem;
+}
+.pro-text-left {
+  text-align: left;
+}
 .pro-text-center {
   text-align: center;
+}
+.pro-align-middle {
+  vertical-align: middle;
 }
 .pro-font-sans {
   font-family: Mona Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -905,6 +935,14 @@ video {
   --tw-text-opacity: 1;
   color: rgb(212 212 212 / var(--tw-text-opacity));
 }
+.pro-text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(115 115 115 / var(--tw-text-opacity));
+}
+.pro-text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
 .pro-antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -912,6 +950,11 @@ video {
 .pro-shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.pro-shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .pro-transition {
@@ -1021,6 +1064,17 @@ video {
 .hover\:pro-text-blue-500:hover {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+.hover\:pro-text-blue-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
+}
+.hover\:pro-text-red-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+.hover\:pro-underline:hover {
+  text-decoration-line: underline;
 }
 .hover\:pro-shadow-sm:hover {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);

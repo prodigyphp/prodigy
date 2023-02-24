@@ -1,0 +1,27 @@
+fields:
+  image:
+    type: image
+
+  content_width:
+    type: dropdown
+    width: 33
+    options:
+      - Full Width
+      - Fixed
+    show: width:full-width
+    help: Define the wideness of your content section
+
+  link_group:
+    type: group
+    label: Link
+    expanded: true
+    fields:
+      link_type:
+        type: dropdown
+        label: None
+        options:
+          - None
+          - Url
+      link:
+        type: link
+        show: link_type:url

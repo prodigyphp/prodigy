@@ -53,20 +53,73 @@ class AddBlockAction {
 
     protected function insertAtRowLevel(): Block
     {
-        dd(['row', $this->block_key, $this->block_order, $this->column_index]);
+        $blocks = $this->page->blocks;
+
+        // We count starting at one, but PHP arrays start at zero, so we have to manually adjust.
+        $zero_based_order = $this->block_order - 1;
+
+        $new_block = $this->createBlock();
+
+        // splice in the block to the collection.
+        $blocks->splice($zero_based_order, 0, [$new_block]);
+
+        $new_blocks = [];
+        $order = 1;
+
+        // Reorder the blocks
+        foreach($blocks as $newly_ordered_block) {
+            $new_blocks[$newly_ordered_block->id] = [
+                'order' => $order,
+            ];
+            $order++;
+        }
+
+        // Detach old
+        $this->page->blocks()->detach($blocks->pluck('id'));
+
+        // Create all new attachments
+        $this->page->blocks()->attach($new_blocks);
+
+        // Send back the block we created.
+        return $new_block;
     }
 
     protected function insertIntoColumn(): Block
     {
+        // find the block
         $block = $this->page->blocks()->wherePivot('order', $this->block_order)->first();
+
+        // get all the blocks in the column
+        $child_blocks = $block->children()->wherePivot('column', $this->column_index)->get();
+
+        // We count starting at one, but PHP arrays start at zero, so we have to manually adjust.
+        $zero_based_order = $this->column_order - 1;
+
+        // create block
         $child_block = $this->createBlock();
 
-        // @TODO
-        // Figure out the logic for putting a child block into the right spot in the list.
+        // splice in the block to the collection.
+        $child_blocks->splice($zero_based_order, 0, [$child_block]);
 
+        $new_column_blocks = [];
+        $order = 1;
 
-        $block->children()->attach($child_block->id, ['order' => $this->column_order, 'column' => $this->column_index]);
+        // Reorder the blocks
+        foreach($child_blocks as $newly_ordered_block) {
+            $new_column_blocks[$newly_ordered_block->id] = [
+                'order' => $order,
+                'column' => $this->column_index
+            ];
+            $order++;
+        }
 
+        // Detach old
+        $block->children()->detach($child_blocks->pluck('id'));
+
+        // Create all new attachments
+        $block->children()->attach($new_column_blocks);
+
+        // Send back the block we created.
         return $child_block;
     }
 

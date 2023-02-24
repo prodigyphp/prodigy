@@ -9,7 +9,7 @@
     @endif
 
     @if($editorState == 'blockEditor')
-        <livewire:prodigy-edit-block :block="$editing_block"></livewire:prodigy-edit-block>
+        <livewire:prodigy-edit-block key="{{ now() }}" :block="$editing_block"></livewire:prodigy-edit-block>
     @endif
 
     @if($editorState == 'pageEditor')

@@ -50,6 +50,9 @@
                     @endif
 
                     <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
+                        @if($editing)
+                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order" />
+                        @endif
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
 
                             @if($block->key == 'prodigy::blocks.basic.row')
@@ -57,14 +60,12 @@
                                 </x-prodigy::blocks.basic.row>
                             @else
                                 <x-dynamic-component :component="$block->key"
+                                                     :block="$block"
                                                      :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
                                 </x-dynamic-component>
                             @endif
 
                         </x-prodigy::structure.inner>
-                        @if($editing)
-                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order" />
-                        @endif
                     </x-prodigy::structure.wrapper>
 
                 @empty
@@ -75,6 +76,8 @@
                         </x-prodigy::structure.dropzone>
                     @endif
                 @endforelse
+
+                <x-prodigy::structure.dropzone :block_order="$blocks->count() + 1"/>
             </main>
 
             @if($editing)

@@ -6,8 +6,10 @@ use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Image;
+use ProdigyPHP\Prodigy\FieldTypes\Link;
 use ProdigyPHP\Prodigy\FieldTypes\PixelGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Range;
+use ProdigyPHP\Prodigy\FieldTypes\Repeater;
 use ProdigyPHP\Prodigy\FieldTypes\Text;
 use ProdigyPHP\Prodigy\FieldTypes\TextEditor;
 
@@ -57,7 +59,9 @@ return [
         'color' => Color::class,
         'image' => Image::class,
         'pixelgroup' => PixelGroup::class,
-        'range' => Range::class
+        'range' => Range::class,
+        'link' => Link::class,
+        'repeater' => Repeater::class
 
         // register more fields here...
     ],

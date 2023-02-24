@@ -4,7 +4,9 @@ namespace ProdigyPHP\Prodigy\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
@@ -34,6 +36,7 @@ class Block extends Model implements HasMedia {
         return $this->belongsToMany(Page::class, 'prodigy_block_page');
     }
 
+
     public function getTitleAttribute()
     {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
@@ -42,6 +45,16 @@ class Block extends Model implements HasMedia {
     public function children() : BelongsToMany
     {
         return $this->belongsToMany(Block::class, 'prodigy_block_row', 'row_block_id', 'block_id')->withPivot('column', 'order')->orderByPivot('order');
+    }
+
+    public function repeaterParent() : BelongsTo
+    {
+        return $this->belongsTo(Block::class, 'repeater_id');
+    }
+
+    public function repeaterChildren() : HasMany
+    {
+        return $this->hasMany(Block::class, 'repeater_id');
     }
 
 

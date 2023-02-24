@@ -81,12 +81,20 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
      */
     public function getBladeComponents(): Collection
     {
+        if(!is_dir($this->absolutePath())) {
+            return collect();
+        }
+
         return collect(File::allFiles($this->absolutePath()))
             ->filter(fn($file) => $file->getExtension() == 'php');
     }
 
     protected function getDirectories(): Collection
     {
+        if(!is_dir($this->absolutePath())) {
+            return collect();
+        }
+
         return collect(File::directories($this->absolutePath()));
     }
 
