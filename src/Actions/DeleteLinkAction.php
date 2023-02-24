@@ -5,32 +5,22 @@ namespace ProdigyPHP\Prodigy\Actions;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\BlockPage;
 use ProdigyPHP\Prodigy\Models\BlockRow;
+use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class DeleteConnectionAction {
+class DeleteLinkAction {
 
-    protected int $connection_id;
-    protected string $connection_type; // page | row
-    protected Page $page;
-    protected Block $row;
-    protected BlockPage|BlockRow $connection;
+    protected Link $link;
 
-    public function __construct(int $connection_id, string $connection_type)
+    public function __construct(int $link_id)
     {
-        $this->connection_id = $connection_id;
-        $this->connection_type = $connection_type;
-
-        if ($connection_type == 'page') {
-            $this->connection = BlockPage::findOrFail($this->connection_id);
-        } else {
-            $this->connection = BlockRow::findOrFail($this->connection_id);
-        }
+        $this->link = Link::findOrFail($link_id);
     }
 
     public function execute(): void
     {
 
-        $block = $this->connection->block;
+        $block = $this->link->block;
 
         // We separately manage deleting global blocks.
         if (!$block->is_global) {
@@ -47,7 +37,7 @@ class DeleteConnectionAction {
         }
 
         // Remove the connection.
-        $this->connection->delete();
+        $this->link->delete();
 
     }
 

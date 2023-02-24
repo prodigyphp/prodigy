@@ -42,11 +42,11 @@
                 <x-prodigy::icons.cog class="pro-w-5"/>
             </button>
             <button class="pro-px-2 pro-py-2 pro-text-sm hover:pro-bg-blue-600"
-                    wire:click="$emit('duplicateBlock', {{ $block->id }})">
+                    wire:click="$emit('duplicateLink', {{$block->pivot->id}})">
                 <x-prodigy::icons.m-document-duplicate class="pro-w-5"/>
             </button>
             <button class="pro-px-2 pro-py-2 pro-text-sm hover:pro-bg-blue-600"
-                    x-on:click="deleteConnection({{$block->pivot->id}}, '{{ $block_parent_type }}')">
+                    x-on:click="deleteLink({{$block->pivot->id}})">
                 <x-prodigy::icons.m-x-mark class="pro-w-5"/>
             </button>
         </div>

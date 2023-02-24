@@ -7,19 +7,16 @@
         // initialize variables to nothing.
         $margin_units = config('prodigy.default.unit', 'px');
         $padding_units = config('prodigy.default.unit', 'px');
-        $padding_top = $padding_right = $padding_bottom = $padding_left = config('prodigy.default.padding', '');
-
 
         $margin_top = $fields['margin_top'] ?? '';
         $margin_right = $fields['margin_right'] ?? '';
         $margin_bottom = $fields['margin_bottom'] ?? '';
         $margin_left = $fields['margin_left'] ?? '';
 
-        $padding_top = $fields['padding_top'] ?? '';
-        $padding_right = $fields['padding_right'] ?? '';
-        $padding_bottom = $fields['padding_bottom'] ?? '';
-        $padding_left = $fields['padding_left'] ?? '';
-
+        $padding_top = $fields['padding_top'] ?? config('prodigy.default.padding', '');
+        $padding_right = $fields['padding_right'] ?? config('prodigy.default.padding', '');
+        $padding_bottom = $fields['padding_bottom'] ?? config('prodigy.default.padding', '');
+        $padding_left = $fields['padding_left'] ?? config('prodigy.default.padding', '');
 
          // If it's max width, update margin_left and margin_right and set the max width.
          if($fields->has('width', 'max_width') && $fields['width'] == 'fixed') {

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
@@ -16,16 +19,26 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class BlockPage extends Model {
+class Link extends Model {
 
-    protected $table = 'prodigy_block_page';
+    protected $table = 'prodigy_links';
 
     protected $guarded = [];
 
-    public function page() : BelongsTo
+    public function prodigy_links(): MorphTo
     {
-        return $this->belongsTo(Page::class, 'page_id');
+        return $this->morphTo();
     }
+
+    public function parent() : MorphTo
+    {
+        return $this->prodigy_links();
+    }
+
+//    public function page() : BelongsTo
+//    {
+//        return $this->belongsTo(Page::class, 'page_id');
+//    }
 
     public function block() : BelongsTo
     {

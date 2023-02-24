@@ -144,6 +144,21 @@ class EditBlock extends Component {
             }
         }
 
+        // If there's no block collection yet, add an empty one.
+        if(!$this->block->content) {
+            $this->block->content = collect();
+        }
+
+        // Set default values if we have a default value but no set value.
+        if( !$this->block->content->contains($key) &&
+            array_key_exists('default', $data)) {
+
+            // has to drop out to array b/c I can't update the collection directly.
+            $content_array = $this->block->content->toArray();
+            $content_array[$key] = $content_array[$key] ?? $data['default'];
+            $this->block->content = collect($content_array);
+        }
+
         // Side load the block ID to be able to upload images.
         if ($data['type'] == 'image') {
             $data['block_id'] = $this->block->id;

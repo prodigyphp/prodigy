@@ -7050,11 +7050,11 @@ hideDropzone = function hideDropzone() {
     return x.classList.remove('prodigy-highlight-dropzone');
   });
 };
-deleteConnection = function deleteConnection(id, type) {
-  console.log(id, type);
+deleteLink = function deleteLink(id) {
+  console.log(id);
   var response = confirm("Permanently delete?");
   if (response) {
-    Livewire.emit('deleteConnection', id, type);
+    Livewire.emit('deleteLink', id);
   }
 };
 

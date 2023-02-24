@@ -5,7 +5,7 @@
 @endphp
 <div style="{{ ($editing) ? 'padding:20px;' : '' }} display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 1.5rem;" class="">
 
-    @if($block && $children->isNotEmpty())
+    @if($block)
         @foreach(range(1, $block->content['columns'] ?? 1) as $column_index)
             <div class="prodigy_column">
                 @foreach($children->where('pivot.column', $column_index) as $child)

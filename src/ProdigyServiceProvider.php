@@ -2,6 +2,7 @@
 
 namespace ProdigyPHP\Prodigy;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,13 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/prodigy'),
         ], 'prodigy');
+
+        Relation::enforceMorphMap([
+            'page' => 'ProdigyPHP\Prodigy\Models\Page',
+            'block' => 'ProdigyPHP\Prodigy\Models\Block',
+        ]);
+
+        $this->gate();
     }
 
     protected function configureComponents()

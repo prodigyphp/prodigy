@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
@@ -20,8 +22,6 @@ class Block extends Model implements HasMedia {
     use HasFactory;
     use InteractsWithMedia;
 
-    // not sure where this lives.
-
     protected $table = 'prodigy_blocks';
 
     protected $guarded = [];
@@ -31,9 +31,22 @@ class Block extends Model implements HasMedia {
         'meta' => 'collection'
     ];
 
-    public function pages()
+    /**
+     * Get the parent imageable model (block or page).
+     */
+    public function linkable(): MorphTo
     {
-        return $this->belongsToMany(Page::class, 'prodigy_block_page');
+        return $this->morphTo();
+    }
+
+    public function pages() : MorphToMany
+    {
+        return $this->morphedByMany(Page::class, 'prodigy_links');
+    }
+
+    public function children() : MorphToMany
+    {
+        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order')->orderByPivot('order');
     }
 
 
@@ -42,20 +55,17 @@ class Block extends Model implements HasMedia {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
     }
 
-    public function children() : BelongsToMany
-    {
-        return $this->belongsToMany(Block::class, 'prodigy_block_row', 'row_block_id', 'block_id')->withPivot('column', 'order')->orderByPivot('order');
-    }
 
-    public function repeaterParent() : BelongsTo
-    {
-        return $this->belongsTo(Block::class, 'repeater_id');
-    }
 
-    public function repeaterChildren() : HasMany
-    {
-        return $this->hasMany(Block::class, 'repeater_id');
-    }
+//    public function repeaterParent() : BelongsTo
+//    {
+//        return $this->belongsTo(Block::class, 'repeater_id');
+//    }
+//
+//    public function repeaterChildren() : HasMany
+//    {
+//        return $this->hasMany(Block::class, 'repeater_id');
+//    }
 
 
     protected static function newFactory(): BlockFactory

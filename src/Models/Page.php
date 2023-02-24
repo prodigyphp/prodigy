@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use ProdigyPHP\Prodigy\Database\Factories\PageFactory;
 
 class Page extends Model
@@ -13,9 +14,9 @@ class Page extends Model
 
     protected $table = 'prodigy_pages';
 
-    public function blocks()
+    public function blocks() : MorphToMany
     {
-        return $this->belongsToMany(Block::class, 'prodigy_block_page');
+        return $this->morphToMany(Block::class, 'prodigy_links');
     }
 
     protected static function newFactory() : PageFactory

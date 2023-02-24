@@ -3,10 +3,15 @@
 namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
-use ProdigyPHP\Prodigy\Actions\DeleteConnectionAction;
+use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
+use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
+use ProdigyPHP\Prodigy\Facades\Prodigy;
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
 class Editor extends Component {
@@ -21,7 +26,7 @@ class Editor extends Component {
 
     public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
 
-    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteConnection', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
+    protected $listeners = ['editBlock', 'duplicateLink', 'deleteLink', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
 
     public function mount(Page $page)
     {
@@ -40,7 +45,7 @@ class Editor extends Component {
         $this->editorState = 'blockEditor';
     }
 
-    public function addChildBlockThenEdit($key, $parent_block_id) : void
+    public function addChildBlockThenEdit($key, $parent_block_id): void
     {
         $block = Block::find($parent_block_id);
         $child_block = $block->repeaterChildren()->create([
@@ -50,21 +55,25 @@ class Editor extends Component {
         $this->editBlock($child_block->id);
     }
 
-    public function insertBlock($blockKey)
+//    public function insertBlock($blockKey)
+//    {
+//        $block = Block::where('key', $blockKey)->get()->first();
+//        $this->page->blocks()->attach($block->id);
+//    }
+
+    public function duplicateLink(int $link_id)
     {
-        $block = Block::where('key', $blockKey)->get()->first();
-        $this->page->blocks()->attach($block->id);
+        Gate::authorize('viewProdigy', auth()->user());
+
+        (new DuplicateLinkAction($link_id))->execute();
+        $this->emit('fireGlobalRefresh');
     }
 
-    public function duplicateBlock($id)
+    public function deleteLink(int $link_id)
     {
-        $block = Block::find($id);
-        $this->page->blocks()->attach($id);
-    }
+        Gate::authorize('viewProdigy', auth()->user());
 
-    public function deleteConnection(int $connection_id, string $connection_type)
-    {
-        (new DeleteConnectionAction($connection_id, $connection_type))->execute();
+        (new DeleteLinkAction($link_id))->execute();
         $this->emit('fireGlobalRefresh');
     }
 
@@ -76,18 +85,17 @@ class Editor extends Component {
 
     public function createPage()
     {
+        Gate::authorize('viewProdigy', auth()->user());
+
         $this->editing_page = null;
         $this->updateState('pageEditor');
     }
 
     public function editPage(int $page_id)
     {
-        $page = Page::findOrfail($page_id);
+        Gate::authorize('viewProdigy', auth()->user());
 
-        // @TODO
-        // $this->authorize('access_prodigy');
-
-        $this->editing_page = $page;
+        $this->editing_page = Page::findOrfail($page_id);
         $this->updateState('pageEditor');
     }
 
