@@ -5,6 +5,7 @@ namespace ProdigyPHP\Prodigy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
@@ -28,7 +29,7 @@ class ProdigyPage extends Component {
     public $cssPath = __DIR__ . '/../public/prodigy.css';
     public $jsPath = __DIR__ . '/../public/prodigy.js';
 
-    protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'stopEditingPage', 'startEditingPage'];
+    protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
 
     public function mount(string $wildcard = null)
     {
@@ -36,7 +37,7 @@ class ProdigyPage extends Component {
         $this->page = $this->getPage($wildcard);
 
         // Show edit screen if user can edit, and has requested edit access.
-        $this->editing = $this->canEdit() && request('editing');
+        $this->editing = Gate::check('viewProdigy', auth()->user()) && request('editing');
 
         // dynamic routing means we need to not just load for anything.
         if (!$this->page) {
@@ -60,17 +61,10 @@ class ProdigyPage extends Component {
         }
     }
 
-    /**
-     * @return bool
-     * Right now just checks to see if the user is logged in.
-     * @todo Need to register this logic in a service provider.
-     */
-    public static function canEdit(): bool
-    {
-        return (Auth::check());
-    }
 
     public function addBlock($block_key, $block_order, $column_index = null, $column_order = null) {
+        Gate::authorize('viewProdigy', auth()->user());
+
         $block = (new AddBlockAction($block_key))
             ->forPage($this->page)
             ->atPagePosition($block_order)
@@ -82,13 +76,31 @@ class ProdigyPage extends Component {
         $this->emit('editBlock', $block->id);
     }
 
+    public function openProdigyPanel()
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+        return $this->toggleProdigyPanel(true);
+    }
+
+    public function closeProdigyPanel()
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+        return $this->toggleProdigyPanel(false);
+    }
+
+    public function render()
+    {
+        $this->blocks = $this->page->blocks()->with('children')->withPivot('order', 'id')->orderBy('order', 'asc')->get();
+
+        return view('prodigy::prodigy-page');
+    }
+
     /**
-     * Add the "editing" flag so it edits the page.
+     * Toggle the "editing" flag so it edits the page.
      */
-    public function editPage(bool $startEditing = true)
+    protected function toggleProdigyPanel(bool $startEditing = true)
     {
         $url = Str::of(request()->header('Referer'));
-
 
         if ($startEditing) {
             $url = $url->append('?editing=true');
@@ -97,22 +109,6 @@ class ProdigyPage extends Component {
         }
 
         return redirect($url);
-    }
-
-    public function startEditingPage()
-    {
-        return $this->editPage(true);
-    }
-    public function stopEditingPage()
-    {
-        return $this->editPage(false);
-    }
-
-    public function render()
-    {
-        $this->blocks = $this->page->blocks()->with('children')->withPivot('order', 'id')->orderBy('order', 'asc')->get();
-
-        return view('prodigy::prodigy-page');
     }
 
     /**

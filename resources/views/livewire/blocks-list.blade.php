@@ -12,7 +12,7 @@
 
         </div>
         <div class="">
-            <button wire:click="$emit('stopEditingPage')"
+            <button wire:click="$emit('closeProdigyPanel')"
                     class="pro-text-sm pro-font-bold pro-shadow-sm pro-bg-blue-500 pro-text-white hover:pro-bg-blue-600 pro-py-1 pro-px-3 pro-rounded-sm">
                 Publish
             </button>
