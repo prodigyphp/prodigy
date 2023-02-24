@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use ProdigyPHP\Prodigy\Actions\DeleteConnectionAction;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
@@ -20,7 +21,7 @@ class Editor extends Component {
 
     public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
 
-    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteBlock', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
+    protected $listeners = ['editBlock', 'duplicateBlock', 'deleteConnection', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
 
     public function mount(Page $page)
     {
@@ -61,19 +62,10 @@ class Editor extends Component {
         $this->page->blocks()->attach($id);
     }
 
-    public function deleteBlock($id)
+    public function deleteConnection(int $connection_id, string $connection_type)
     {
-        $block = Block::find($id);
-
-        $block->pages()->detach();
-
-        // detach from the page
-        //
-        // update the order on the page to reflect the missing block.
-
-        $block->rows()->
-        $this->page->blocks()->detach($id);
-        $this->emit('$refresh');
+        (new DeleteConnectionAction($connection_id, $connection_type))->execute();
+        $this->emit('fireGlobalRefresh');
     }
 
     public function updateState(string $stateString)

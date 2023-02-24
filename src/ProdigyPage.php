@@ -110,7 +110,7 @@ class ProdigyPage extends Component {
 
     public function render()
     {
-        $this->blocks = $this->page->blocks()->with('children')->withPivot('order')->orderBy('order', 'asc')->get();
+        $this->blocks = $this->page->blocks()->with('children')->withPivot('order', 'id')->orderBy('order', 'asc')->get();
 
         return view('prodigy::prodigy-page');
     }

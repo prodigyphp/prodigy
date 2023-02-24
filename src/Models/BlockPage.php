@@ -16,20 +16,15 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class BlockRow extends Model {
+class BlockPage extends Model {
 
-    protected $table = 'prodigy_block_row';
+    protected $table = 'prodigy_block_page';
 
     protected $guarded = [];
 
-    public function pages()
+    public function page() : BelongsTo
     {
-        return $this->belongsToMany(Page::class, 'prodigy_block_page');
-    }
-
-    public function row() : BelongsTo
-    {
-        return $this->belongsTo(Block::class, 'row_block_id');
+        return $this->belongsTo(Page::class, 'page_id');
     }
 
     public function block() : BelongsTo

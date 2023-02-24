@@ -18,10 +18,11 @@ hideDropzone = function () {
     document.querySelectorAll('.prodigy-dropzone').forEach(x => x.classList.remove('prodigy-highlight-dropzone'));
 }
 
-deleteBlock = function (id) {
+deleteConnection = function (id, type) {
+    console.log(id, type);
     const response = confirm("Permanently delete?");
 
     if (response) {
-        Livewire.emit('deleteBlock', id);
+        Livewire.emit('deleteConnection', id, type);
     }
 }

@@ -56,8 +56,7 @@
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
 
                             @if($block->key == 'prodigy::blocks.basic.row')
-                                <x-prodigy::blocks.basic.row :block="$block" :editing="$editing">
-                                </x-prodigy::blocks.basic.row>
+                                <x-prodigy::blocks.basic.row :block="$block" :editing="$editing" />
                             @else
                                 <x-dynamic-component :component="$block->key"
                                                      :block="$block"
