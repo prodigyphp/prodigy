@@ -10,4 +10,22 @@ fields:
       - 6
   items:
     type: repeater
-    key: prodigy::blocks.basic.content-grid-item
+    fields:
+      photo:
+        type: image
+      title:
+        type: text
+      body:
+        type: texteditor
+      link_type:
+        type: dropdown
+        label: Link
+        options:
+          - None
+          - Url
+      link:
+        type: link
+        show: link_type:url
+      link_label:
+        type: text
+        show: link_type:url

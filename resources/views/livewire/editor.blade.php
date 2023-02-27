@@ -8,8 +8,8 @@
         <livewire:prodigy-pages-list :page="$page"></livewire:prodigy-pages-list>
     @endif
 
-    @if($editorState == 'blockEditor')
-        <livewire:prodigy-edit-block key="{{ now() }}" :block="$editing_block"></livewire:prodigy-edit-block>
+    @if($editorState == 'linkEditor')
+        <livewire:prodigy-edit-link key="{{ now() }}" :link="$editing_link"></livewire:prodigy-edit-link>
     @endif
 
     @if($editorState == 'pageEditor')

@@ -3,7 +3,7 @@
 @endphp
 
 <div class="prodigy-content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 1.5rem;">
-    @forelse ($block->repeaterChildren as $child_block)
+    @forelse ($block->children as $child_block)
         @if($child_block->content)
             <div class="" style="">
                 @if($child_block->content['link_type'] ?? false)

@@ -28,7 +28,7 @@
 
 <div class="inner {{ ($editing) ? $group_name : '' }}" style="{{ $styles }}">
     @if($editing)
-        <div wire:click="$emit('editBlock', {{ $block->id }})"
+        <div wire:click="$emit('editLink', {{ $block->pivot->id }})"
              class="{{ $topOffset }} {{ $group_hover_border_classes }} pro-absolute pro-inset-0"
              style="z-index:998;"></div>
         <div x-data
@@ -38,7 +38,7 @@
                 <x-prodigy::icons.move class="pro-w-5"/>
             </button>
             <button class="pro-px-2 pro-py-2 pro-text-sm hover:pro-bg-blue-600"
-                    wire:click="$emit('editBlock', {{ $block->id }})">
+                    wire:click="$emit('editLink', {{ $block->pivot->id }})">
                 <x-prodigy::icons.cog class="pro-w-5"/>
             </button>
             <button class="pro-px-2 pro-py-2 pro-text-sm hover:pro-bg-blue-600"

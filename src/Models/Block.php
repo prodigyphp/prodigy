@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
@@ -39,6 +40,11 @@ class Block extends Model implements HasMedia {
         return $this->morphTo();
     }
 
+    public function parent() : MorphTo
+    {
+        return $this->linkable();
+    }
+
     public function pages() : MorphToMany
     {
         return $this->morphedByMany(Page::class, 'prodigy_links');
@@ -49,23 +55,15 @@ class Block extends Model implements HasMedia {
         return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order')->orderByPivot('order');
     }
 
+    public function getIsRepeaterAttribute()
+    {
+        return str($this->key)->contains('prodigy::blocks.basic.repeater');
+    }
 
     public function getTitleAttribute()
     {
         return Str::of($this->key)->afterLast('.')->replace('-', ' ')->title();
     }
-
-
-
-//    public function repeaterParent() : BelongsTo
-//    {
-//        return $this->belongsTo(Block::class, 'repeater_id');
-//    }
-//
-//    public function repeaterChildren() : HasMany
-//    {
-//        return $this->hasMany(Block::class, 'repeater_id');
-//    }
 
 
     protected static function newFactory(): BlockFactory

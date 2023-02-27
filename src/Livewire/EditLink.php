@@ -2,19 +2,18 @@
 
 namespace ProdigyPHP\Prodigy\Livewire;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
+use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Models\Block;
-use Symfony\Component\Yaml\Yaml;
+use ProdigyPHP\Prodigy\Models\Link;
 
-class EditBlock extends Component {
+class EditLink extends Component {
 
     use WithFileUploads;
 
+    public Link $link;
     public Block $block;
     public $schema;
     public array $fields;
@@ -56,77 +55,27 @@ class EditBlock extends Component {
 
         }
 
-//        info($rules);
         return $rules;
 
     }
 
-    /**
-     * Each field class has a property "subfields" which can be set to an array.
-     * That array contains [key => rules] where rules are Laravel validation
-     * rules and key is the name of the subfield. This is used for when a field
-     * needs to handle logic for displaying  multidimensional fields.
-     */
-    public function getSubFields(string $field_slug): array
+    public function mount(Link $link, GetSchemaAction $schemaBuilder)
     {
-        return (new $this->fields[$field_slug])->subfields;
-    }
+        $this->link = $link;
+        $this->block = $link->block;
 
-    public function mount(Block $block)
-    {
-        $this->block = $block;
+        // get registered fields list.
         $this->fields = config('prodigy.fields');
-        $this->schema = $this->getSchema($block) ?? []; // if content field is empty (as opposed to []), it'll error.
-        $this->schema = array_merge_recursive($this->schema, $this->getStandardSchema()); // add all the normal fields.
+
+        // Build the schema for this block.
+        $this->schema = $schemaBuilder->execute($this->block) ?? []; // if content field is empty (as opposed to []), it'll error.
+        $this->schema = array_merge_recursive($this->schema, $schemaBuilder->standardSchema()); // add all the normal fields.
     }
 
-
-    public function getSchema(Block $block): array|null
-    {
-        $path = $this->getPathOfBlockSchema($block);
-
-        if (File::isFile($path)) {
-            return Yaml::parseFile($path);
-        }
-
-        // try .yaml as well
-        $path = Str::of($path)->replaceLast('yml', 'yaml');
-        if (File::isFile($path)) {
-            return Yaml::parseFile($path);
-        }
-
-        return null;
-    }
-
-    public function getStandardSchema(): array
-    {
-        $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/standard-schema.yml');
-        return Yaml::parseFile($path);
-    }
-
-    //
-    protected function getPathOfBlockSchema(Block $block): string
-    {
-        $key = Str::of($block->key);
-        $search_key = $key->replace('.', '/');
-
-        // It's a package block, so we need to get the right namespace from the declaration.
-        if ($key->contains("::")) {
-            $namespace = $key->before("::");
-            $blockGroup = collect(config('prodigy.block_paths'))
-                ->map(fn(string $blockGroup) => (new $blockGroup))
-                ->filter(fn(BlockGroup $blockGroup) => $blockGroup->namespace == $namespace)
-                ->firstOrFail();
-            $search_key = $search_key->remove("{$namespace}::blocks");
-            return base_path("{$blockGroup->path}{$search_key}.yml");
-        }
-
-        // It's a regular local path, so we can just use the key.
-        return resource_path("views/components/{$search_key}.yml");
-    }
 
     /**
      * Gets the field, loads the view, and sends to the browser.
+     * Note: this literally returns a view, which is unusual.
      */
     public function getField($key, array $data): View|null
     {
@@ -166,6 +115,17 @@ class EditBlock extends Component {
 
         return (new $field_name)->make($key, $data, $this->block);
 
+    }
+
+    /**
+     * Each field class has a property "subfields" which can be set to an array.
+     * That array contains [key => rules] where rules are Laravel validation
+     * rules and key is the name of the subfield. This is used for when a field
+     * needs to handle logic for displaying  multidimensional fields.
+     */
+    public function getSubFields(string $field_slug): array
+    {
+        return (new $this->fields[$field_slug])->subfields;
     }
 
     public function testConditionalLogic(string|array $rules): bool
@@ -209,8 +169,9 @@ class EditBlock extends Component {
     {
 
         // If it's inside a repeater, go back to editing the repeater.
-        if ($this->block->repeaterParent) {
-            $this->emit('editBlock', $this->block->repeaterParent->id);
+        if ($this->block->parent && $this->block->parent->is_repeater) {
+            dd('figure out how to edit the block\'s parents id');
+//            $this->emit('editLink', $this->block->parent->id);
         // Otherwise go back to the blocks list.
         } else {
             $this->emit('updateState', 'blocksList');

@@ -29,7 +29,7 @@ class ProdigyPage extends Component {
     public $cssPath = __DIR__ . '/../public/prodigy.css';
     public $jsPath = __DIR__ . '/../public/prodigy.js';
 
-    protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
+    protected $listeners = ['editLink' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
 
     public function mount(string $wildcard = null)
     {
@@ -72,8 +72,10 @@ class ProdigyPage extends Component {
             ->atColumnPosition($column_order)
             ->execute();
 
+        dd('todo, add block pivot');
+
         // Opens the editor once it's been created.
-        $this->emit('editBlock', $block->id);
+        $this->emit('editLink', $block->pivot->id);
     }
 
     public function openProdigyPanel()

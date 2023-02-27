@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
-use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Facades\Prodigy;
-use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
@@ -21,12 +19,12 @@ class Editor extends Component {
     public Collection $blocks;
     public Collection $groups;
 
-    public ?Block $editing_block;
+    public ?Link $editing_link;
     public ?Page $editing_page;
 
-    public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
+    public string $editorState = 'blocksList'; // blocksList, pagesList, linkEditor, pageEditor
 
-    protected $listeners = ['editBlock', 'duplicateLink', 'deleteLink', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
+    protected $listeners = ['editLink', 'duplicateLink', 'deleteLink', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
 
     public function mount(Page $page)
     {
@@ -38,28 +36,23 @@ class Editor extends Component {
         return view('prodigy::livewire.editor');
     }
 
-    public function editBlock($id)
+    public function editLink($id)
     {
-        $this->editing_block = null; // clear anything else out first.
-        $this->editing_block = Block::find($id);
-        $this->editorState = 'blockEditor';
+        $this->editing_link = null; // clear anything else out first.
+        $this->editing_link = Link::find($id);
+        $this->editorState = 'linkEditor';
     }
 
-    public function addChildBlockThenEdit($key, $parent_block_id): void
-    {
-        $block = Block::find($parent_block_id);
-        $child_block = $block->repeaterChildren()->create([
-            'key' => $key
-        ]);
-
-        $this->editBlock($child_block->id);
-    }
-
-//    public function insertBlock($blockKey)
+//    public function addChildBlockThenEdit($key, $parent_block_id): void
 //    {
-//        $block = Block::where('key', $blockKey)->get()->first();
-//        $this->page->blocks()->attach($block->id);
+//        $block = Block::find($parent_block_id);
+//        $child_block = $block->repeaterChildren()->create([
+//            'key' => $key
+//        ]);
+//
+//        $this->editLink($child_block->pivot->id);
 //    }
+
 
     public function duplicateLink(int $link_id)
     {

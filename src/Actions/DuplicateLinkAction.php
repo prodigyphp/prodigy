@@ -33,15 +33,42 @@ class DuplicateLinkAction {
             return $block;
         }
 
-        // loading children replicates them as well, I think.
+        // loading children replicates them as well
+
+        return $this->replicateWithRelations($block);
+
+    }
+
+    // Taken from https://laracasts.com/discuss/channels/eloquent/deep-replication-model-relations
+    public function replicateWithRelations(Block $block)
+    {
         $block->load('children');
-        $new_block = $block->replicate();
+        $newBlock = $block->replicate();
+        $newBlock->setRelations([]);
+        $block->load('children');
+        $newBlock->push();
 
-        $new_block->setCreatedAt(now());
-        $new_block->save();
+        $replicatedBlock = static::replicateRelations($block, $newBlock);
 
-        return $new_block;
+        return $replicatedBlock->loadMissing('children');
+    }
 
+    protected static function replicateRelations($oldModel, &$newModel)
+    {
+        foreach ($oldModel->getRelations() as $relation => $modelCollection) {
+
+            foreach ($modelCollection as $model) {
+                $childModel = $model->replicate();
+                $childModel->push();
+                $childModel->setRelations([]);
+
+                $newModel->{$relation}()->attach($childModel, ['order' => 0, 'column' => 0]); // saving whatever columns $childModel has except foreign keys relative to it's parent model. If there were any other foreign keys other than the parent model, in this case, those scenarios are not handled.
+
+                static::replicateRelations($model, $childModel);
+            }
+        }
+
+        return $newModel;
     }
 
 }
