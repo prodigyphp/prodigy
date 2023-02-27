@@ -3,6 +3,7 @@
 namespace ProdigyPHP\Prodigy\Actions;
 
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
 class AddBlockAction {
@@ -18,8 +19,9 @@ class AddBlockAction {
         $this->block_key = $block_key;
     }
 
-    public function execute(): Block
+    public function execute(): Link
     {
+
         if (!$this->column_index) {
             return $this->insertAtRowLevel();
         } else {
@@ -51,7 +53,7 @@ class AddBlockAction {
         return $this;
     }
 
-    protected function insertAtRowLevel(): Block
+    protected function insertAtRowLevel(): Link
     {
         $blocks = $this->page->blocks;
 
@@ -80,17 +82,18 @@ class AddBlockAction {
         // Create all new attachments
         $this->page->blocks()->attach($new_blocks);
 
-        // Send back the block we created.
-        return $new_block;
+        // Send back the link we created.
+        return $this->findLink($new_block, $this->page);
     }
 
-    protected function insertIntoColumn(): Block
+    protected function insertIntoColumn(): Link
     {
+
         // find the block
-        $block = $this->page->blocks()->wherePivot('order', $this->block_order)->first();
+        $row = $this->page->blocks()->wherePivot('order', $this->block_order)->first();
 
         // get all the blocks in the column
-        $child_blocks = $block->children()->wherePivot('column', $this->column_index)->get();
+        $child_blocks = $row->children()->wherePivot('column', $this->column_index)->get();
 
         // We count starting at one, but PHP arrays start at zero, so we have to manually adjust.
         $zero_based_order = $this->column_order - 1;
@@ -113,14 +116,29 @@ class AddBlockAction {
             $order++;
         }
 
+
         // Detach old
-        $block->children()->detach($child_blocks->pluck('id'));
+        $row->children()->detach($child_blocks->pluck('id'));
 
         // Create all new attachments
-        $block->children()->attach($new_column_blocks);
+        $row->children()->attach($new_column_blocks);
 
-        // Send back the block we created.
-        return $child_block;
+        // Send back the link we created.
+        return $this->findLink($child_block, $row);
+    }
+
+    /**
+     * Huge refactor opportunity.
+     * I can't figure out how to get a link from the block and parent.
+     * The issue is that you could have a collision between parent ID's
+     * i.e. there is both a row and a parent with ID 3.
+     * Ideally, this would be Link::find(block_id, parent_id, parent_type);
+     * But for now, it works.
+     */
+    protected function findLink(Block $block, Block|Page $parent): Link
+    {
+        $link_id = $parent->children()->where('block_id', $block->id)->withPivot('id')->first()->pivot->id;
+        return Link::find($link_id);
     }
 
     protected function createBlock(): Block

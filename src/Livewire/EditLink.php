@@ -180,7 +180,7 @@ class EditLink extends Component {
 
     public function render()
     {
-        return view('prodigy::livewire.edit-block');
+        return view('prodigy::livewire.edit-link');
     }
 
 }

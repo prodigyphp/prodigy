@@ -44,8 +44,7 @@
                     @if(!$this->canFindView("{$block->key}"))
                         @continue
                     @endif
-
-                    @if(!$editing && $block->content?->has('show_on_page') && $block->content['show_on_page'] == 'hide')
+                    @if(!$editing && ($block->content?->has('show_on_page') && $block->content['show_on_page'] == 'hide'))
                         @continue
                     @endif
 
@@ -54,14 +53,12 @@
                             <x-prodigy::structure.dropzone :block_order="$block->pivot->order" />
                         @endif
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
-
                             @if($block->key == 'prodigy::blocks.basic.row')
                                 <x-prodigy::blocks.basic.row :block="$block" :editing="$editing" />
                             @else
                                 <x-dynamic-component :component="$block->key"
                                                      :block="$block"
-                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])">
-                                </x-dynamic-component>
+                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])" />
                             @endif
 
                         </x-prodigy::structure.inner>

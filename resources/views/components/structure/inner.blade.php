@@ -24,9 +24,14 @@
 
     // Determine if it's a row. If it is, move the editing functionality up a bit.
     $topOffset = (str($block->key)->endsWith('basic.row')) ? ' pro-top-[-30px] ' : '';
+
+    // ensure that the editor shows up.
+    if($editing){
+        $styles.= 'min-height: 20px;';
+    }
 @endphp
 
-<div class="inner {{ ($editing) ? $group_name : '' }}" style="{{ $styles }}">
+<div class="prodigy-inner {{ ($editing) ? $group_name : '' }}" style="{{ $styles }}">
     @if($editing)
         <div wire:click="$emit('editLink', {{ $block->pivot->id }})"
              class="{{ $topOffset }} {{ $group_hover_border_classes }} pro-absolute pro-inset-0"

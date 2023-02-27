@@ -65,17 +65,16 @@ class ProdigyPage extends Component {
     public function addBlock($block_key, $block_order, $column_index = null, $column_order = null) {
         Gate::authorize('viewProdigy', auth()->user());
 
-        $block = (new AddBlockAction($block_key))
+        // Sends back a link, since that's what we need to edit.
+        $link = (new AddBlockAction($block_key))
             ->forPage($this->page)
             ->atPagePosition($block_order)
             ->intoColumn($column_index)
             ->atColumnPosition($column_order)
             ->execute();
 
-        dd('todo, add block pivot');
-
         // Opens the editor once it's been created.
-        $this->emit('editLink', $block->pivot->id);
+        $this->emit('editLink', $link->id);
     }
 
     public function openProdigyPanel()

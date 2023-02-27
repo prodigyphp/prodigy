@@ -19,6 +19,11 @@ class Page extends Model
         return $this->morphToMany(Block::class, 'prodigy_links');
     }
 
+    public function children() : MorphToMany
+    {
+        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot( 'order')->orderByPivot('order');
+    }
+
     protected static function newFactory() : PageFactory
     {
         return new PageFactory();
