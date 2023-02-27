@@ -9,6 +9,7 @@ use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
 use ProdigyPHP\Prodigy\Facades\Prodigy;
+use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
@@ -19,12 +20,12 @@ class Editor extends Component {
     public Collection $blocks;
     public Collection $groups;
 
-    public ?Link $editing_link;
+    public ?Block $editing_block;
     public ?Page $editing_page;
 
-    public string $editorState = 'blocksList'; // blocksList, pagesList, linkEditor, pageEditor
+    public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
 
-    protected $listeners = ['editLink', 'duplicateLink', 'deleteLink', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
+    protected $listeners = ['editBlock', 'duplicateLink', 'deleteLink', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
 
     public function mount(Page $page)
     {
@@ -36,22 +37,27 @@ class Editor extends Component {
         return view('prodigy::livewire.editor');
     }
 
-    public function editLink($id)
+    public function editBlock($id)
     {
-        $this->editing_link = null; // clear anything else out first.
-        $this->editing_link = Link::find($id);
-        $this->editorState = 'linkEditor';
+        $this->editing_block = null; // clear anything else out first.
+        $this->editing_block = Block::find($id);
+        $this->editorState = 'blockEditor';
     }
 
-//    public function addChildBlockThenEdit($key, $parent_block_id): void
-//    {
-//        $block = Block::find($parent_block_id);
-//        $child_block = $block->repeaterChildren()->create([
-//            'key' => $key
-//        ]);
-//
-//        $this->editLink($child_block->pivot->id);
-//    }
+    public function addChildBlockThenEdit($key, $parent_block_id): void
+    {
+        $block = Block::find($parent_block_id);
+
+        $child_block = Block::create([ 'key' => $key ]);
+
+        $block->children()->attach($child_block->id, ['order' => 0]);
+
+        // get the link ID.
+        dd('todo, broken link id');
+//        $link_id = $block->children()->where('block_id', $child_block->id)->withPivot('id')->first()->pivot->id;
+
+        $this->editBlock($link_id);
+    }
 
 
     public function duplicateLink(int $link_id)

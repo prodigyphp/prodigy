@@ -29,7 +29,7 @@ class ProdigyPage extends Component {
     public $cssPath = __DIR__ . '/../public/prodigy.css';
     public $jsPath = __DIR__ . '/../public/prodigy.js';
 
-    protected $listeners = ['editLink' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
+    protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
 
     public function mount(string $wildcard = null)
     {
@@ -66,7 +66,7 @@ class ProdigyPage extends Component {
         Gate::authorize('viewProdigy', auth()->user());
 
         // Sends back a link, since that's what we need to edit.
-        $link = (new AddBlockAction($block_key))
+        $block = (new AddBlockAction($block_key))
             ->forPage($this->page)
             ->atPagePosition($block_order)
             ->intoColumn($column_index)
@@ -74,7 +74,7 @@ class ProdigyPage extends Component {
             ->execute();
 
         // Opens the editor once it's been created.
-        $this->emit('editLink', $link->id);
+        $this->emit('editBlock', $block->id);
     }
 
     public function openProdigyPanel()

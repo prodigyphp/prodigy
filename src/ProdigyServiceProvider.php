@@ -13,7 +13,7 @@ use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
 use ProdigyPHP\Prodigy\Livewire\EditChildBlock;
 use ProdigyPHP\Prodigy\Livewire\PageEditor;
-use ProdigyPHP\Prodigy\Livewire\EditLink;
+use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\Editor;
 use ProdigyPHP\Prodigy\Livewire\PagesList;
 use ProdigyPHP\Prodigy\Livewire\PhotoUploader;
@@ -43,7 +43,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         // Add livewire components
         Livewire::component('prodigy-page', ProdigyPage::class);
         Livewire::component('prodigy-editor', Editor::class);
-        Livewire::component('prodigy-edit-link', EditLink::class);
+        Livewire::component('prodigy-edit-block', EditBlock::class);
 //        Livewire::component('prodigy-edit-child-block', EditChildBlock::class);
         Livewire::component('prodigy-blocks-list', BlocksList::class);
         Livewire::component('prodigy-pages-list', PagesList::class);

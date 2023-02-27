@@ -2,7 +2,6 @@
     <div class="pro-flex-grow pro-overflow-scroll">
         <div class="p-4 pro-flex pro-flex-wrap">
             <x-prodigy::editor.h2 class="pro-px-2">{{ $block->title }}</x-prodigy::editor.h2>
-
             @if($errors->isNotEmpty())
                 @foreach($errors->all() as $error)
                     <p class="pro-text-red-500 pro-text-sm mb-2">{{ $error }}</p>

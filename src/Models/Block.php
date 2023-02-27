@@ -33,16 +33,16 @@ class Block extends Model implements HasMedia {
     ];
 
     /**
-     * Get the parent imageable model (block or page).
+     * Get the parent models (block or page).
      */
-    public function linkable(): MorphTo
+    public function prodigy_links(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function parent() : MorphTo
+    public function parentBlock() : Block
     {
-        return $this->linkable();
+        return $this->morphedByMany(Block::class, 'prodigy_links')->first();
     }
 
     public function pages() : MorphToMany
@@ -52,7 +52,7 @@ class Block extends Model implements HasMedia {
 
     public function children() : MorphToMany
     {
-        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order')->orderByPivot('order');
+        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order', 'id')->orderByPivot('order');
     }
 
     public function getIsRepeaterAttribute()

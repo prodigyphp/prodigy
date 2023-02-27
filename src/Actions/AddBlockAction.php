@@ -19,7 +19,7 @@ class AddBlockAction {
         $this->block_key = $block_key;
     }
 
-    public function execute(): Link
+    public function execute(): Block
     {
 
         if (!$this->column_index) {
@@ -53,7 +53,7 @@ class AddBlockAction {
         return $this;
     }
 
-    protected function insertAtRowLevel(): Link
+    protected function insertAtRowLevel(): Block
     {
         $blocks = $this->page->blocks;
 
@@ -83,10 +83,11 @@ class AddBlockAction {
         $this->page->blocks()->attach($new_blocks);
 
         // Send back the link we created.
-        return $this->findLink($new_block, $this->page);
+        return $new_block;
+//        return $this->findLink($new_block, $this->page);
     }
 
-    protected function insertIntoColumn(): Link
+    protected function insertIntoColumn(): Block
     {
 
         // find the block
@@ -124,7 +125,8 @@ class AddBlockAction {
         $row->children()->attach($new_column_blocks);
 
         // Send back the link we created.
-        return $this->findLink($child_block, $row);
+        return $child_block;
+//        return $this->findLink($child_block, $row);
     }
 
     /**
@@ -135,11 +137,11 @@ class AddBlockAction {
      * Ideally, this would be Link::find(block_id, parent_id, parent_type);
      * But for now, it works.
      */
-    protected function findLink(Block $block, Block|Page $parent): Link
-    {
-        $link_id = $parent->children()->where('block_id', $block->id)->withPivot('id')->first()->pivot->id;
-        return Link::find($link_id);
-    }
+//    protected function findLink(Block $block, Block|Page $parent): Link
+//    {
+//        $link_id = $parent->children()->where('block_id', $block->id)->withPivot('id')->first()->pivot->id;
+//        return Link::find($link_id);
+//    }
 
     protected function createBlock(): Block
     {

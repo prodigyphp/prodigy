@@ -45,5 +45,10 @@ class Link extends Model {
         return $this->belongsTo(Block::class);
     }
 
+    public function child() : BelongsTo
+    {
+        return $this->block();
+    }
+
 
 }

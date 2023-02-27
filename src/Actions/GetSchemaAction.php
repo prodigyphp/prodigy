@@ -19,6 +19,16 @@ class GetSchemaAction {
 
     }
 
+    /**
+     * Repeater schemas are pulled from their parent block.
+     */
+    public function getRepeaterSchema(Block $parent_block):array
+    {
+        $parent_schema = $this->execute($parent_block);
+        $fields = $parent_schema['fields']['repeater'];
+        return $fields;
+    }
+
     public static function standardSchema(): array
     {
         $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/standard-schema.yml');

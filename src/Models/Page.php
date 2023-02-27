@@ -21,7 +21,7 @@ class Page extends Model
 
     public function children() : MorphToMany
     {
-        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot( 'order')->orderByPivot('order');
+        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot( 'order', 'id')->orderByPivot('order');
     }
 
     protected static function newFactory() : PageFactory

@@ -9,7 +9,7 @@ use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 
-class EditLink extends Component {
+class EditBlock extends Component {
 
     use WithFileUploads;
 
@@ -59,15 +59,26 @@ class EditLink extends Component {
 
     }
 
-    public function mount(Link $link, GetSchemaAction $schemaBuilder)
+    public function mount(Block $block, GetSchemaAction $schemaBuilder)
     {
-        $this->link = $link;
-        $this->block = $link->block;
+//        $this->link = $link;
+        $this->block = $block;
 
         // get registered fields list.
         $this->fields = config('prodigy.fields');
 
-        // Build the schema for this block.
+        $this->getSchema($schemaBuilder);
+    }
+
+    public function getSchema(GetSchemaAction $schemaBuilder): void
+    {
+        // Build the schema for a repeater block
+        if ($this->block->key == 'repeater') {
+            $parent = $this->block->parentBlock();
+            $this->schema = $schemaBuilder->getRepeaterSchema($parent);
+            return;
+        }
+
         $this->schema = $schemaBuilder->execute($this->block) ?? []; // if content field is empty (as opposed to []), it'll error.
         $this->schema = array_merge_recursive($this->schema, $schemaBuilder->standardSchema()); // add all the normal fields.
     }
@@ -94,12 +105,12 @@ class EditLink extends Component {
         }
 
         // If there's no block collection yet, add an empty one.
-        if(!$this->block->content) {
+        if (!$this->block->content) {
             $this->block->content = collect();
         }
 
         // Set default values if we have a default value but no set value.
-        if( !$this->block->content->contains($key) &&
+        if (!$this->block->content->contains($key) &&
             array_key_exists('default', $data)) {
 
             // has to drop out to array b/c I can't update the collection directly.
@@ -165,22 +176,23 @@ class EditLink extends Component {
         $this->close();
     }
 
-    public function close()
+    public function close(): void
     {
 
-        // If it's inside a repeater, go back to editing the repeater.
-        if ($this->block->parent && $this->block->parent->is_repeater) {
-            dd('figure out how to edit the block\'s parents id');
-//            $this->emit('editLink', $this->block->parent->id);
-        // Otherwise go back to the blocks list.
-        } else {
-            $this->emit('updateState', 'blocksList');
+        // If it's inside a repeater, go back to editing the repeater block.
+        if ($this->block->key == 'repeater') {
+            $parent_id = $this->block->parentBlock()->id;
+            $this->emit('editBlock', $parent_id);
+            return;
         }
+
+        // Otherwise go back to the blocks list.
+        $this->emit('updateState', 'blocksList');
     }
 
     public function render()
     {
-        return view('prodigy::livewire.edit-link');
+        return view('prodigy::livewire.edit-block');
     }
 
 }
