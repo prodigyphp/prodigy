@@ -8,9 +8,11 @@ use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class PageEditor extends Component {
+class PageSettingsEditor extends Component {
 
     public Page $page;
+
+    public $title;
 
     protected $rules = [
       'page.title' => 'required',
@@ -19,12 +21,13 @@ class PageEditor extends Component {
 
     public function mount(Page $page = null)
     {
-        $this->page = $page ?? new Page();
+        $this->title = ($page->title) ? "Settings – {$page->title}" : "Create Page";
+        $this->page = ($page->title) ? $page : new Page();
     }
 
     public function render()
     {
-        return view('prodigy::livewire.page-editor');
+        return view('prodigy::livewire.page-settings-editor');
     }
 
     public function save()

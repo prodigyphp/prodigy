@@ -3,6 +3,7 @@
 namespace ProdigyPHP\Prodigy\FieldTypes;
 
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Entry;
 
 abstract class Field {
 
@@ -15,7 +16,7 @@ abstract class Field {
 
     public array $subfields = [];
 
-    public function make(string $key, array $meta, Block|null $block)
+    public function make(string $key, array $meta, Block|Entry|null $block)
     {
         return;
     }

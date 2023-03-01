@@ -4,24 +4,22 @@ namespace ProdigyPHP\Prodigy\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use ProdigyPHP\Prodigy\Database\Factories\PageFactory;
 
-class Page extends Model
+class Taxonomy extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    protected $table = 'prodigy_pages';
+    protected $table = 'prodigy_types';
 
-    public function blocks() : MorphToMany
-    {
-        return $this->children();
-    }
 
-    public function children() : MorphToMany
+    public function entries() : HasMany
     {
-        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot( 'order', 'id')->orderByPivot('order');
+        return $this->hasMany(Entry::class);
     }
 
     protected static function newFactory() : PageFactory

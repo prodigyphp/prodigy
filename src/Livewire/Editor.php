@@ -10,6 +10,7 @@ use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
 use ProdigyPHP\Prodigy\Facades\Prodigy;
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
@@ -21,11 +22,24 @@ class Editor extends Component {
     public Collection $groups;
 
     public ?Block $editing_block;
+    public ?Entry $editing_entry;
     public ?Page $editing_page;
 
-    public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor
+    public string $viewing_entries_type;
 
-    protected $listeners = ['editBlock', 'duplicateLink', 'deleteLink', 'updateState', 'createPage', 'editPage', 'addChildBlockThenEdit'];
+    public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor, entriesList, entryEditor
+
+    protected $listeners = [
+        'viewEntriesByType',
+        'createEntryByType',
+        'editEntry',
+        'editBlock',
+        'duplicateLink',
+        'deleteLink',
+        'updateState',
+        'createPage',
+        'editPageSettings',
+        'addChildBlockThenEdit'];
 
     public function mount(Page $page)
     {
@@ -44,19 +58,28 @@ class Editor extends Component {
         $this->editorState = 'blockEditor';
     }
 
+    public function createEntryByType(string $type)
+    {
+        $this->editing_entry = Entry::create(['type' => $type, 'title' => '', 'slug' => '']); // clear anything else.
+        $this->editorState = 'entryEditor';
+    }
+
+    public function editEntry($id)
+    {
+        $this->editing_entry = null; // clear anything else out first.
+        $this->editing_entry = Entry::find($id);
+        $this->editorState = 'entryEditor';
+    }
+
     public function addChildBlockThenEdit($key, $parent_block_id): void
     {
         $block = Block::find($parent_block_id);
 
-        $child_block = Block::create([ 'key' => $key ]);
+        $child_block = Block::create(['key' => $key]);
 
         $block->children()->attach($child_block->id, ['order' => 0]);
 
-        // get the link ID.
-        dd('todo, broken link id');
-//        $link_id = $block->children()->where('block_id', $child_block->id)->withPivot('id')->first()->pivot->id;
-
-        $this->editBlock($link_id);
+        $this->editBlock($child_block->id);
     }
 
 
@@ -78,6 +101,7 @@ class Editor extends Component {
 
     public function updateState(string $stateString)
     {
+
         $this->emit('fireGlobalRefresh');
         $this->editorState = $stateString;
     }
@@ -90,7 +114,15 @@ class Editor extends Component {
         $this->updateState('pageEditor');
     }
 
-    public function editPage(int $page_id)
+    public function viewEntriesByType(string $type)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $this->viewing_entries_type = $type;
+        $this->updateState('entriesList');
+    }
+
+    public function editPageSettings(int $page_id)
     {
         Gate::authorize('viewProdigy', auth()->user());
 

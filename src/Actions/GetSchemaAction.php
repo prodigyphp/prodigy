@@ -2,6 +2,7 @@
 
 namespace ProdigyPHP\Prodigy\Actions;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
@@ -22,11 +23,38 @@ class GetSchemaAction {
     /**
      * Repeater schemas are pulled from their parent block.
      */
-    public function getRepeaterSchema(Block $parent_block):array
+    public function getRepeaterSchema(Block $parent_block): array
     {
         $parent_schema = $this->execute($parent_block);
         $fields = $parent_schema['fields']['repeater'];
         return $fields;
+    }
+
+    public function getEntrySchema(string $type): array
+    {
+        return $this->getEntrySchemas()->where('type', $type)->first();
+//        $path = resource_path("schemas/{$type}.yml");
+//        return $this->getSchemaFromFile($path);
+    }
+
+    public function getTaxonomySchemas(): Collection
+    {
+        return $this->getAllDataSchemas()->where('role', 'taxonomy');
+    }
+
+    public function getEntrySchemas(): Collection
+    {
+        return $this->getAllDataSchemas()->where('role', 'entry');
+    }
+
+    public function getAllDataSchemas(): Collection
+    {
+        $path = resource_path("schemas");
+
+        $paths = $this->glob_recursive($path, '*.{yml,yaml}', GLOB_BRACE);
+
+        return collect($paths)->map(fn($path) => $this->getSchemaFromFile($path));
+
     }
 
     public static function standardSchema(): array
@@ -67,6 +95,32 @@ class GetSchemaAction {
 
         // It's a regular local path, so we can just use the key.
         return resource_path("views/components/{$search_key}.yml");
+    }
+
+    protected function glob_recursive($base, $pattern, $flags = 0)
+    {
+        $flags = $flags & ~GLOB_NOCHECK;
+
+        if (substr($base, - 1) !== DIRECTORY_SEPARATOR) {
+            $base .= DIRECTORY_SEPARATOR;
+        }
+
+        $files = glob($base . $pattern, $flags);
+        if (!is_array($files)) {
+            $files = [];
+        }
+
+        $dirs = glob($base . '*', GLOB_ONLYDIR | GLOB_NOSORT | GLOB_MARK);
+        if (!is_array($dirs)) {
+            return $files;
+        }
+
+        foreach ($dirs as $dir) {
+            $dirFiles = $this->glob_recursive($dir, $pattern, $flags);
+            $files = array_merge($files, $dirFiles);
+        }
+
+        return $files;
     }
 
 }

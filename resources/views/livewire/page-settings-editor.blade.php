@@ -1,6 +1,6 @@
 <div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full">
+    <x-prodigy::editor.nav :label="$title" :page="$page" currentState="pageEditor"/>
     <div class="pro-flex-grow pro-overflow-scroll pro-px-4">
-        <x-prodigy::editor.h2>Create Page</x-prodigy::editor.h2>
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Title" for="title"></x-prodigy::editor.label>

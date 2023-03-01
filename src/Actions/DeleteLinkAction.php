@@ -14,7 +14,10 @@ class DeleteLinkAction {
 
     public function __construct(int $link_id)
     {
+        info('before link find');
+        info($link_id);
         $this->link = Link::findOrFail($link_id);
+        info('past link find');
     }
 
     public function execute(): void

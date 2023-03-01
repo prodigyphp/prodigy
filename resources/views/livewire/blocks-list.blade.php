@@ -1,24 +1,22 @@
 <div class="">
 
-    <header class=" pro-p-4">
-        <button wire:click="$emit('updateState','pagesList')"
-                class="pro-font-medium pro-font-uppercase pro-flex pro-mb-8">
-            <x-prodigy::icons.chevron-left class="pro-w-5 pro-mr-1"></x-prodigy::icons.chevron-left>
-            <span>Pages</span>
+    <x-prodigy::editor.nav :label="$page->title" :page="$page" currentState="blocksList">
+        <button wire:click="$emit('closeProdigyPanel')"
+                class="pro-text-sm pro-font-bold pro-shadow-sm pro-bg-blue-500 pro-text-white hover:pro-bg-blue-600 pro-py-1 pro-px-3 pro-rounded-sm">
+            Publish
         </button>
+    </x-prodigy::editor.nav>
+
+    <header class=" pro-p-4 pro-hidden">
         <div class="pro-flex pro-w-full">
             <div class="pro-flex-grow pro-text-xl">
-            {{ $page->title }}
+                {{ $page->title }}
 
-        </div>
-        <div class="">
-            <button wire:click="$emit('closeProdigyPanel')"
-                    class="pro-text-sm pro-font-bold pro-shadow-sm pro-bg-blue-500 pro-text-white hover:pro-bg-blue-600 pro-py-1 pro-px-3 pro-rounded-sm">
-                Publish
-            </button>
-        </div>
-        </div>
+            </div>
+            <div class="">
 
+            </div>
+        </div>
 
     </header>
 

@@ -11,8 +11,9 @@ use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
 use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
-use ProdigyPHP\Prodigy\Livewire\EditChildBlock;
-use ProdigyPHP\Prodigy\Livewire\PageEditor;
+use ProdigyPHP\Prodigy\Livewire\EditEntry;
+use ProdigyPHP\Prodigy\Livewire\EntriesList;
+use ProdigyPHP\Prodigy\Livewire\PageSettingsEditor;
 use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\Editor;
 use ProdigyPHP\Prodigy\Livewire\PagesList;
@@ -47,8 +48,10 @@ class ProdigyServiceProvider extends PackageServiceProvider {
 //        Livewire::component('prodigy-edit-child-block', EditChildBlock::class);
         Livewire::component('prodigy-blocks-list', BlocksList::class);
         Livewire::component('prodigy-pages-list', PagesList::class);
-        Livewire::component('prodigy-page-edit', PageEditor::class);
+        Livewire::component('prodigy-page-settings-edit', PageSettingsEditor::class);
         Livewire::component('prodigy-photo-uploader', PhotoUploader::class);
+        Livewire::component('prodigy-entries-list', EntriesList::class);
+        Livewire::component('prodigy-edit-entry', EditEntry::class);
 
         // load blade components
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'prodigy');
@@ -57,6 +60,10 @@ class ProdigyServiceProvider extends PackageServiceProvider {
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/prodigy'),
         ], 'prodigy');
+
+        $this->publishes([
+            __DIR__ . '/../resources/schemas' => resource_path('schemas'),
+        ], 'prodigy-schemas');
 
         Relation::enforceMorphMap([
             'page' => 'ProdigyPHP\Prodigy\Models\Page',
@@ -82,7 +89,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
 
     public function packageRegistered()
     {
-        Route::namespace('Laravel\Nova\Http\Controllers')
+        Route::namespace('ProdigyPHP\Prodigy\Http\Controllers')
             ->prefix(Prodigy::path())
             ->middleware([
                 'web'
