@@ -70,6 +70,11 @@ class EditBlock extends Component {
         $this->getSchema($schemaBuilder);
     }
 
+    public function updating()
+    {
+        $this->emit('fireGlobalRefresh');
+    }
+
     public function getSchema(GetSchemaAction $schemaBuilder): void
     {
         // Build the schema for a repeater block

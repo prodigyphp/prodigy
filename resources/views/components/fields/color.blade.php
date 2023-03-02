@@ -1,11 +1,8 @@
 @props(['key', 'data'])
 
 <x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" x-data>
-    <x-prodigy::editor.label
-            :label="$data['label'] ?? $key"
-            for="block.content.{{$key}}"
-            :help="$data['help'] ?? ''">
-    </x-prodigy::editor.label>
+    <x-prodigy::editor.label :data="$data" :key="$key" for="block.content.{{$key}}" />
+
     <div class="pro-flex">
         <div class="pro-rounded-tl-sm pro-flex pro-items-center pro-rounded-bl-sm pro-shadow-sm pro-bg-gray-50 pro-border pro-border-gray-300 pro-border-r-0 pro-px-2">
             <input type="color"

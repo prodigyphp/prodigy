@@ -18,3 +18,7 @@ fields:
         options:
           - Show
           - Hide
+      custom_css_classes:
+        type: text
+        label: CSS Classes
+        help: "Do not include the '.'"

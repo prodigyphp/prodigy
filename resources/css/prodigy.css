@@ -10,6 +10,13 @@
     @apply pro-rounded-md pro-p-4 pro-border-2 pro-border-black/50 pro-border-dashed pro-text-black/50 pro-text-center;
 }
 
+.prodigy-dropzone.prodigy-dropzone-expanded {
+    @apply pro-px-6 pro-py-12 pro-border-2 pro-border-black/50 pro-border-dashed pro-text-black/50 pro-text-center;
+}
+.prodigy-dropzone.prodigy-dropzone-expanded.prodigy-highlight-dropzone {
+    @apply pro-py-16;
+}
+
 
 
 .property-top-line, .property-right-line, .property-bottom-line, .property-left-line {

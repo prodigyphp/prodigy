@@ -23,7 +23,7 @@ fields:
   max_width:
     type: text
     width: 34
-    show: content_width:fixed|width:fixed
+    show: contentWidth:fixed|width:fixed
     rules: numeric|nullable
 
   columns:
@@ -62,6 +62,7 @@ fields:
         show: background_type:photo
       background_size:
         type: dropdown
+        default: cover
         label: Size
         options:
           - Auto

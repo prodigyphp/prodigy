@@ -53,22 +53,18 @@
                             <x-prodigy::structure.dropzone :block_order="$block->pivot->order" />
                         @endif
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
-                            @if($block->key == 'prodigy::blocks.basic.row')
-                                <x-prodigy::blocks.basic.row :block="$block" :editing="$editing" />
-                            @else
-                                <x-dynamic-component :component="$block->key"
+                            <x-dynamic-component :component="$block->key"
                                                      :block="$block"
-                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])" />
-                            @endif
+                                                     :editing="$editing"
+                                                     :content="$block->content?->toArray()" />
 
                         </x-prodigy::structure.inner>
                     </x-prodigy::structure.wrapper>
 
                 @empty
                     @if($editing)
-
-                        <x-prodigy::structure.dropzone block_order="0">
-                            Drag and drop a block.
+                        <x-prodigy::structure.dropzone block_order="0" :style="($blocks->count()) ? 'regular' : 'expanded'">
+                            {{ _('Drag and drop a block.') }}
                         </x-prodigy::structure.dropzone>
                     @endif
                 @endforelse

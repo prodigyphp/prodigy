@@ -31,7 +31,7 @@
     }
 @endphp
 
-<div class="prodigy-inner {{ ($editing) ? $group_name : '' }}" style="{{ $styles }}">
+<div class="prodigy-inner {{ ($editing) ? $group_name : '' }} {{ $block->content['custom_css_classes'] ?? '' }}" style="{{ $styles }}">
     @if($editing)
         <div wire:click="$emit('editBlock', {{ $block->id }})"
              class="{{ $topOffset }} {{ $group_hover_border_classes }} pro-absolute pro-inset-0"
@@ -54,6 +54,7 @@
                     x-on:click="deleteLink({{$block->pivot->id}})">
                 <x-prodigy::icons.m-x-mark class="pro-w-5"/>
             </button>
+            <div class="pro-text-white/80 pro-text-sm pro-p-2 pro-ml-1 pro-border-l pro-border-blue-600 pro-pl-2">{{ $block->title }}</div>
         </div>
     @endif
 

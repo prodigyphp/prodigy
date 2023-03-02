@@ -6,7 +6,9 @@ use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Image;
+use ProdigyPHP\Prodigy\FieldTypes\Number;
 use ProdigyPHP\Prodigy\FieldTypes\Link;
+use ProdigyPHP\Prodigy\FieldTypes\NumberWithUnit;
 use ProdigyPHP\Prodigy\FieldTypes\PixelGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Range;
 use ProdigyPHP\Prodigy\FieldTypes\Repeater;
@@ -53,6 +55,8 @@ return [
 
     'fields' => [
         'text' => Text::class,
+        'number' => Number::class,
+        'numberwithunit' => NumberWithUnit::class,
         'dropdown' => Dropdown::class,
         'group' => Group::class,
         'texteditor' => TextEditor::class,

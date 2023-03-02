@@ -44,6 +44,15 @@
              $styles .= "background-color: {$fields['background_color']};";
          }
 
+         // Show background image
+         if($fields->has('background_type') && ($fields['background_type'] == 'photo') ) {
+                $url = $block->getFirstMediaUrl('prodigy_photos', 'large');
+
+                $styles .= ($url) ? "background-image: url('{$url}');" : '';
+                $styles .= ($fields->has('background_size')) ? "background-size: {$fields['background_size']};" : '';
+                $styles .= ($fields->has('background_attachment')) ? "background-attachment: {$fields['background_attachment']};" : '';
+         }
+
          // Hide if set to hide, but only when not editing
          if(!$editing && $fields->has('show_on_page') && $fields['show_on_page']) {
              $styles.="";

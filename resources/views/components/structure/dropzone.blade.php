@@ -2,6 +2,7 @@
 
 @php
     $classes = match($style) {
+        'expanded' => 'prodigy-dropzone-expanded',
         'regular' => 'prodigy-dropzone-regular',
         'minimal' => 'prodigy-dropzone-minimal'
     }

@@ -1,10 +1,9 @@
 @props(['key', 'data'])
 
-<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" x-data>
+<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100">
     <x-prodigy::editor.label :data="$data" :key="$key" for="block.content.{{$key}}" />
 
-    <x-prodigy::editor.input  type="text"
+    <x-prodigy::editor.input  type="number"
            wire:model="block.content.{{$key}}"
-                              placeholder="/example or http://www.example.com"
            value="{{ $block->content[$key] ?? $data['default'] ?? null }}" />
 </x-prodigy::editor.field-wrapper>

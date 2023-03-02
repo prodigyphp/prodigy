@@ -2,14 +2,22 @@ fields:
   image:
     type: image
 
-  content_width:
-    type: dropdown
-    width: 33
+  max_width:
+    type: numberwithunit
+    width: 50
     options:
-      - Full Width
-      - Fixed
-    show: width:full-width
-    help: Define the wideness of your content section
+      - 'px'
+      - '%'
+      - 'vw'
+
+  alignment:
+    width: 50
+    type: dropdown
+    default: center
+    options:
+      - Left
+      - Center
+      - Right
 
   link_group:
     type: group
