@@ -8,7 +8,13 @@
 // }
 
 
-require('@shopify/draggable')
+// import Sortable  from '@shopify/draggable';
+
+// require('@shopify/draggable')
+
+// window.sortable = require('@shopify/draggable/lib/sortable');
+
+
 
 showDropzone = function () {
     document.querySelectorAll('.prodigy-dropzone').forEach(x => x.classList.add('prodigy-highlight-dropzone'));

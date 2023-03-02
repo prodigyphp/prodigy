@@ -1,6 +1,6 @@
-@props(['data', 'key'])
+@props(['data', 'key'=> null, 'label' => null])
 @php
-    $label = $data['label'] ?? $key;
+    $label = $label ?? $data['label'] ?? $key;
     $hide = (str($label)->lower() == 'none') ? 'pro-hidden' : '';
     $help = $data['help'] ?? ''; // not used yet.
 @endphp

@@ -1,6 +1,8 @@
 @php extract($content ?? []); @endphp
 @php
-    $children = $block->children()->withPivot('order', 'column', 'id')->get();
+    // I'm not sure why I had it dynamically querying.
+    //    $children = $block->children()->withPivot('order', 'column', 'id')->get();
+    $children = $block->children;
 @endphp
 <div style="{{ ($editing) ? 'padding:20px;' : '' }} display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 1.5rem;"
      class="">

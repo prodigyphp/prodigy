@@ -27,7 +27,7 @@
             <img x-on:click="$refs.photo.click();"
                  src="{{ $preview }}" alt="" class="pro-max-w-[50%]"/>
 
-            <p class="pro-text-red-500 pro-mt-2 pro-mb-4 hover:pro-text-red-700 pro-cursor-pointer" x-on:click="handleDelete()">
+            <p class="pro-text-red-500 pro-text-sm pro-font-medium pro-mt-2 pro-mb-4 hover:pro-text-red-700 pro-cursor-pointer" x-on:click="handleDelete()">
                 {{ _('Delete Image') }}</p>
         @else
             <div x-on:click="$refs.photo.click();"

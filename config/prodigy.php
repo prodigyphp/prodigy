@@ -6,6 +6,7 @@ use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Image;
+use ProdigyPHP\Prodigy\FieldTypes\Menu;
 use ProdigyPHP\Prodigy\FieldTypes\Number;
 use ProdigyPHP\Prodigy\FieldTypes\Link;
 use ProdigyPHP\Prodigy\FieldTypes\NumberWithUnit;
@@ -65,7 +66,8 @@ return [
         'pixelgroup' => PixelGroup::class,
         'range' => Range::class,
         'link' => Link::class,
-        'repeater' => Repeater::class
+        'repeater' => Repeater::class,
+        'menu' => Menu::class
 
         // register more fields here...
     ],
