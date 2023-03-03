@@ -175,7 +175,7 @@ class EditBlock extends Component {
     public function save()
     {
         $this->validate();
-        $this->block->content = $this->block->content->filter(); // removes null values so we don't fill the db with null.
+        $this->block->content = $this->block->content->filter(fn($val) => $val != null); // removes null values so we don't fill the db with null.
 
         $this->block->save();
         $this->close();

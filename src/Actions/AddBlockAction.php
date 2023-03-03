@@ -9,14 +9,15 @@ use ProdigyPHP\Prodigy\Models\Page;
 class AddBlockAction {
 
     protected string $block_key;
+    protected Block $block;
     protected Page $page;
     protected ?int $block_order;
     protected ?int $column_index;
     protected ?int $column_order;
 
-    public function __construct(string $block_key)
+    public function __construct()
     {
-        $this->block_key = $block_key;
+
     }
 
     public function execute(): Block
@@ -53,6 +54,23 @@ class AddBlockAction {
         return $this;
     }
 
+    public function insertExistingBlockByLinkId(int $link_id):self
+    {
+        $link = Link::find($link_id);
+        $this->block = $link->child;
+
+        // we're moving the block, so we need to delete the old link.
+        $link->delete();
+        return $this;
+    }
+
+    public function createBlockByKey(string $block_key):self
+    {
+        $this->block_key = $block_key;
+        $this->block = $this->createBlock();
+        return $this;
+    }
+
     protected function insertAtRowLevel(): Block
     {
         $blocks = $this->page->blocks;
@@ -60,10 +78,8 @@ class AddBlockAction {
         // We count starting at one, but PHP arrays start at zero, so we have to manually adjust.
         $zero_based_order = $this->block_order - 1;
 
-        $new_block = $this->createBlock();
-
         // splice in the block to the collection.
-        $blocks->splice($zero_based_order, 0, [$new_block]);
+        $blocks->splice($zero_based_order, 0, [$this->block]);
 
         $new_blocks = [];
         $order = 1;
@@ -83,7 +99,7 @@ class AddBlockAction {
         $this->page->blocks()->attach($new_blocks);
 
         // Send back the link we created.
-        return $new_block;
+        return $this->block;
 //        return $this->findLink($new_block, $this->page);
     }
 
@@ -99,11 +115,8 @@ class AddBlockAction {
         // We count starting at one, but PHP arrays start at zero, so we have to manually adjust.
         $zero_based_order = $this->column_order - 1;
 
-        // create block
-        $child_block = $this->createBlock();
-
         // splice in the block to the collection.
-        $child_blocks->splice($zero_based_order, 0, [$child_block]);
+        $child_blocks->splice($zero_based_order, 0, [$this->block]);
 
         $new_column_blocks = [];
         $order = 1;
@@ -117,7 +130,6 @@ class AddBlockAction {
             $order++;
         }
 
-
         // Detach old
         $row->children()->detach($child_blocks->pluck('id'));
 
@@ -125,23 +137,9 @@ class AddBlockAction {
         $row->children()->attach($new_column_blocks);
 
         // Send back the link we created.
-        return $child_block;
+        return $this->block;
 //        return $this->findLink($child_block, $row);
     }
-
-    /**
-     * Huge refactor opportunity.
-     * I can't figure out how to get a link from the block and parent.
-     * The issue is that you could have a collision between parent ID's
-     * i.e. there is both a row and a parent with ID 3.
-     * Ideally, this would be Link::find(block_id, parent_id, parent_type);
-     * But for now, it works.
-     */
-//    protected function findLink(Block $block, Block|Page $parent): Link
-//    {
-//        $link_id = $parent->children()->where('block_id', $block->id)->withPivot('id')->first()->pivot->id;
-//        return Link::find($link_id);
-//    }
 
     protected function createBlock(): Block
     {

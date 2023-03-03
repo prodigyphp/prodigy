@@ -49,7 +49,7 @@ class ProdigyPage extends Component {
      * ties it to the particular page, if someone dropped <x-prodigy-page> on
      * the page.
      */
-    public function getPage(string $wildcard = null) : Page|null
+    public function getPage(string $wildcard = null): Page|null
     {
         if ($wildcard) {
             return Page::where('slug', $wildcard)->first();
@@ -59,19 +59,33 @@ class ProdigyPage extends Component {
     }
 
 
-    public function addBlock($block_key, $block_order, $column_index = null, $column_order = null) {
+    public function addBlock($block_key, $block_order, $column_index = null, $column_order = null)
+    {
         Gate::authorize('viewProdigy', auth()->user());
-
-        // Sends back a link, since that's what we need to edit.
-        $block = (new AddBlockAction($block_key))
-            ->forPage($this->page)
+        $blockAdder = (new AddBlockAction())->forPage($this->page)
             ->atPagePosition($block_order)
             ->intoColumn($column_index)
-            ->atColumnPosition($column_order)
-            ->execute();
+            ->atColumnPosition($column_order);
 
-        // Opens the editor once it's been created.
-        $this->emit('editBlock', $block->id);
+        /**
+         * Either move the existing block or create a new block.
+         *      Existing blocks pass their ID as an integer
+         *      New blocks pass their key ('blocks.header.header') as a string.
+         */
+        if (is_numeric($block_key)) {
+            $block = $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
+            // don't open the block if we're just dragging it.
+
+        } else {
+            $block = $blockAdder->createBlockByKey($block_key)->execute();
+
+            // Opens the editor once it's been created.
+            $this->emit('editBlock', $block->id);
+        }
+
+        // Refresh is required in order to update order on all blocks in the frontend.
+        $this->emitSelf('fireGlobalRefresh');
+
     }
 
     public function openProdigyPanel()

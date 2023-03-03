@@ -51,7 +51,7 @@
 
                     <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
                         @if($editing)
-                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order" />
+                            <x-prodigy::structure.dropzone style="minimal" :block_order="$block->pivot->order" />
                         @endif
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
                             <x-dynamic-component :component="$block->key"

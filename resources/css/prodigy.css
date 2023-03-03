@@ -4,9 +4,17 @@
 
 @import "../codemirror/codemirror.css";
 
-.prodigy-dropzone.prodigy-dropzone-minimal.prodigy-highlight-dropzone {
-    @apply pro-py-1;
+/**
+  * dropzones cannot cause layout shift _at all_ when an element is selected, so we position them absolutely.
+ */
+.prodigy-dropzone.prodigy-dropzone-minimal {
+    width: 100%;
+    position: absolute;
+    height: 6px;
+    top:-3px;
 }
+
+
 .prodigy-dropzone.prodigy-dropzone-regular.prodigy-highlight-dropzone {
     @apply pro-rounded-md pro-p-4 pro-border-2 pro-border-black/50 pro-border-dashed pro-text-black/50 pro-text-center;
 }

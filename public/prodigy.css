@@ -1297,10 +1297,17 @@ video {
   transition-duration: 150ms;
 }
 
-.prodigy-dropzone.prodigy-dropzone-minimal.prodigy-highlight-dropzone {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+/**
+  * dropzones cannot cause layout shift _at all_ when an element is selected, so we position them absolutely.
+ */
+.prodigy-dropzone.prodigy-dropzone-minimal {
+    width: 100%;
+    position: absolute;
+    height: 6px;
+    top:-3px;
 }
+
+
 .prodigy-dropzone.prodigy-dropzone-regular.prodigy-highlight-dropzone {
   border-radius: 0.375rem;
   border-width: 2px;

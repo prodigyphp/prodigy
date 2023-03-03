@@ -22,6 +22,20 @@
 
 // window.sortable = require('@shopify/draggable/lib/sortable');
 
+startDraggingLink = function startDraggingLink(event, element, link_id) {
+  console.log(element);
+  console.log(event);
+  showDropzone();
+  // element.classList.add('hi');
+  element.setAttribute('draggable', 'true');
+  // event.dataTransfer.setData('text/plain', link_id);
+};
+
+stopDraggingLink = function stopDraggingLink(element) {
+  element.setAttribute('draggable', 'false');
+  console.log('cant drag wrapper');
+  hideDropzone();
+};
 showDropzone = function showDropzone() {
   document.querySelectorAll('.prodigy-dropzone').forEach(function (x) {
     return x.classList.add('prodigy-highlight-dropzone');

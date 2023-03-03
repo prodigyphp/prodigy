@@ -16,6 +16,21 @@
 
 
 
+startDraggingLink = function(event, element, link_id) {
+    console.log(element);
+    console.log(event);
+    showDropzone();
+    // element.classList.add('hi');
+    element.setAttribute('draggable', 'true');
+    // event.dataTransfer.setData('text/plain', link_id);
+
+}
+stopDraggingLink = function(element) {
+    element.setAttribute('draggable', 'false');
+    console.log('cant drag wrapper');
+    hideDropzone();
+}
+
 showDropzone = function () {
     document.querySelectorAll('.prodigy-dropzone').forEach(x => x.classList.add('prodigy-highlight-dropzone'));
 }

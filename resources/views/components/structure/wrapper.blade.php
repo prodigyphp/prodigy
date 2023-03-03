@@ -59,6 +59,7 @@
          }
 @endphp
 
-<div class="wrapper" style="{{ $styles }}">
+<div class="prodigy-wrapper pro-relative"
+     style="{{ $styles }}">
     {{ $slot }}
 </div>
