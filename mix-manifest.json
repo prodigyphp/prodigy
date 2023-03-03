@@ -1,5 +1,6 @@
 {
     "/public/prodigy.js": "/public/prodigy.js",
     "/public/ckeditor.js": "/public/ckeditor.js",
+    "/public/codemirror.js": "/public/codemirror.js",
     "/public/prodigy.css": "/public/prodigy.css"
 }

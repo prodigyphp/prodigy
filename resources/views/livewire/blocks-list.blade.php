@@ -44,7 +44,7 @@
                                         draggable="true"
                                         ondragstart="event.dataTransfer.setData('text/plain', '{{ $block['key'] }}'); showDropzone()"
                                         ondragend="hideDropzone()"
-                                        class="pro-text-sm hover:pro-bg-white pro-flex-grow hover:pro-border-gray-100 hover:pro-shadow-sm pro-rounded-sm pro-transition pro-cursor-grab pro-px-4 pro-py-3">
+                                        class="pro-text-sm pro-font-medium hover:pro-bg-white pro-flex-grow hover:pro-border-gray-100 hover:pro-shadow-sm pro-rounded-sm pro-transition pro-cursor-grab pro-px-4 pro-py-3">
                                     {{ $block['title'] }}
                                 </div>
                             @endforeach

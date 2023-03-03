@@ -11,7 +11,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            'styles': '/resources/css/settings.css',
+            'styles': '/resources/css/prodigy.css',
             'scripts': '/resources/js/prodigy.js',
         },
     },

@@ -19,6 +19,7 @@
         @endisset
 
         <script src="/vendor/prodigy/ckeditor.js"></script>
+        <script src="/vendor/prodigy/codemirror.js"></script>
 
         <livewire:prodigy-editor :page="$page"></livewire:prodigy-editor>
         <div class="pro-order-2 pro-absolute pro-inset-0 lg:pro-relative lg:pro-min-h-screen lg:pro-max-h-screen lg:pro-inset-auto pro-bg-white pro-flex-grow pro-overflow-scroll">
@@ -41,7 +42,7 @@
                 @endif
 
                 @forelse($blocks as $block)
-                    @if(!$this->canFindView("{$block->key}"))
+                    @if(!Prodigy::canFindView("{$block->key}"))
                         @continue
                     @endif
                     @if(!$editing && ($block->content?->has('show_on_page') && $block->content['show_on_page'] == 'hide'))
@@ -56,7 +57,8 @@
                             <x-dynamic-component :component="$block->key"
                                                      :block="$block"
                                                      :editing="$editing"
-                                                     :content="$block->content?->toArray()" />
+                                                     :content="$block->content?->toArray()"
+                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])" />
 
                         </x-prodigy::structure.inner>
                     </x-prodigy::structure.wrapper>

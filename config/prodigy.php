@@ -2,6 +2,7 @@
 
 use ProdigyPHP\Prodigy\BlockGroups\CustomBlocksGroup;
 use ProdigyPHP\Prodigy\BlockGroups\ProdigyBlocksGroup;
+use ProdigyPHP\Prodigy\FieldTypes\Code;
 use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
@@ -67,7 +68,8 @@ return [
         'range' => Range::class,
         'link' => Link::class,
         'repeater' => Repeater::class,
-        'menu' => Menu::class
+        'menu' => Menu::class,
+        'code' => Code::class
 
         // register more fields here...
     ],

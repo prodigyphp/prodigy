@@ -11,7 +11,7 @@
         @foreach(range(1, $block->content['columns'] ?? 1) as $column_index)
             <div class="prodigy_column">
                 @foreach($children->where('pivot.column', $column_index) as $child)
-                    @if(!$this->canFindView("{$block->key}"))
+                    @if(!Prodigy::canFindView("{$block->key}"))
                         @continue
                     @endif
                     @if(!$editing && $child->content?->has('show_on_page') && $child->content['show_on_page'] == 'hide')
@@ -20,19 +20,20 @@
 
                     <x-prodigy::structure.inner :editing="$editing" :block="$child" is_column="true">
                         @if($editing)
-                            <x-prodigy::structure.dropzone :block_order="$block->pivot->order"
-                                                           :column_order="$child->pivot->order" style="minimal"
+                            <x-prodigy::structure.dropzone :block_order="$block->pivot?->order"
+                                                           :column_order="$child->pivot?->order" style="minimal"
                                                            :column_index="$column_index"/>
                         @endif
                         <x-dynamic-component :component="$child->key"
                                              :block="$child"
                                              :editing="$editing"
+                                             :attributes="new Illuminate\View\ComponentAttributeBag($child->content?->all() ?? [])"
                                              :content="$child->content?->toArray()"/>
 
                     </x-prodigy::structure.inner>
                 @endforeach
 
-                <x-prodigy::structure.dropzone :block_order="$block->pivot->order"
+                <x-prodigy::structure.dropzone :block_order="$block->pivot?->order"
                                                :column_order="$block->children->where('pivot.column', $column_index)->count() + 1"
                                                :column_index="$column_index"/>
             </div>

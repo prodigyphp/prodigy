@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "../codemirror/codemirror.css";
 
 .prodigy-dropzone.prodigy-dropzone-minimal.prodigy-highlight-dropzone {
     @apply pro-py-1;
