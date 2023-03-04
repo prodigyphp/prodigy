@@ -29,7 +29,7 @@
 
                 @if(Auth::check() && !$editing)
                     <button wire:click="openProdigyPanel"
-                            style="z-index:999;position: fixed; top:0; left:0;">
+                            style="z-index:9999;position: fixed; top:0; left:0;">
                         <x-prodigy::icons.arrow-down-right-mini></x-prodigy::icons.arrow-down-right-mini>
                     </button>
                     <script>

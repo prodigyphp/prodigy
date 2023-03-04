@@ -33,7 +33,7 @@
                 :aria-expanded="open"
                 :aria-controls="$id('dropdown-button')"
                 type="button"
-                class="pro-flex pro-font-semibold pro-text-lg pro-items-center pro-gap-2 pro-bg-white pro-px-5 pro-py-2.5 pro-rounded-md pro-shadow"
+                class="pro-flex pro-font-semibold pro-text-[16px] pro-items-center pro-gap-2 pro-bg-white pro-px-5 pro-py-2.5 pro-rounded-md pro-shadow"
         >
             {{ $label }}
 
@@ -59,10 +59,10 @@
             <x-prodigy::editor.nav-button
                     :active="$currentState == 'blocksList'"
                     x-on:click="Livewire.emit('updateState', 'blocksList')">
-                Edit Current Page
+                {{ _('Edit Current Page') }}
             </x-prodigy::editor.nav-button>
             <x-prodigy::editor.nav-button x-on:click="Livewire.emit('editPageSettings', {{ $page->id }})">
-                Current Page Settings
+                {{ _('Current Page Settings') }}
             </x-prodigy::editor.nav-button>
 
             <x-prodigy::editor.nav-separator/>
@@ -70,7 +70,7 @@
             <x-prodigy::editor.nav-button
                     :active="$currentState == 'pagesList'"
                     x-on:click="Livewire.emit('updateState','pagesList')">
-                Pages
+                {{ _('All Pages') }}
             </x-prodigy::editor.nav-button>
 
             <x-prodigy::editor.nav-separator/>

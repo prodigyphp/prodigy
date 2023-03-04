@@ -1,4 +1,6 @@
-<div class="not-prose lg:not-prose pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-max-h-screen pro-min-h-screen">
+<div
+        @keydown.meta.enter="$wire.save;"
+        class="not-prose lg:not-prose pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-max-h-screen pro-min-h-screen">
     <div class="pro-flex-grow pro-overflow-scroll">
         <div class="p-4 pro-flex pro-flex-wrap">
             <x-prodigy::editor.h2 class="pro-px-2">{{ $block->title }}</x-prodigy::editor.h2>
