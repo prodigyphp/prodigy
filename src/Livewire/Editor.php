@@ -38,6 +38,7 @@ class Editor extends Component {
         'deleteLink',
         'updateState',
         'createPage',
+        'deletePage',
         'editPageSettings',
         'addChildBlockThenEdit'];
 
@@ -97,6 +98,17 @@ class Editor extends Component {
 
         (new DeleteLinkAction($link_id))->execute();
         $this->emit('fireGlobalRefresh');
+    }
+
+    public function deletePage(int $page_id)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $page = Page::find($page_id);
+        $page->delete();
+
+        $this->redirect(config('prodigy.home') . "?editing=true");
+//        $this->emit('fireGlobalRefresh');
     }
 
     public function updateState(string $stateString)

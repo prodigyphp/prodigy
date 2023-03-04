@@ -53,6 +53,13 @@ deleteLink = function deleteLink(id) {
     Livewire.emit('deleteLink', id);
   }
 };
+deletePage = function deletePage(id) {
+  console.log(id);
+  var response = confirm("Permanently delete?");
+  if (response) {
+    Livewire.emit('deletePage', id);
+  }
+};
 
 /***/ }),
 

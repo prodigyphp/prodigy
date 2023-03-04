@@ -2,7 +2,7 @@
 
     <x-prodigy::editor.nav :label="$page->title" :page="$page" currentState="blocksList">
         <button wire:click="$emit('closeProdigyPanel')"
-                class="pro-text-sm pro-font-bold pro-shadow-sm pro-bg-blue-500 pro-text-white hover:pro-bg-blue-600 pro-py-1 pro-px-3 pro-rounded-sm">
+                class="pro-text-sm pro-font-bold pro-shadow pro-bg-gradient-to-bl pro-from-blue-400 pro-to-blue-600 pro-border pro-border-blue-700 hover:pro-from-blue-600 hover:pro-to-blue-700 pro-text-white pro-py-1 pro-px-3 pro-rounded-md">
             Publish
         </button>
     </x-prodigy::editor.nav>

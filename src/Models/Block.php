@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use ProdigyPHP\Prodigy\Actions\DeleteBlockChildrenAction;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -100,6 +101,17 @@ class Block extends Model implements HasMedia {
     {
         $this
             ->addMediaCollection('prodigy_photos');
+    }
+
+    /**
+     * Handle events for Block
+     * Most specifically, when deleting needs to cascade.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (Block $block) {
+            (new DeleteBlockChildrenAction())->execute($block);
+        });
     }
 
 
