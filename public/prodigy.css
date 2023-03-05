@@ -857,11 +857,38 @@ video {
 .pro-top-\[0\.2rem\] {
   top: 0.2rem;
 }
+.pro-left-\[50\%\] {
+  left: 50%;
+}
+.pro-top-\[-2em\] {
+  top: -2em;
+}
+.pro-top-\[-50\%\] {
+  top: -50%;
+}
+.pro-top-\[-3rem\] {
+  top: -3rem;
+}
+.pro-top-\[-2rem\] {
+  top: -2rem;
+}
+.pro-top-\[-1rem\] {
+  top: -1rem;
+}
+.pro-top-\[-1\.2rem\] {
+  top: -1.2rem;
+}
 .pro-z-\[1000\] {
   z-index: 1000;
 }
 .pro-z-\[900\] {
   z-index: 900;
+}
+.pro-z-20 {
+  z-index: 20;
+}
+.pro-z-\[20\] {
+  z-index: 20;
 }
 .pro-order-1 {
   order: 1;
@@ -977,6 +1004,12 @@ video {
 .pro-w-full {
   width: 100%;
 }
+.pro-w-12 {
+  width: 3rem;
+}
+.pro-w-20 {
+  width: 5rem;
+}
 .pro-min-w-\[60px\] {
   min-width: 60px;
 }
@@ -991,6 +1024,14 @@ video {
 }
 .pro-flex-grow {
   flex-grow: 1;
+}
+.pro-translate-x-\[-50\%\] {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.pro-translate-y-\[-100\%\] {
+  --tw-translate-y: -100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .pro--rotate-90 {
   --tw-rotate: -90deg;
@@ -1158,6 +1199,9 @@ video {
 .pro-to-blue-600 {
   --tw-gradient-to: #473FEB;
 }
+.pro-to-blue-400 {
+  --tw-gradient-to: #6F9CF8;
+}
 .pro-p-2 {
   padding: 0.5rem;
 }
@@ -1316,6 +1360,11 @@ video {
 .pro-shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.pro-shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .pro-transition {
@@ -1557,6 +1606,14 @@ video {
 
   .lg\:pro-min-h-screen {
     min-height: 100vh;
+  }
+
+  .lg\:pro-rounded-lg {
+    border-radius: 0.5rem;
+  }
+
+  .lg\:pro-p-12 {
+    padding: 3rem;
   }
 }
 
