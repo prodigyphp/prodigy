@@ -8,14 +8,14 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use ProdigyPHP\Prodigy\ProdigyServiceProvider;
 
-class TestCase extends Orchestra
-{
+class TestCase extends Orchestra {
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'ProdigyPHP\\Prodigy\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn(string $modelName) => 'ProdigyPHP\\Prodigy\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -29,12 +29,25 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        config()->set('database.default', 'testing');
+//        config()->set('database.default', 'testing');
+        $app['config']->set('database.default', 'sqlite');
+
+        $app['config']->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+
+        $app['config']->set('app.key', 'base64:iSHOeoNKQaK1OCzOFR2D6bfoDhas2YJ3NOlu/4S9YEw=');
 
         Schema::dropAllTables();
 
-        $migration = include __DIR__.'/../database/migrations/create_prodigy_table.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/2014_create_users_table.php';
+        $migration->up();
+
+        $migration = include __DIR__ . '/../database/migrations/2023_03_01_create_prodigy_tables.php.stub';
         $migration->up();
 
     }
+
 }

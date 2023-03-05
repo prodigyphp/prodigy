@@ -81,7 +81,7 @@
 
             <x-prodigy::editor.nav-title>Entries</x-prodigy::editor.nav-title>
 
-            @forelse(Prodigy::getEntrySchemas() as $schema)
+            @forelse(\ProdigyPHP\Prodigy\Prodigy::getEntrySchemas() as $schema)
                 <x-prodigy::editor.nav-button
                         wire:key="{{$schema['type']}}"
                         x-on:click="Livewire.emit('viewEntriesByType', '{{ $schema['type'] }}')">

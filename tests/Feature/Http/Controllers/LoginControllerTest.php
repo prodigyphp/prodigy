@@ -5,5 +5,5 @@ use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 it('has a login route', function() {
    $this->get(action([LoginController::class, 'index']))
        ->assertOk()
-       ->assertSee('good job');
+       ->assertSee('Log in');
 });

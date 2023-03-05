@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->foreignId('public_page_id')->nullable()->constrained('prodigy_pages')->cascadeOnDelete();
+            $table->foreignId('public_page_id')->nullable()->constrained('prodigy_pages');
+            $table->foreignId('draft_page_id')->nullable()->constrained('prodigy_pages')->cascadeOnDelete();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
@@ -30,7 +31,7 @@ return new class extends Migration
             $table->id();
             $table->integer('block_id');
             $table->morphs('prodigy_links');
-            $table->integer('order');
+            $table->integer('order')->default(1);
             $table->integer('column')->nullable();
             $table->timestamps();
         });

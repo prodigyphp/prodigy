@@ -13,10 +13,10 @@ class DeletePageAction {
     public function execute(Page $page): void
     {
         $blocks = $page->children()->with('children')->get();
+
         $blocks->map(function ($block) use($page) {
             $this->removeChildren($block);
             $this->removeBlockFromPage($block, $page);
-
             if (!$block->is_global) {
                 $block->delete();
             }

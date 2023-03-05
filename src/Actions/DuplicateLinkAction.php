@@ -40,7 +40,7 @@ class DuplicateLinkAction {
     }
 
     // Taken from https://laracasts.com/discuss/channels/eloquent/deep-replication-model-relations
-    public function replicateWithRelations(Block $block)
+    public function replicateWithRelations(Block $block) : Block
     {
         $block->load('children');
         $newBlock = $block->replicate();

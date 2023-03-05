@@ -28,8 +28,7 @@ class PagesList extends Component {
 
     public function getPages()
     {
-        return Page::all();
-
+        return Page::public()->get();
     }
 
 }

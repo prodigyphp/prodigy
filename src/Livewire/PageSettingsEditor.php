@@ -3,6 +3,7 @@
 namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
@@ -33,6 +34,8 @@ class PageSettingsEditor extends Component {
     public function save()
     {
         $this->validate();
+
+        Gate::authorize('viewProdigy', auth()->user());
 
         $this->page->updateOrCreate([
             'slug' => $this->page->slug,

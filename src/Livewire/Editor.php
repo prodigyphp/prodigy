@@ -11,7 +11,6 @@ use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
 use ProdigyPHP\Prodigy\Facades\Prodigy;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
-use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
 class Editor extends Component {

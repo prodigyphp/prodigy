@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Illuminate\View\ComponentAttributeBag;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\AddBlockAction;
+use ProdigyPHP\Prodigy\Actions\GetDraftAction;
 use ProdigyPHP\Prodigy\Models\Page;
 
 class ProdigyPage extends Component {
@@ -31,10 +31,10 @@ class ProdigyPage extends Component {
     public function mount(string $wildcard = null)
     {
 
-        $this->page = $this->getPage($wildcard);
-
         // Show edit screen if user can edit, and has requested edit access.
         $this->editing = Gate::check('viewProdigy', auth()->user()) && request('editing');
+
+        $this->page = $this->getPage($wildcard);
 
         // dynamic routing means we need to not just load for anything.
         if (!$this->page) {
@@ -48,14 +48,36 @@ class ProdigyPage extends Component {
      * in the wildcard route, which would be set in the URL. Otherwise, it just
      * ties it to the particular page, if someone dropped <x-prodigy-page> on
      * the page.
+     *
+     * @TODO double check that this is still true.
+     */
+    public function getSlug(string $wildcard)
+    {
+        return ($wildcard) ? $wildcard : request()->path();
+    }
+
+    /**
+     * Either get the public page OR the draft if we're editing.
      */
     public function getPage(string $wildcard = null): Page|null
     {
-        if ($wildcard) {
-            return Page::where('slug', $wildcard)->first();
-        } else {
-            return Page::where('slug', request()->path())->first();
+        $slug = $this->getSlug($wildcard);
+
+        // visitors get the published page.
+        if(!auth()->check()) {
+            return Page::where('slug', $slug)->public()->published()->first();
         }
+
+        // Users CAN see unpublished pages, too.
+        $page = Page::where('slug', $slug)->public()->first();
+
+        // Find or create the draft to edit as an admin.
+        if ($this->editing) {
+            $page = (new GetDraftAction())->execute($page);
+        }
+
+        // return the regular page for regular visitors
+        return $page;
     }
 
 

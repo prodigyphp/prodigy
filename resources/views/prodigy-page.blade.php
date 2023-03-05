@@ -2,7 +2,7 @@
     {{ $page->title }}
 @endsection
 
-<div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }}">
+<div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }} prodigy-page-root">
 
     @if($editing)
         @isset($cssPath)
