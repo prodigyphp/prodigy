@@ -11,7 +11,7 @@ use ProdigyPHP\Prodigy\Models\Page;
 class BlockComponent extends Component {
 
     public int $block_id;
-    public Block $block;
+    public ?Block $block;
 
     public function mount(int $block_id)
     {

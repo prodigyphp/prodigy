@@ -72,7 +72,7 @@ class Page extends Model
     protected static function booted(): void
     {
         static::deleting(function (Page $page) {
-            (new DeletePageAction())->execute($page);
+            (new DeletePageAction($page))->removeBlocks();
         });
     }
 }

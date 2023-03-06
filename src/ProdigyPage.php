@@ -48,10 +48,8 @@ class ProdigyPage extends Component {
      * in the wildcard route, which would be set in the URL. Otherwise, it just
      * ties it to the particular page, if someone dropped <x-prodigy-page> on
      * the page.
-     *
-     * @TODO double check that this is still true.
      */
-    public function getSlug(string $wildcard)
+    public function getSlug(?string $wildcard) : string
     {
         return ($wildcard) ? $wildcard : request()->path();
     }
@@ -64,7 +62,7 @@ class ProdigyPage extends Component {
         $slug = $this->getSlug($wildcard);
 
         // visitors get the published page.
-        if(!auth()->check()) {
+        if (!auth()->check()) {
             return Page::where('slug', $slug)->public()->published()->first();
         }
 
@@ -126,7 +124,9 @@ class ProdigyPage extends Component {
     {
         $this->blocks = $this->page->blocks()->with('children')->withPivot('order', 'id')->orderBy('order', 'asc')->get();
 
-        return view('prodigy::prodigy-page');
+        $layout = config('prodigy.full_page_layout', 'layouts.app');
+
+        return view('prodigy::prodigy-page')->layout($layout);
     }
 
     /**

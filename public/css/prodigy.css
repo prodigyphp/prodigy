@@ -1147,6 +1147,9 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.pro-bg-gray-700\/25 {
+  background-color: rgb(64 64 64 / 0.25);
+}
 .pro-bg-gradient-to-bl {
   background-image: linear-gradient(to bottom left, var(--tw-gradient-stops));
 }
@@ -1255,6 +1258,9 @@ video {
 .pro-text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.pro-text-\[14px\] {
+  font-size: 14px;
 }
 .pro-font-bold {
   font-weight: 700;

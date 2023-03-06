@@ -48,10 +48,12 @@ return [
         // register blocks from other packages here...
     ],
 
+    'full_page_layout' => 'layouts.app',
+
     'default' => [
         'unit' => 'px',
         'padding' => '20',
-        'max_width' => '1500'
+        'max_width' => '1500',
     ],
 
     'fields' => [

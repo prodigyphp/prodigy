@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
+use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
+use ProdigyPHP\Prodigy\Actions\PublishPageAction;
 use ProdigyPHP\Prodigy\Facades\Prodigy;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
@@ -36,6 +38,8 @@ class Editor extends Component {
         'duplicateLink',
         'deleteLink',
         'updateState',
+        'publishDraft',
+        'deleteDraft',
         'createPage',
         'deletePage',
         'editPageSettings',
@@ -99,12 +103,31 @@ class Editor extends Component {
         $this->emit('fireGlobalRefresh');
     }
 
+    public function publishDraft(int $draft_id)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+        $draft = Page::find($draft_id);
+        (new PublishPageAction($draft))->execute();
+    }
+
+     public function deleteDraft(int $draft_id)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $draft = Page::find($draft_id);
+        $redirect_slug = $draft->publicPage->slug;
+
+        (new DeletePageAction($draft))->execute();
+
+        $this->redirect($redirect_slug);
+    }
+
     public function deletePage(int $page_id)
     {
         Gate::authorize('viewProdigy', auth()->user());
 
         $page = Page::find($page_id);
-        $page->delete();
+        (new DeletePageAction($page))->execute();
 
         $this->redirect(config('prodigy.home') . "?editing=true");
 //        $this->emit('fireGlobalRefresh');

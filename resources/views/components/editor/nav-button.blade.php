@@ -1,6 +1,6 @@
 @props(['active' => null])
 @php
-    $classes = 'pro-flex pro-items-center pro-gap-2 pro-w-full pro-px-4 pro-py-2.5 pro-text-left pro-text-sm  disabled:pro-text-gray-500';
+    $classes = 'pro-flex pro-font-medium pro-items-center pro-gap-2 pro-w-full pro-px-4 pro-py-2.5 pro-text-left pro-text-sm  disabled:pro-text-gray-500';
     if($active) {
         $classes .= ' pro-bg-blue-500 pro-text-white pro-cursor-default';
     } else {
