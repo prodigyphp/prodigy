@@ -35,7 +35,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
             ->name('prodigy')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_prodigy_table')
+            ->hasMigration('2023_03_01_create_prodigy_tables')
             ->hasCommand(ProdigyCommand::class);
     }
 
@@ -61,7 +61,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
 
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/prodigy'),
-        ], 'prodigy');
+        ], 'prodigy-assets');
 
         $this->publishes([
             __DIR__ . '/../resources/schemas' => resource_path('schemas'),

@@ -1,6 +1,7 @@
 {
-    "/public/prodigy.js": "/public/prodigy.js",
-    "/public/ckeditor.js": "/public/ckeditor.js",
-    "/public/codemirror.js": "/public/codemirror.js",
-    "/public/prodigy.css": "/public/prodigy.css"
+    "/public/js/prodigy.js": "/public/js/prodigy.js",
+    "/public/js/alpine.js": "/public/js/alpine.js",
+    "/public/css/prodigy.css": "/public/css/prodigy.css",
+    "/public/js/ckeditor.js": "/public/js/ckeditor.js",
+    "/public/js/codemirror.js": "/public/js/codemirror.js"
 }

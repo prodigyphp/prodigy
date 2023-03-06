@@ -14,7 +14,7 @@ class LoginController {
     public function index()
     {
         return view('prodigy::auth.login', [
-            'cssPath' => __DIR__ . '/../../../public/prodigy.css'
+            'cssPath' => __DIR__ . '/../../../public/css/prodigy.css'
         ]);
     }
 

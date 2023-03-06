@@ -2,9 +2,11 @@
 
 // import Alpine from 'alpinejs'
 //
+// window.Alpine = Alpine
+// Alpine.start()
+
 // if(!window.Alpine instanceof Alpine) {
-//     window.Alpine = Alpine
-//     Alpine.start()
+//
 // }
 
 
@@ -15,8 +17,7 @@
 // window.sortable = require('@shopify/draggable/lib/sortable');
 
 
-
-startDraggingLink = function(event, element, link_id) {
+startDraggingLink = function (event, element, link_id) {
     console.log(element);
     console.log(event);
     showDropzone();
@@ -25,7 +26,7 @@ startDraggingLink = function(event, element, link_id) {
     // event.dataTransfer.setData('text/plain', link_id);
 
 }
-stopDraggingLink = function(element) {
+stopDraggingLink = function (element) {
     element.setAttribute('draggable', 'false');
     console.log('cant drag wrapper');
     hideDropzone();

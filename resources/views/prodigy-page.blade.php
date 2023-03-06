@@ -13,20 +13,21 @@
                 }
             </style>
         @endisset
+        <script src="/vendor/prodigy/js/alpine.js" defer></script>
+        <script src="/vendor/prodigy/js/ckeditor.js" defer></script>
+        <script src="/vendor/prodigy/js/codemirror.js" defer></script>
 
         @isset($jsPath)
             <script>{!! file_get_contents($jsPath) !!}</script>
         @endisset
 
-        <script src="/vendor/prodigy/ckeditor.js"></script>
-        <script src="/vendor/prodigy/codemirror.js"></script>
 
-        <livewire:prodigy-editor :page="$page"></livewire:prodigy-editor>
+        <livewire:prodigy-editor :page="$page"/>
+
         <div class="pro-order-2 pro-absolute pro-inset-0 lg:pro-relative lg:pro-min-h-screen lg:pro-max-h-screen lg:pro-inset-auto pro-bg-white pro-flex-grow pro-overflow-scroll">
             @endif
 
             <main>
-
                 @if(Auth::check() && !$editing)
                     <button wire:click="openProdigyPanel"
                             style="z-index:9999;position: fixed; top:0; left:0;">
@@ -51,21 +52,22 @@
 
                     <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
                         @if($editing)
-                            <x-prodigy::structure.dropzone style="minimal" :block_order="$block->pivot->order" />
+                            <x-prodigy::structure.dropzone style="minimal" :block_order="$block->pivot->order"/>
                         @endif
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
                             <x-dynamic-component :component="$block->key"
-                                                     :block="$block"
-                                                     :editing="$editing"
-                                                     :content="$block->content?->toArray()"
-                                                     :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])" />
+                                                 :block="$block"
+                                                 :editing="$editing"
+                                                 :content="$block->content?->toArray()"
+                                                 :attributes="new Illuminate\View\ComponentAttributeBag($block->content?->all() ?? [])"/>
 
                         </x-prodigy::structure.inner>
                     </x-prodigy::structure.wrapper>
 
                 @empty
                     @if($editing)
-                        <x-prodigy::structure.dropzone block_order="0" :style="($blocks->count()) ? 'regular' : 'expanded'">
+                        <x-prodigy::structure.dropzone block_order="0"
+                                                       :style="($blocks->count()) ? 'regular' : 'expanded'">
                             {{ _('Drag and drop a block.') }}
                         </x-prodigy::structure.dropzone>
                     @endif

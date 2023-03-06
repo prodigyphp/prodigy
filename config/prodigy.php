@@ -45,14 +45,13 @@ return [
     'block_paths' => [
         ProdigyBlocksGroup::class,
         CustomBlocksGroup::class,
-
         // register blocks from other packages here...
     ],
 
     'default' => [
         'unit' => 'px',
-        'padding' => '20', // px units are implied.
-        'max_width' => '1500' // px units are implied.
+        'padding' => '20',
+        'max_width' => '1500'
     ],
 
     'fields' => [
@@ -70,7 +69,6 @@ return [
         'repeater' => Repeater::class,
         'menu' => Menu::class,
         'code' => Code::class
-
         // register more fields here...
     ],
 ];

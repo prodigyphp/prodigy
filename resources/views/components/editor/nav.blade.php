@@ -37,7 +37,7 @@
         >
             {{ $label }}
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+            <svg xmlns="http://www.w3.org/2000/svg" class="pro-h-5 pro-w-5 pro-text-gray-400" viewBox="0 0 20 20"
                  fill="currentColor">
                 <path fill-rule="evenodd"
                       d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -77,18 +77,24 @@
                 {{ _('All Pages') }}
             </x-prodigy::editor.nav-button>
 
-            <x-prodigy::editor.nav-separator/>
+            @php
+                $entry_schemas = \ProdigyPHP\Prodigy\Prodigy::getEntrySchemas();
+            @endphp
 
-            <x-prodigy::editor.nav-title>Entries</x-prodigy::editor.nav-title>
+            @if($entry_schemas->isNotEmpty())
+                <x-prodigy::editor.nav-separator/>
 
-            @forelse(\ProdigyPHP\Prodigy\Prodigy::getEntrySchemas() as $schema)
-                <x-prodigy::editor.nav-button
-                        wire:key="{{$schema['type']}}"
-                        x-on:click="Livewire.emit('viewEntriesByType', '{{ $schema['type'] }}')">
-                    {{ $schema['labels']['plural'] ?? str($schema['type'])->title() ?? 'Error reading schema' }}
-                </x-prodigy::editor.nav-button>
-            @empty
-            @endforelse
+                <x-prodigy::editor.nav-title>Entries</x-prodigy::editor.nav-title>
+
+                @forelse($entry_schemas as $schema)
+                    <x-prodigy::editor.nav-button
+                            wire:key="{{$schema['type']}}"
+                            x-on:click="Livewire.emit('viewEntriesByType', '{{ $schema['type'] }}')">
+                        {{ $schema['labels']['plural'] ?? str($schema['type'])->title() ?? 'Error reading schema' }}
+                    </x-prodigy::editor.nav-button>
+                @empty
+                @endforelse
+            @endif
 
         </div>
 

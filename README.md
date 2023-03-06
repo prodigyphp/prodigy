@@ -13,11 +13,16 @@
 `composer require prodigyphp/prodigy`
 ```bash
 php artisan vendor:publish --tag="prodigy-migrations"
+php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 
+add to web.php
+`Route::get('/{wildcard}', ProdigyPage::class)->where('wildcard', '.*');`
+
 ```bash
 php artisan vendor:publish --tag="prodigy-config"
+php artisan vendor:publish --tag="prodigy-assets"
 ```
 
 
@@ -48,6 +53,7 @@ You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="prodigy-config"
+php artisan vendor:publish --tag="prodigy-views" # << probably not what you want. contents of all views.
 ```
 
 This is the contents of the published config file:
@@ -55,12 +61,6 @@ This is the contents of the published config file:
 ```php
 return [
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="prodigy-views"
 ```
 
 ## Usage

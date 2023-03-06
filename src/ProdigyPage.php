@@ -23,8 +23,8 @@ class ProdigyPage extends Component {
 
     public array $temp;
 
-    public $cssPath = __DIR__ . '/../public/prodigy.css';
-    public $jsPath = __DIR__ . '/../public/prodigy.js';
+    public $cssPath = __DIR__ . '/../public/css/prodigy.css';
+    public $jsPath = __DIR__ . '/../public/js/prodigy.js';
 
     protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
 
