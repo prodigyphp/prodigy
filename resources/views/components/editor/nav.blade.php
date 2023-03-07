@@ -64,7 +64,7 @@
             <x-prodigy::editor.nav-button x-on:click="Livewire.emit('editPageSettings', {{ $page->id }})">
                 {{ _('Current Page Settings') }}
             </x-prodigy::editor.nav-button>
-            <x-prodigy::editor.nav-button x-on:click="Livewire.emit('duplicatePage', {{ $page->id }})">
+            <x-prodigy::editor.nav-button x-on:click="Livewire.emit('duplicatePageFromDraft', {{ $page->id }})">
                 {{ _('Duplicate') }}
             </x-prodigy::editor.nav-button>
 

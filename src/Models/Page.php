@@ -11,9 +11,10 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Database\Factories\PageFactory;
 
-class Page extends Model
-{
+class Page extends Model {
+
     use HasFactory;
+
     protected $guarded = [];
 
     protected $table = 'prodigy_pages';
@@ -22,22 +23,22 @@ class Page extends Model
         'published_at' => 'datetime'
     ];
 
-    public function blocks() : MorphToMany
+    public function blocks(): MorphToMany
     {
         return $this->children();
     }
 
-    public function children() : MorphToMany
+    public function children(): MorphToMany
     {
-        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot( 'order', 'id')->orderByPivot('order');
+        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('order', 'id')->orderByPivot('order');
     }
 
-    public function publicPage() : BelongsTo
+    public function publicPage(): BelongsTo
     {
         return $this->belongsTo(Page::class, 'public_page_id');
     }
 
-    public function draftPage() : HasOne
+    public function draftPage(): HasOne
     {
         return $this->hasOne(Page::class, 'public_page_id');
     }
@@ -60,7 +61,7 @@ class Page extends Model
         $query->whereNotNull('published_at');
     }
 
-    protected static function newFactory() : PageFactory
+    protected static function newFactory(): PageFactory
     {
         return new PageFactory();
     }
@@ -74,5 +75,7 @@ class Page extends Model
         static::deleting(function (Page $page) {
             (new DeletePageAction($page))->removeBlocks();
         });
+
     }
+
 }

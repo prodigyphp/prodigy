@@ -14,7 +14,7 @@ use function PHPUnit\Framework\assertNotNull;
 use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertSame;
 
-it('can publish a page', function () {
+it('can duplicate a page', function () {
     $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
     $page = Page::factory()->create(['title' => 'Hey You', 'slug' => 'hey-you']);
 

@@ -41,17 +41,17 @@ class Block extends Model implements HasMedia {
         return $this->morphTo();
     }
 
-    public function parentBlock() : Block
+    public function parentBlock(): Block
     {
         return $this->morphedByMany(Block::class, 'prodigy_links')->first();
     }
 
-    public function pages() : MorphToMany
+    public function pages(): MorphToMany
     {
         return $this->morphedByMany(Page::class, 'prodigy_links');
     }
 
-    public function children() : MorphToMany
+    public function children(): MorphToMany
     {
         return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order', 'id')->orderByPivot('order');
     }
@@ -92,7 +92,7 @@ class Block extends Model implements HasMedia {
 
         $this
             ->addMediaConversion('small')
-           ->width(750)
+            ->width(750)
             ->height(750)
             ->queued();
     }
@@ -104,9 +104,29 @@ class Block extends Model implements HasMedia {
     }
 
     /**
-     * Handle events for Block
-     * Most specifically, when deleting needs to cascade.
+     * We are recursively iterating through all the children to
+     * get our children moved over to the newParent. If it's
+     * global, we just attach it. Otherwise, we need to manually
+     * create all the new blocks.
      */
+    public function deepCopy(Page|Block $newParent, Block &$oldBlock)
+    {
+        if ($oldBlock->is_global) {
+            $newParent->blocks()->attach($oldBlock->id);
+            return;
+        }
+
+        $newBlock = $oldBlock->replicate();
+        $newBlock->save();
+        $newParent->blocks()->attach($newBlock->id);
+
+        foreach ($oldBlock->children()->get() as $child) {
+            static::deepCopy($newBlock, $child);
+        }
+
+    }
+
+
     protected static function booted(): void
     {
         static::deleting(function (Block $block) {

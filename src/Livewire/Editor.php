@@ -9,10 +9,12 @@ use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
 use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
+use ProdigyPHP\Prodigy\Actions\DuplicatePageAction;
 use ProdigyPHP\Prodigy\Actions\PublishPageAction;
 use ProdigyPHP\Prodigy\Facades\Prodigy;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
+use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
 class Editor extends Component {
@@ -41,6 +43,7 @@ class Editor extends Component {
         'publishDraft',
         'deleteDraft',
         'createPage',
+        'duplicatePageFromDraft',
         'deletePage',
         'editPageSettings',
         'addChildBlockThenEdit'];
@@ -99,7 +102,8 @@ class Editor extends Component {
     {
         Gate::authorize('viewProdigy', auth()->user());
 
-        (new DeleteLinkAction($link_id))->execute();
+        $link = Link::find($link_id);
+        (new DeleteLinkAction($link))->execute();
         $this->emit('fireGlobalRefresh');
     }
 
@@ -145,6 +149,20 @@ class Editor extends Component {
 
         $this->editing_page = null;
         $this->updateState('pageEditor');
+    }
+
+    public function duplicatePageFromDraft(int $page_id)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $draft = Page::find($page_id);
+        $page = Page::find($draft->public_page_id); // get the *published* page
+        $new_page = (new DuplicatePageAction($page))->execute();
+
+        $this->redirect($new_page->slug . "?editing=true");
+        // @TODO indicate success
+        // @TODO write tests for duplication
+        // @TODO change state to page editor.
     }
 
     public function viewEntriesByType(string $type)

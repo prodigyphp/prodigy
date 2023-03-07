@@ -7,38 +7,31 @@ use ProdigyPHP\Prodigy\Models\Link;
 
 class DeleteLinkAction {
 
-    protected Link $link;
 
-    public function __construct(int $link_id)
-    {
-        info('before link find');
-        info($link_id);
-        $this->link = Link::findOrFail($link_id);
-        info('past link find');
-    }
+    public function __construct(protected Link $link) {}
 
     public function execute(): void
     {
+        $this->removeBlocks()
+            ->deleteLink();
+    }
 
+    /* We separately manage deleting global blocks.
+     * and block deletion cascades
+     */
+    public function removeBlocks(): self
+    {
         $block = $this->link->block;
 
-        // We separately manage deleting global blocks.
         if (!$block->is_global) {
-            // Delete non-global child blocks.
-            $children = $block->children;
-            $children->map(function ($child) {
-                if (!$child->is_global) {
-                    $child->delete();
-                }
-            });
-
-            // Delete block itself.
             $block->delete();
         }
+        return $this;
+    }
 
-        // Remove the connection.
+    public function deleteLink()
+    {
         $this->link->delete();
-
     }
 
 }

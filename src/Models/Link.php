@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -48,6 +49,18 @@ class Link extends Model {
     public function child() : BelongsTo
     {
         return $this->block();
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Link $link) {
+            (new DeleteLinkAction($link))->removeBlocks();
+        });
+
+        static::replicating(function (Link $link) {
+            dd("@TODO Replicate Links");
+//            (new DeletePageAction($page))->removeBlocks();
+        });
     }
 
 
