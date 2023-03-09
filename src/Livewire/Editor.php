@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
+use ProdigyPHP\Prodigy\Actions\DeleteEntryAction;
 use ProdigyPHP\Prodigy\Actions\DeleteLinkAction;
 use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
@@ -36,6 +37,7 @@ class Editor extends Component {
         'viewEntriesByType',
         'createEntryByType',
         'editEntry',
+        'deleteEntry',
         'editBlock',
         'duplicateLink',
         'deleteLink',
@@ -76,6 +78,15 @@ class Editor extends Component {
         $this->editing_entry = null; // clear anything else out first.
         $this->editing_entry = Entry::find($id);
         $this->editorState = 'entryEditor';
+    }
+
+    public function deleteEntry(int $entry_id)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $entry = Entry::find($entry_id);
+        (new DeleteEntryAction($entry))->execute();
+        $this->emit('fireGlobalRefresh');
     }
 
     public function addChildBlockThenEdit($key, $parent_block_id): void

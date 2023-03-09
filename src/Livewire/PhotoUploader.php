@@ -11,6 +11,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Entry;
 use Symfony\Component\Yaml\Yaml;
 
 class PhotoUploader extends Component {
@@ -18,16 +19,16 @@ class PhotoUploader extends Component {
     use WithFileUploads;
 
     public $photo;
-    public Block $block;
+    public Block|Entry $block;
     public string $key;
 
     public string $preview;
 
-    protected $listeners = ['refresh'=> '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
 
-    public function mount(int $block_id, string $array_key)
+    public function mount(Block|Entry $block, string $array_key)
     {
-        $this->block = Block::find($block_id);
+        $this->block = $block;
         $this->key = $array_key;
     }
 
@@ -56,11 +57,11 @@ class PhotoUploader extends Component {
 
     public function delete()
     {
-          Gate::authorize('viewProdigy', auth()->user());
+        Gate::authorize('viewProdigy', auth()->user());
 
-          $this->block->getFirstMedia('prodigy_photos')->delete();
-          $this->emit('fireGlobalRefresh');
-          $this->emitSelf('refresh');
+        $this->block->getFirstMedia('prodigy_photos')->delete();
+        $this->emit('fireGlobalRefresh');
+        $this->emitSelf('refresh');
     }
 
     public function render()

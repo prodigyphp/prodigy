@@ -94,7 +94,6 @@ class ProdigyPage extends Component {
          */
         if (is_numeric($block_key)) {
             $block = $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
-            // don't open the block if we're just dragging it.
 
         } else {
             $block = $blockAdder->createBlockByKey($block_key)->execute();

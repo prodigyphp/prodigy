@@ -31,6 +31,8 @@ module.exports = {
         },
     },
     safelist: [
-        'pro-grid-cols-2', 'pro-grid-cols-3', 'pro-grid-cols-4', 'pro-grid-cols-5', 'pro-grid-cols-6',
+        'pro-grid-cols-1', 'pro-grid-cols-2', 'pro-grid-cols-3', 'pro-grid-cols-4', 'pro-grid-cols-5', 'pro-grid-cols-6',
+        'md:pro-grid-cols-1', 'md:pro-grid-cols-2', 'md:pro-grid-cols-3', 'md:pro-grid-cols-4', 'md:pro-grid-cols-5', 'md:pro-grid-cols-6',
+        'lg:pro-grid-cols-1', 'lg:pro-grid-cols-2', 'lg:pro-grid-cols-3', 'lg:pro-grid-cols-4', 'lg:pro-grid-cols-5', 'lg:pro-grid-cols-6',
     ]
 }

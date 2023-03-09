@@ -1,6 +1,9 @@
 fields:
-  columns:
+  columns_lg:
     type: dropdown
+    default: 4
+    label: Columns (LG)
+    width: 33
     options:
       - 1
       - 2
@@ -8,6 +11,47 @@ fields:
       - 4
       - 5
       - 6
+  columns_md:
+    type: dropdown
+    label: Columns (MD)
+    default: 2
+    width: 33
+    options:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+  columns_xs:
+    type: dropdown
+    width: 33
+    label: Columns (XS)
+    default: 1
+    options:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+  gap:
+    label: Gap between Columns
+    type: numberwithunit
+    width: 50
+    options:
+      - 'px'
+      - 'rem'
+      - '%'
+      - 'vw'
+  alignment:
+    type: dropdown
+    default: start
+    width: 50
+    options:
+      - Start
+      - Center
+      - End
   repeater:
     type: repeater
     label: Grid Items

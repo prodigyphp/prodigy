@@ -27,14 +27,4 @@ class GetDraftAction {
         });
     }
 
-//    protected function replicatePage(Page $public_page): Page
-//    {
-//        $draft = $public_page->replicate()->fill([
-//            'public_page_id' => $public_page->id
-//        ]);
-//        $draft->save();
-//
-//        return $draft;
-//    }
-
 }

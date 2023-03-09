@@ -23,7 +23,7 @@ fields:
   max_width:
     type: text
     width: 34
-    show: contentWidth:fixed|width:fixed
+    show: content_width:fixed|width:fixed
     rules: numeric|nullable
 
   columns:

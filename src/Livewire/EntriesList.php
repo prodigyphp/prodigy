@@ -5,6 +5,7 @@ namespace ProdigyPHP\Prodigy\Livewire;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
+use ProdigyPHP\Prodigy\Actions\ReorderEntriesAction;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
@@ -26,9 +27,21 @@ class EntriesList extends Component {
         $this->entry_schema = (new GetSchemaAction())->getEntrySchema($type);
     }
 
+    public function reorder(int $entry_id, int $newOrder)
+    {
+        $entry = Entry::find($entry_id);
+        (new ReorderEntriesAction($entry))->execute($newOrder);
+        $this->emit('fireGlobalRefresh');
+    }
+
     public function render()
     {
-        $this->entries = Entry::ofType($this->entry_type)->get();
+        $orderByField = $this->entry_schema['orderBy'] ?? '';
+        $this->entries = Entry::ofType($this->entry_type)
+            ->when($orderByField, function ($q, $orderByField) {
+                return $q->orderBy($orderByField);
+            })
+            ->get();
         return view('prodigy::livewire.entries-list');
     }
 

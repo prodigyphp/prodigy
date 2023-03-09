@@ -7,37 +7,6 @@
   \*********************************/
 /***/ (() => {
 
-// import './bootstrap';
-
-// import Alpine from 'alpinejs'
-//
-// window.Alpine = Alpine
-// Alpine.start()
-
-// if(!window.Alpine instanceof Alpine) {
-//
-// }
-
-// import Sortable  from '@shopify/draggable';
-
-// require('@shopify/draggable')
-
-// window.sortable = require('@shopify/draggable/lib/sortable');
-
-startDraggingLink = function startDraggingLink(event, element, link_id) {
-  console.log(element);
-  console.log(event);
-  showDropzone();
-  // element.classList.add('hi');
-  element.setAttribute('draggable', 'true');
-  // event.dataTransfer.setData('text/plain', link_id);
-};
-
-stopDraggingLink = function stopDraggingLink(element) {
-  element.setAttribute('draggable', 'false');
-  console.log('cant drag wrapper');
-  hideDropzone();
-};
 showDropzone = function showDropzone() {
   document.querySelectorAll('.prodigy-dropzone').forEach(function (x) {
     return x.classList.add('prodigy-highlight-dropzone');
@@ -60,6 +29,13 @@ deletePage = function deletePage(id) {
   var response = confirm("Permanently delete?");
   if (response) {
     Livewire.emit('deletePage', id);
+  }
+};
+deleteEntry = function deleteEntry(id) {
+  console.log(id);
+  var response = confirm("Permanently delete?");
+  if (response) {
+    Livewire.emit('deleteEntry', id);
   }
 };
 

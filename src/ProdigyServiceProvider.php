@@ -69,6 +69,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
 
         Relation::enforceMorphMap([
             'page' => 'ProdigyPHP\Prodigy\Models\Page',
+            'entry' => 'ProdigyPHP\Prodigy\Models\Entry',
             'block' => 'ProdigyPHP\Prodigy\Models\Block',
         ]);
 

@@ -22,7 +22,6 @@ class AddBlockAction {
 
     public function execute(): Block
     {
-
         if (!$this->column_index) {
             return $this->insertAtRowLevel();
         } else {
@@ -60,7 +59,9 @@ class AddBlockAction {
         $this->block = $link->child;
 
         // we're moving the block, so we need to delete the old link.
-        $link->delete();
+        // But if we directly delete it, it will delete the block too.
+        $link->parent()->children()->detach($link->child->id);
+
         return $this;
     }
 
@@ -91,21 +92,18 @@ class AddBlockAction {
             ];
             $order++;
         }
-
         // Detach old
         $this->page->blocks()->detach($blocks->pluck('id'));
 
         // Create all new attachments
         $this->page->blocks()->attach($new_blocks);
 
-        // Send back the link we created.
+        // Send back the block we created.
         return $this->block;
-//        return $this->findLink($new_block, $this->page);
     }
 
     protected function insertIntoColumn(): Block
     {
-
         // find the block
         $row = $this->page->blocks()->wherePivot('order', $this->block_order)->first();
 

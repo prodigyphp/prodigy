@@ -57,10 +57,6 @@ class Link extends Model {
             (new DeleteLinkAction($link))->removeBlocks();
         });
 
-        static::replicating(function (Link $link) {
-            dd("@TODO Replicate Links");
-//            (new DeletePageAction($page))->removeBlocks();
-        });
     }
 
 

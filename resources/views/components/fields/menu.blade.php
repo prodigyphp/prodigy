@@ -15,6 +15,7 @@
 
     <div class="pro-relative" x-data="{
         {{$key}}: @entangle("block.content.{$key}"),
+        editItem: [],
         addItem() {
             this.{{$key}}.push({title: '', 'url': ''});
         },
@@ -32,21 +33,36 @@
           let oldIndex = event.dataTransfer.getData('text/plain')
           this.swapPosition(oldIndex, newIndex);
         },
-        edit(event, index) {
+        openEdit(event, index) {
+
+            // Hide other open forms.
+            document.getElementById('sortable-{{ $key }}')
+                .querySelectorAll('.edit-form').forEach((form) => {
+                    form.setAttribute('draggable', true);
+                    form.classList.add('pro-hidden');
+                });
+
+            // Get data
+            this.editItem = this.{{$key}}[index];
+
+            // Open relevant form.
             parent = event.target.closest('li');
             parent.removeAttribute('draggable');
             parent.querySelector('.edit-form').classList.remove('pro-hidden');
-            console.log(parent);
         },
-        closeEdit(event) {
+        closeEdit(event, index) {
+            this.{{$key}}[index] = this.editItem;
             parent = event.target.closest('.edit-form');
-
             parent.closest('li').setAttribute('draggable', true);
             parent.classList.add('pro-hidden');
-            parent.classList.add('pro-hidden');
+        },
+        initialize() {
+            if(!Array.isArray(this.{{$key}})){
+                this.{{$key}} = [];
+            }
         }
-    }">
-        <ul id="sortable-{{$key}}">
+    }" x-init="initialize()">
+        <ul id="sortable-{{$key}}" wire:ignore>
             <template x-for="(item, index) in {{$key}}">
                 <li draggable="true"
                     x-on:drop.prevent="handleDrop($event, index); $el.classList.remove('pro-bg-blue-500'); $el.classList.add('pro-bg-white');"
@@ -61,7 +77,7 @@
                         </div>
                         <div>
                             <button
-                                    x-on:click="edit($event, index)"
+                                    x-on:click="openEdit($event, index)"
                                     class="pro-text-blue-500 hover:pro-text-blue-700 hover:pro-underline pro-mr-2">
                                 Edit
                             </button>
@@ -72,17 +88,17 @@
                         </div>
                     </div>
                     <div class="edit-form pro-hidden">
-                        <div class="py-4 mt-2 border-t border-gray-100">
+                        <div class="pro-py-3 pro-mt-2 pro-border-t pro-border-gray-100">
                             <x-prodigy::editor.label label="Title" class="text-xs" />
-                            <x-prodigy::editor.input type="text" x-model.lazy="{{$key}}[index].title" class="pro-mb-4" />
+                            <x-prodigy::editor.input type="text" x-model.lazy="editItem.title" class="pro-mb-4" />
 
                             <x-prodigy::editor.label label="URL" class="text-xs" />
-                            <x-prodigy::editor.input type="text" x-model.lazy="{{$key}}[index].url" class="pro-mb-4" />
+                            <x-prodigy::editor.input type="text" x-model.lazy="editItem.url" class="pro-mb-4" />
 
                             <x-prodigy::editor.label label="CSS Classes" class="text-xs" />
-                            <x-prodigy::editor.input type="text" x-model.lazy="{{$key}}[index].css_classes" />
+                            <x-prodigy::editor.input type="text" x-model.lazy="editItem.css_classes" />
                         </div>
-                        <button x-on:click="closeEdit($event)" class="pro-gray-700 hover:pro-underline pro-mb-2">Close</button>
+                        <button x-on:click="closeEdit($event, index)" class="pro-gray-700 hover:pro-underline pro-pt-2 pro-mb-2">Save & Close</button>
                     </div>
 
                 </li>

@@ -24,7 +24,7 @@
 
         <livewire:prodigy-editor :page="$page"/>
 
-        <div class="pro-order-2 pro-absolute pro-inset-0 lg:pro-relative lg:pro-min-h-screen lg:pro-max-h-screen lg:pro-inset-auto pro-bg-white pro-flex-grow pro-overflow-scroll">
+        <div class="pro-order-2 pro-absolute pro-inset-0 lg:pro-relative lg:pro-min-h-screen lg:pro-max-h-screen lg:pro-inset-auto pro-flex-grow pro-overflow-scroll">
             @endif
 
             <main>

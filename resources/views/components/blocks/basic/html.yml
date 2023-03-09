@@ -1,0 +1,5 @@
+fields:
+  html:
+    label: none
+    type: code
+

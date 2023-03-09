@@ -78,23 +78,6 @@ class Block extends Model implements HasMedia {
             ->addMediaConversion('preview')
             ->fit(Manipulations::FIT_CROP, 300, 300);
 
-        $this
-            ->addMediaConversion('large')
-            ->width(2500)
-            ->height(2500)
-            ->queued();
-
-        $this
-            ->addMediaConversion('medium')
-            ->width(1500)
-            ->height(1500)
-            ->queued();
-
-        $this
-            ->addMediaConversion('small')
-            ->width(750)
-            ->height(750)
-            ->queued();
     }
 
     public function registerMediaCollections(): void
@@ -111,19 +94,34 @@ class Block extends Model implements HasMedia {
      */
     public function deepCopy(Page|Block $newParent, Block &$oldBlock)
     {
+        $order = $oldBlock->pivot->order ?? 1;
+        $column = $oldBlock->pivot->column ?? null;
+
         if ($oldBlock->is_global) {
-            $newParent->blocks()->attach($oldBlock->id);
+            $newParent->children()->attach($oldBlock->id, ['order' => $order, 'column' => $column]);
             return;
         }
 
         $newBlock = $oldBlock->replicate();
         $newBlock->save();
-        $newParent->blocks()->attach($newBlock->id);
+
+        if($oldBlock->hasMedia('prodigy_photos')) {
+            $this->syncMedia($oldBlock, $newBlock);
+        }
+
+        $newParent->children()->attach($newBlock->id, ['order' => $order, 'column' => $column]);
 
         foreach ($oldBlock->children()->get() as $child) {
             static::deepCopy($newBlock, $child);
         }
 
+    }
+
+    public function syncMedia(Block $oldBlock, Block $newBlock) : Media
+    {
+        $media = $oldBlock->getFirstMedia('prodigy_photos');
+
+        return $media->copy($newBlock, 'prodigy_photos');
     }
 
 

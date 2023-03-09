@@ -1,0 +1,12 @@
+fields:
+  type:
+    type: dropdown
+    default: vimeo
+    options:
+      - Vimeo
+      - Youtube
+
+  url:
+    type: text
+    label: Video URL
+    rules: required

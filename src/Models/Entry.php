@@ -47,23 +47,6 @@ class Entry extends Model implements HasMedia {
             ->addMediaConversion('preview')
             ->fit(Manipulations::FIT_CROP, 300, 300);
 
-        $this
-            ->addMediaConversion('large')
-            ->width(2500)
-            ->height(2500)
-            ->queued();
-
-        $this
-            ->addMediaConversion('medium')
-            ->width(1500)
-            ->height(1500)
-            ->queued();
-
-        $this
-            ->addMediaConversion('small')
-            ->width(750)
-            ->height(750)
-            ->queued();
     }
 
     public function registerMediaCollections(): void
