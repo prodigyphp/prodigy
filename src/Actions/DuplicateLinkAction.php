@@ -56,7 +56,6 @@ class DuplicateLinkAction {
     protected static function replicateRelations($oldModel, &$newModel)
     {
         foreach ($oldModel->getRelations() as $relation => $modelCollection) {
-
             foreach ($modelCollection as $model) {
                 $childModel = $model->replicate();
                 $childModel->push();

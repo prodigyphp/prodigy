@@ -2,10 +2,12 @@
 
 namespace ProdigyPHP\Prodigy\Actions;
 
+use Illuminate\Database\Eloquent\Collection;
 use ProdigyPHP\Prodigy\Models\Entry;
 
 class ReorderEntriesAction {
 
+    protected Collection $blocks;
     protected Entry $entry;
     protected string $type;
 
@@ -36,5 +38,11 @@ class ReorderEntriesAction {
             $newly_ordered_entry->update(['order' => $order]);
             $order++;
         }
+    }
+
+    public function forEntriesByType() : self
+    {
+
+        return $this;
     }
 }

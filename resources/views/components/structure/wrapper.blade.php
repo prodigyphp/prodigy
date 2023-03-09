@@ -21,6 +21,7 @@
          // If it's max width, update margin_left and margin_right and set the max width.
          if($fields->has('width', 'max_width') && $fields['width'] == 'fixed') {
                 $margin_right = $margin_left = 'auto';
+                $margin_units = ''; // avoid autopx
                 $styles .= "max-width:{$fields['max_width']}px;";
          }
 

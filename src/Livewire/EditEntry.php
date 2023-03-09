@@ -42,8 +42,24 @@ class EditEntry extends Component {
         $this->validate();
         $this->block->content = $this->block->content->filter(); // removes null values so we don't fill the db with null.
 
+        if($this->needsOrder()) {
+            $this->setOrder();
+        }
+
         $this->block->save();
         $this->close();
+    }
+
+    public function needsOrder() : bool
+    {
+        return !$this->block->order &&
+                array_key_exists('orderBy', $this->schema) &&
+                $this->schema['orderBy'] == 'order';
+    }
+
+    public function setOrder() {
+        $highest_entry = Entry::ofType($this->schema['type'])->orderBy('order', 'desc')->select('order')->first() ?? 0;
+        $this->block->order = $highest_entry->order +1;
     }
 
     public function close(): void

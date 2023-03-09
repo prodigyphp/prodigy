@@ -2,7 +2,7 @@
     $field_label = $entry_schema['labels']['field_label'] ;
 @endphp
 
-<div>
+<div class="pro-flex pro-flex-col pro-max-h-screen">
     <x-prodigy::editor.nav label="{{ $entry_schema['labels']['plural'] ?? str($entry_schema['type'])->title() }}"
                            :page="$page" currentState="entriesList">
         <button wire:click="$emit('createEntryByType', '{{$entry_schema['type']}}')">
@@ -10,7 +10,7 @@
         </button>
     </x-prodigy::editor.nav>
 
-    <div class=" px-4">
+    <div class=" px-4 pro-overflow-scroll">
 
         @forelse($entries as $entry_item)
 
@@ -22,7 +22,7 @@
                     x-on:dragover.prevent="$el.classList.add('pro-bg-blue-500');$el.classList.remove('pro-bg-white');"
                     x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-500');$el.classList.add('pro-bg-white');">
                 <x-slot:label>
-                    {{ $entry_item['content'][$field_label] }}
+                    {{ $entry_item['content'][$field_label] ?? '' }}
                 </x-slot:label>
                 <x-slot:actions>
                     <button
@@ -47,5 +47,6 @@
             </div>
 
         @endforelse
+        <div class="pro-pb-8"></div>
     </div>
 </div>
