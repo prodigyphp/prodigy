@@ -2,6 +2,7 @@
 
 namespace ProdigyPHP\Prodigy\Livewire;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -25,6 +26,9 @@ class EditBlock extends Component {
         }
 
         $rules = [];
+        $rules['block.is_global'] = 'nullable';
+        $rules['block.global_title'] = ($this->block->is_global) ? 'required' : 'nullable'; // it's required if it's global, or nullable if it's not required.
+
         foreach ($this->schema['fields'] as $attribute => $element) {
 
             // check for subfields at the top level
@@ -50,18 +54,14 @@ class EditBlock extends Component {
                         $rules["block.content.{$field_key}"] = $field_element['rules'] ?? '';
                     }
                 }
-
             }
-
         }
-
         return $rules;
-
     }
 
     public function mount(Block $block, GetSchemaAction $schemaBuilder)
     {
-//        $this->link = $link;
+        Gate::authorize('viewProdigy', auth()->user());
         $this->block = $block;
 
         // get registered fields list.
@@ -174,6 +174,7 @@ class EditBlock extends Component {
 
     public function save()
     {
+        Gate::authorize('viewProdigy', auth()->user());
         $this->validate();
         $this->block->content = $this->block->content->filter(fn($val) => $val != null); // removes null values so we don't fill the db with null.
 
@@ -193,6 +194,22 @@ class EditBlock extends Component {
 
         // Otherwise go back to the blocks list.
         $this->emit('updateState', 'blocksList');
+    }
+
+    /**
+     * Change the block to global to allow for headers and footers.
+     */
+    public function toggleGlobalBlock(bool $newValue): void
+    {
+        // Toggle the global flag.
+        $this->block->is_global = $newValue;
+
+        // Set a title if we need to.
+        if ($newValue && !$this->block->global_title) {
+            $this->block->global_title = $this->block->title;
+        }
+
+        $this->block->save();
     }
 
     public function render()

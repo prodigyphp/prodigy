@@ -14,6 +14,7 @@ class BlocksList extends Component {
 
     public Collection $blocks;
     public Collection $groups;
+    public Collection $global_blocks;
 
     public function mount(Page $page)
     {
@@ -23,7 +24,13 @@ class BlocksList extends Component {
     public function render()
     {
         $this->groups = $this->getBlocks();
+        $this->global_blocks = $this->getGlobalBlocks();
         return view('prodigy::livewire.blocks-list');
+    }
+
+    public function getGlobalBlocks(): Collection
+    {
+        return Block::where('is_global', true)->get();
     }
 
     public function getBlocks()

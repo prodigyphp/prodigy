@@ -19,7 +19,7 @@ class ReorderEntriesAction {
 
     public function execute(int $new_order)
     {
-        $entries = Entry::ofType($this->type)->get();
+        $entries = Entry::ofType($this->type)->orderBy('order')->get();
 
         // Remove the existing entry from the list.
         $entries = $entries->filter(function($e){
@@ -27,7 +27,7 @@ class ReorderEntriesAction {
         });
 
         // We count starting at one, but PHP arrays start at zero, so we have to manually adjust.
-        $zero_based_order = $new_order - 1;
+        $zero_based_order = $new_order;
 
         // splice in the block to the collection.
         $entries->splice($zero_based_order, 0, [$this->entry]);

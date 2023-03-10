@@ -65,6 +65,12 @@ class AddBlockAction {
         return $this;
     }
 
+    public function attachGlobalBlock(int $block_id):self
+    {
+        $this->block = Block::find($block_id);
+        return $this;
+    }
+
     public function createBlockByKey(string $block_key):self
     {
         $this->block_key = $block_key;
@@ -82,16 +88,21 @@ class AddBlockAction {
         // splice in the block to the collection.
         $blocks->splice($zero_based_order, 0, [$this->block]);
 
+
         $new_blocks = [];
         $order = 1;
 
-        // Reorder the blocks
+        /**
+         * Reorder blocks
+         * @TODO: right now, this prevents global content from appearing on the same page twice.
+         */
         foreach($blocks as $newly_ordered_block) {
             $new_blocks[$newly_ordered_block->id] = [
                 'order' => $order,
             ];
             $order++;
         }
+
         // Detach old
         $this->page->blocks()->detach($blocks->pluck('id'));
 

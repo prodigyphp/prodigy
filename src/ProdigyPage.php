@@ -88,18 +88,19 @@ class ProdigyPage extends Component {
             ->atColumnPosition($column_order);
 
         /**
-         * Either move the existing block or create a new block.
-         *      Existing blocks pass their ID as an integer
-         *      New blocks pass their key ('blocks.header.header') as a string.
+         * Three options for adding blocks:
+         * 1. $block_key is a number, so we're reordering
+         * 2. $block_key starts with _GLOBAL_ so it's a global block that needs to be attached.
+         * 3. $block_key is a keyed path to a block, so it needs to be created.
          */
         if (is_numeric($block_key)) {
             $block = $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
-
+        } elseif (str($block_key)->startsWith('_GLOBAL')) {
+            $id = str($block_key)->remove('_GLOBAL_')->toInteger();
+            $block = $blockAdder->attachGlobalBlock($id)->execute();
         } else {
             $block = $blockAdder->createBlockByKey($block_key)->execute();
-
-            // Opens the editor once it's been created.
-            $this->emit('editBlock', $block->id);
+            $this->emit('editBlock', $block->id); // Open the editor once it's been created.
         }
 
         // Refresh is required in order to update order on all blocks in the frontend.

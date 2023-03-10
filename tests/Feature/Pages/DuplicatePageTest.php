@@ -1,6 +1,5 @@
 <?php
 
-use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
 use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\Editor;
