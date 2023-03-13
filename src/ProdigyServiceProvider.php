@@ -109,9 +109,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     protected function gate()
     {
         Gate::define('viewProdigy', function ($user) {
-            return in_array($user->email, [
-                '' // Insert emails which should be allowed to access Prodigy here.
-            ]);
+            return in_array($user->email, config('prodigy.access_emails') );
         });
     }
 

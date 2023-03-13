@@ -1,0 +1,16 @@
+type: sample
+role: entry
+orderBy: order
+slug: sample
+
+labels:
+  singular: Sample
+  plural: Samples
+  field_label: title
+
+fields:
+  photo:
+    type: image
+  title:
+    type: text
+    rules: required
