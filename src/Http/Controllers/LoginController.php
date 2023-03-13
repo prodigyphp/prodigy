@@ -30,6 +30,6 @@ class LoginController {
         }
         session()->regenerate();
 
-        return redirect(config('prodigy.home', '/') . "?editing=true");
+        return redirect(config('prodigy.home', '/') . "?pro_editing=true");
     }
 }

@@ -26,11 +26,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
+        // Reference: https://github.com/spatie/laravel-package-tools
         $package
             ->name('prodigy')
             ->hasConfigFile()
@@ -114,7 +110,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     {
         Gate::define('viewProdigy', function ($user) {
             return in_array($user->email, [
-                'stephen@bate-man.com'
+                '' // Insert emails which should be allowed to access Prodigy here.
             ]);
         });
     }

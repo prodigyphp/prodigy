@@ -16,7 +16,7 @@
         'pro-bg-gray-700/10' => ($page_item->slug == $page->slug),
         'pro-py-3 pro-text-sm pro-font-regular pro-flex pro-items-center pro-w-full hover:pro-bg-gray-700/10 pro-px-4'
         ])
-                    href="{{ $page_item->slug  }}?editing=true">
+                    href="{{ $page_item->slug  }}?pro_editing=true">
 
                 <p class="pro-flex-grow">{{ $page_item->title }}</p>
                 <button wire:click.prevent="$emit('editPageSettings', {{ $page_item->id }})">

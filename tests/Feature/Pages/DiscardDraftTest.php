@@ -18,7 +18,7 @@ it('can discard a draft', function () {
     $page = Page::factory()->create(['title' => 'Hey You', 'slug' => 'hey-you']);
 
     // Edit to trigger creation of a draft.
-    Livewire::withQueryParams(['editing' => true])
+    Livewire::withQueryParams(['pro_editing' => true])
         ->test(ProdigyPage::class, ['wildcard' => 'hey-you'])
         ->assertSet('editing', true);
 

@@ -2,6 +2,7 @@
 
 namespace ProdigyPHP\Prodigy\Livewire;
 
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
@@ -18,6 +19,8 @@ class EditEntry extends Component {
     public $schema;
     public array $fields;
 
+    public string $editor_title;
+
     // @TODO RULES
     protected function rules()
     {
@@ -27,9 +30,10 @@ class EditEntry extends Component {
         return $this->iterateSchemaToBuildRules();
     }
 
-    public function mount(Entry $entry, GetSchemaAction $schemaBuilder)
+    public function mount(int $entry_id, GetSchemaAction $schemaBuilder)
     {
-        $this->block = $entry;
+        Gate::authorize('viewProdigy', auth()->user());
+        $this->block = Entry::find($entry_id);
 
         // get registered fields list.
         $this->fields = config('prodigy.fields');
@@ -65,7 +69,7 @@ class EditEntry extends Component {
     public function close(): void
     {
         // go back to the entries list.
-        $this->emit('updateState', 'entriesList');
+        $this->emit('updateState', 'entriesList', null, $this->block->type);
     }
 
     public function render()

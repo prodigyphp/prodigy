@@ -60,10 +60,10 @@ class EditBlock extends Component {
         return $rules;
     }
 
-    public function mount(Block $block, GetSchemaAction $schemaBuilder)
+    public function mount(int $block_id, GetSchemaAction $schemaBuilder)
     {
         Gate::authorize('viewProdigy', auth()->user());
-        $this->block = $block;
+        $this->block = Block::find($block_id);
 
         // get registered fields list.
         $this->fields = config('prodigy.fields');

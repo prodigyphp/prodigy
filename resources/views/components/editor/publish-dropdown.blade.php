@@ -51,7 +51,7 @@
                 x-on:click.outside="close($refs.button)"
                 :id="$id('dropdown-button')"
                 style="display: none;"
-                class="pro-z-[20] pro-absolute pro-overflow-hidden pro-inset-0 pro-bg-white pro-shadow-xl pro-flex pro-gap-2 pro-p-4"
+                class="pro-z-[1000] pro-absolute pro-overflow-hidden pro-inset-0 pro-bg-white pro-shadow-xl pro-flex pro-gap-2 pro-p-4"
         >
 
             <x-prodigy::editor.button
@@ -74,7 +74,7 @@
                 style="display:none;"
                 x-show="open"
                 x-transition.opacity
-                class="pro-fixed pro-inset-0 pro-bg-gray-700/25"></div>
+                class="pro-fixed pro-inset-0 pro-bg-gray-700/25 pro-z-[999]"></div>
 
     </div>
 

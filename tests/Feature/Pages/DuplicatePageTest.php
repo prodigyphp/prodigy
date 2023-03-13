@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
 use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\Editor;
@@ -21,7 +22,7 @@ it('can duplicate a page', function () {
 
     // Load the page and create a draft.
     // Drafts are automatically created when loading prodigy editor
-    Livewire::withQueryParams(['editing' => true])
+    Livewire::withQueryParams(['pro_editing' => true])
         ->test(ProdigyPage::class, ['wildcard' => 'hey-you'])
         ->assertSet('editing', true);
 

@@ -22,7 +22,7 @@ it('can publish a page', function () {
 
     // Load the page and create a draft.
     // Drafts are automatically created when loading prodigy editor
-    Livewire::withQueryParams(['editing' => true])
+    Livewire::withQueryParams(['pro_editing' => true])
         ->test(ProdigyPage::class, ['wildcard' => 'hey-you'])
         ->assertSet('editing', true);
 

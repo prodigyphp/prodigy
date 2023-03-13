@@ -3,24 +3,22 @@
 >
 
     @if($editor_state == 'blocksList')
-        <livewire:prodigy-blocks-list :page="$page"></livewire:prodigy-blocks-list>
+        <livewire:prodigy-blocks-list :page="$page" />
 
     @elseif($editor_state == 'pagesList')
-        <livewire:prodigy-pages-list :page="$page"></livewire:prodigy-pages-list>
+        <livewire:prodigy-pages-list :page="$page" />
 
     @elseif($editor_state == 'blockEditor')
-        <livewire:prodigy-edit-block key="{{ now() }}" :block="$editing_block"></livewire:prodigy-edit-block>
+        <livewire:prodigy-edit-block key="{{ now() }}" :block_id="$editor_detail" />
 
     @elseif($editor_state == 'entriesList')
-        <livewire:prodigy-entries-list key="{{ now() }}" :page="$page"
-                                       :type="$viewing_entries_type"></livewire:prodigy-entries-list>
+        <livewire:prodigy-entries-list key="{{ now() }}" :page="$page" :type="$entries_type" />
 
     @elseif($editor_state == 'entryEditor')
-        <livewire:prodigy-edit-entry key="{{ now() }}" :entry="$editing_entry"></livewire:prodigy-edit-entry>
+        <livewire:prodigy-edit-entry key="{{ now() }}" :entry_id="$editor_detail" />
 
     @elseif($editor_state == 'pageEditor')
-        <livewire:prodigy-page-settings-edit
-                :page="$editing_page ?? new ProdigyPHP\Prodigy\Models\Page()"></livewire:prodigy-page-settings-edit>
+        <livewire:prodigy-page-settings-edit :page_id="$editor_detail" />
     @endif
 
 

@@ -14,7 +14,7 @@ it('can edit a page', function () {
 
     $page = Page::factory()->create(['title' => 'Hey You', 'slug' => 'hey-you']);
 
-    Livewire::withQueryParams(['editing' => true])
+    Livewire::withQueryParams(['pro_editing' => true])
         ->test(ProdigyPage::class, ['wildcard' => 'hey-you'])
         ->assertSet('editing', true)
         ->assertSee('Publish');
@@ -25,9 +25,9 @@ it('cannot edit a page without a user', function () {
 
     $page = Page::factory()->create(['title' => 'Hey You', 'slug' => 'hey-you']);
 
-    Livewire::withQueryParams(['editing' => true])
+    Livewire::withQueryParams(['pro_editing' => true])
         ->test(ProdigyPage::class, ['wildcard' => 'hey-you'])
-        ->assertNotSet('editing', true);
+        ->assertStatus(404);
 
 });
 
@@ -36,7 +36,7 @@ it('creates a draft when editing a page', function () {
 
     $page = Page::factory()->create(['title' => 'Hey You', 'slug' => 'hey-you']);
 
-    Livewire::withQueryParams(['editing' => true])
+    Livewire::withQueryParams(['pro_editing' => true])
         ->test(ProdigyPage::class, ['wildcard' => 'hey-you'])
         ->assertSet('editing', true);
 

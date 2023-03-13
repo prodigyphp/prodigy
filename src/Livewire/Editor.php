@@ -25,15 +25,12 @@ class Editor extends Component {
     public Collection $blocks;
     public Collection $groups;
 
-    public ?Block $editing_block;
-    public ?Entry $editing_entry;
-    public ?Page $editing_page;
-
-    public string $viewing_entries_type;
 
     public string $editor_state = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor, entriesList, entryEditor
+    public int|null $editor_detail = null; // the detail ID to use for editing blocks, entries, or pages.
+    public null|string $entries_type = null;
 
-     protected $queryString = ['editor_state'];
+     protected $queryString = ['editor_state', 'editor_detail', 'entries_type'];
 
     protected $listeners = [
         'viewEntriesByType',
@@ -64,22 +61,20 @@ class Editor extends Component {
 
     public function editBlock($id)
     {
-        $this->editing_block = null; // clear anything else out first.
-        $this->editing_block = Block::find($id);
+        $this->editor_detail = $id;
         $this->editor_state = 'blockEditor';
     }
 
     public function createEntryByType(string $type)
     {
-        $this->editing_entry = Entry::create(['type' => $type, 'title' => '', 'slug' => '']); // clear anything else.
+        $entry = Entry::create(['type' => $type, 'title' => '', 'slug' => '']); // clear anything else.
+        $this->editor_detail = $entry->id;
         $this->editor_state = 'entryEditor';
     }
 
     public function editEntry($id)
     {
-        $this->editing_entry = null; // clear anything else out first.
-        $this->editing_entry = Entry::find($id);
-        $this->editor_state = 'entryEditor';
+        $this->updateState('entryEditor', $id);
     }
 
     public function deleteEntry(int $entry_id)
@@ -146,12 +141,14 @@ class Editor extends Component {
         $page = Page::find($page_id);
         (new DeletePageAction($page))->execute();
 
-        $this->redirect(config('prodigy.home') . "?editing=true");
+        $this->redirect(config('prodigy.home') . "?pro_editing=true");
 //        $this->emit('fireGlobalRefresh');
     }
 
-    public function updateState(string $stateString)
+    public function updateState(string $stateString, int $editor_detail = null, string $entries_type = null)
     {
+        $this->editor_detail = $editor_detail;
+        $this->entries_type = $entries_type;
         $this->emit('fireGlobalRefresh');
         $this->editor_state = $stateString;
     }
@@ -160,7 +157,6 @@ class Editor extends Component {
     {
         Gate::authorize('viewProdigy', auth()->user());
 
-        $this->editing_page = null;
         $this->updateState('pageEditor');
     }
 
@@ -172,7 +168,7 @@ class Editor extends Component {
         $page = Page::find($draft->public_page_id); // get the *published* page
         $new_page = (new DuplicatePageAction($page))->execute();
 
-        $this->redirect($new_page->slug . "?editing=true");
+        $this->redirect($new_page->slug . "?pro_editing=true");
         // @TODO indicate success
         // @TODO write tests for duplication
         // @TODO change state to page editor.
@@ -182,16 +178,14 @@ class Editor extends Component {
     {
         Gate::authorize('viewProdigy', auth()->user());
 
-        $this->viewing_entries_type = $type;
-        $this->updateState('entriesList');
+        $this->updateState('entriesList', null, $type);
     }
 
     public function editPageSettings(int $page_id)
     {
         Gate::authorize('viewProdigy', auth()->user());
 
-        $this->editing_page = Page::findOrfail($page_id);
-        $this->updateState('pageEditor');
+        $this->updateState('pageEditor', $page_id);
     }
 
 }

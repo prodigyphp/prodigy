@@ -20,10 +20,12 @@ class PageSettingsEditor extends Component {
       'page.slug' => 'required',
     ];
 
-    public function mount(Page $page = null)
+    public function mount(int $page_id = null)
     {
-        $this->title = ($page->title) ? "Settings – {$page->title}" : "Create Page";
-        $this->page = ($page->title) ? $page : new Page();
+        $this->page = Page::findOr($page_id, function() {
+           return new Page();
+        });
+        $this->title = ($this->page->title) ? "Settings – {$this->page->title}" : "Create Page";
     }
 
     public function render()
