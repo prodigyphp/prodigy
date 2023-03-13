@@ -63,7 +63,7 @@
                         ondragstart="event.dataTransfer.setData('text/plain', '_GLOBAL_{{ $block['id'] }}'); showDropzone()"
                         ondragend="hideDropzone()"
                         class="pro-text-sm pro-font-medium hover:pro-bg-white pro-flex-grow hover:pro-border-gray-100 hover:pro-shadow-sm pro-rounded-sm pro-transition pro-cursor-grab pro-px-4 pro-py-3">
-                    {{ $block['global_title'] ?? $block['title'] ?? '' }}
+                    {{ $block['global_title'] ?? $block['title'] ?? '' }} <span class="pro-text-gray-400">{{ $block['id'] }}</span>
                 </div>
             @endforeach
         </div>

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Livewire;
-use ProdigyPHP\Prodigy\Commands\ProdigyCommand;
+use ProdigyPHP\Prodigy\Commands\ProdigyBackupCommand;
 use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Livewire\BlockComponent;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
@@ -36,7 +36,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('2023_03_01_create_prodigy_tables')
-            ->hasCommand(ProdigyCommand::class);
+            ->hasCommand(ProdigyBackupCommand::class);
     }
 
     public function bootingPackage(): void

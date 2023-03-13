@@ -1,5 +1,5 @@
 @php
-    $field_label = $entry_schema['labels']['field_label'] ;
+    $field_label = $entry_schema['labels']['field_label'] ?? '' ;
 @endphp
 
 <div class="pro-flex pro-flex-col pro-max-h-screen">
