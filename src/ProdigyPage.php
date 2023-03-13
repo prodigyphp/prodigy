@@ -32,7 +32,7 @@ class ProdigyPage extends Component {
     {
 
         // Show edit screen if user can edit, and has requested edit access.
-        $this->editing = Gate::check('viewProdigy', auth()->user()) && request('editing');
+        $this->editing = Gate::check('viewProdigy', auth()->user()) && request('pro_editing');
 
         $this->page = $this->getPage($wildcard);
 
@@ -131,15 +131,16 @@ class ProdigyPage extends Component {
 
     /**
      * Toggle the "editing" flag so it edits the page.
+     * @TODO needs to be more thoughtful
      */
     protected function toggleProdigyPanel(bool $startEditing = true)
     {
         $url = Str::of(request()->header('Referer'));
 
         if ($startEditing) {
-            $url = $url->append('?editing=true');
+            $url = $url->append('?pro_editing=true');
         } else {
-            $url = $url->remove('?editing=true');
+            $url = $url->remove('?pro_editing=true');
         }
 
         return redirect($url);

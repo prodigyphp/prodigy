@@ -2,28 +2,25 @@
        style="box-shadow: inset -15px 0 15px -15px rgb(0 0 0 / 15%)"
 >
 
-    @if($editorState == 'blocksList')
+    @if($editor_state == 'blocksList')
         <livewire:prodigy-blocks-list :page="$page"></livewire:prodigy-blocks-list>
-    @endif
 
-    @if($editorState == 'pagesList')
+    @elseif($editor_state == 'pagesList')
         <livewire:prodigy-pages-list :page="$page"></livewire:prodigy-pages-list>
-    @endif
 
-    @if($editorState == 'blockEditor')
+    @elseif($editor_state == 'blockEditor')
         <livewire:prodigy-edit-block key="{{ now() }}" :block="$editing_block"></livewire:prodigy-edit-block>
-    @endif
 
-    @if($editorState == 'entriesList')
-        <livewire:prodigy-entries-list key="{{ now() }}" :page="$page" :type="$viewing_entries_type"></livewire:prodigy-entries-list>
-    @endif
+    @elseif($editor_state == 'entriesList')
+        <livewire:prodigy-entries-list key="{{ now() }}" :page="$page"
+                                       :type="$viewing_entries_type"></livewire:prodigy-entries-list>
 
-    @if($editorState == 'entryEditor')
+    @elseif($editor_state == 'entryEditor')
         <livewire:prodigy-edit-entry key="{{ now() }}" :entry="$editing_entry"></livewire:prodigy-edit-entry>
-    @endif
 
-    @if($editorState == 'pageEditor')
-            <livewire:prodigy-page-settings-edit :page="$editing_page ?? new ProdigyPHP\Prodigy\Models\Page()"></livewire:prodigy-page-settings-edit>
+    @elseif($editor_state == 'pageEditor')
+        <livewire:prodigy-page-settings-edit
+                :page="$editing_page ?? new ProdigyPHP\Prodigy\Models\Page()"></livewire:prodigy-page-settings-edit>
     @endif
 
 

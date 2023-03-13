@@ -3,6 +3,7 @@
 namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Actions\ReorderEntriesAction;
@@ -29,6 +30,7 @@ class EntriesList extends Component {
 
     public function reorder(int $entry_id, int $newOrder)
     {
+        Gate::authorize('viewProdigy', auth()->user());
         $entry = Entry::find($entry_id);
         (new ReorderEntriesAction($entry))->execute($newOrder);
         $this->emit('fireGlobalRefresh');

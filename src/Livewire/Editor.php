@@ -31,7 +31,9 @@ class Editor extends Component {
 
     public string $viewing_entries_type;
 
-    public string $editorState = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor, entriesList, entryEditor
+    public string $editor_state = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor, entriesList, entryEditor
+
+     protected $queryString = ['editor_state'];
 
     protected $listeners = [
         'viewEntriesByType',
@@ -64,20 +66,20 @@ class Editor extends Component {
     {
         $this->editing_block = null; // clear anything else out first.
         $this->editing_block = Block::find($id);
-        $this->editorState = 'blockEditor';
+        $this->editor_state = 'blockEditor';
     }
 
     public function createEntryByType(string $type)
     {
         $this->editing_entry = Entry::create(['type' => $type, 'title' => '', 'slug' => '']); // clear anything else.
-        $this->editorState = 'entryEditor';
+        $this->editor_state = 'entryEditor';
     }
 
     public function editEntry($id)
     {
         $this->editing_entry = null; // clear anything else out first.
         $this->editing_entry = Entry::find($id);
-        $this->editorState = 'entryEditor';
+        $this->editor_state = 'entryEditor';
     }
 
     public function deleteEntry(int $entry_id)
@@ -151,7 +153,7 @@ class Editor extends Component {
     public function updateState(string $stateString)
     {
         $this->emit('fireGlobalRefresh');
-        $this->editorState = $stateString;
+        $this->editor_state = $stateString;
     }
 
     public function createPage()

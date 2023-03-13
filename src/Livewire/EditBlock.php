@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
+use ProdigyPHP\Prodigy\Actions\ReorderBlocksAction;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 
@@ -86,6 +87,16 @@ class EditBlock extends Component {
 
         $this->schema = $schemaBuilder->execute($this->block) ?? []; // if content field is empty (as opposed to []), it'll error.
         $this->schema = array_merge_recursive($this->schema, $schemaBuilder->standardSchema()); // add all the normal fields.
+    }
+
+    public function reorder(int $block_id, int $newOrder)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $block = Block::find($block_id);
+        (new ReorderBlocksAction($block))->execute($newOrder);
+
+        $this->emit('fireGlobalRefresh');
     }
 
 

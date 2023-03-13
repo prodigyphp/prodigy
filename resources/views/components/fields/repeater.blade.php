@@ -6,7 +6,14 @@
 
     <div class="pro-flex pro-flex-col" x-data="">
         @forelse($block->children as $child_block)
-            <x-prodigy::editor.block-row :block="$child_block" :label="'Item ' . $loop->index + 1">
+            <x-prodigy::editor.block-row :block="$child_block"
+                                         :label="'Item ' . $loop->index + 1"
+                                         draggable="true"
+                                         x-on:dragstart="event.dataTransfer.setData('text/plain', {{ $child_block->id }});"
+                                         x-on:drop.prevent="$wire.reorder(event.dataTransfer.getData('text/plain'), {{ $loop->index }}); $el.classList.remove('pro-bg-blue-500'); $el.classList.add('pro-bg-white');"
+                                         x-on:dragover.prevent="$el.classList.add('pro-bg-blue-500');$el.classList.remove('pro-bg-white');"
+                                         x-on:dragleave.prevent="$el.classList.remove('pro-bg-blue-500');$el.classList.add('pro-bg-white');"
+            >
                 <x-slot:actions>
                     <button
                             x-on:click="Livewire.emit('editBlock', {{ $child_block->id }})"
