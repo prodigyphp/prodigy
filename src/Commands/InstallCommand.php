@@ -59,7 +59,7 @@ class InstallCommand extends Command {
         $this->call('storage:link');
 
         $this->info('Prodigy is installed...make something great!');
-        $this->info('Log in at' . config('app.url') . '/prodigy/login');
+        $this->info('Log in at ' . config('app.url') . '/prodigy/login');
         return self::SUCCESS;
     }
 

@@ -27,7 +27,7 @@ class UserCommand extends Command {
 
         $user = (new CreateUserAction($this->user_name, $this->email, $this->password))->execute();
 
-        $this->info('New user created!...make something great!');
+        $this->info('New user created!');
         return self::SUCCESS;
     }
 
