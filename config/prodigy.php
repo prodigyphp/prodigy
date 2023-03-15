@@ -46,7 +46,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Currently it's only /prodigy/login. Customize if you want to change
-    | where prodigy resides.
+    | where prodigy resides. No need for an opening slash.
     |
     */
     'path' => 'prodigy',
@@ -62,20 +62,20 @@ return [
     |
     */
     'fields' => [
-        'text' => Text::class,
-        'number' => Number::class,
-        'numberwithunit' => NumberWithUnit::class,
+        'code' => Code::class,
+        'color' => Color::class,
         'dropdown' => Dropdown::class,
         'group' => Group::class,
-        'texteditor' => TextEditor::class,
-        'color' => Color::class,
         'image' => Image::class,
+        'link' => Link::class,
+        'menu' => Menu::class,
+        'number' => Number::class,
+        'numberwithunit' => NumberWithUnit::class,
         'pixelgroup' => PixelGroup::class,
         'range' => Range::class,
-        'link' => Link::class,
         'repeater' => Repeater::class,
-        'menu' => Menu::class,
-        'code' => Code::class
+        'text' => Text::class,
+        'texteditor' => TextEditor::class,
         // register more fields here...
     ],
 

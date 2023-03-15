@@ -5,10 +5,8 @@
 - Couldn't find migration stub
 - how do we install media library?
 - "blocks" directory doesn't exist.
-- adding new photos should remove the old photo. since it just adds a new one, it doesn't update.
 - clicking "home" to edit home on the pages list breaks because it's "//?editing=true"
 - new rows need to allow content width to be not set.
-- columns should default to 1. right now it's unset.
 
 `composer require prodigyphp/prodigy`
 ```bash

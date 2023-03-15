@@ -168,7 +168,7 @@ class Editor extends Component {
         $page = Page::find($draft->public_page_id); // get the *published* page
         $new_page = (new DuplicatePageAction($page))->execute();
 
-        $this->redirect($new_page->slug . "?pro_editing=true");
+        $this->redirect("/" . $new_page->slug . "?pro_editing=true");
         // @TODO indicate success
         // @TODO write tests for duplication
         // @TODO change state to page editor.

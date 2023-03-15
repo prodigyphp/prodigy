@@ -10,17 +10,29 @@ use ProdigyPHP\Prodigy\Models\Page;
 
 class BlockComponent extends Component {
 
-    public int $block_id;
+    // You can send either the ID or the title of the block.
+    public ?int $block_id = null;
+    public ?string $block_title = null;
+
     public ?Block $block;
 
-    public function mount(int $block_id)
+    public function mount(int $block_id = null, string $block_title = null)
     {
-        $this->block_id = $block_id;
+        if ($block_id) {
+            $this->block_id = $block_id;
+        } elseif ($block_title) {
+            $this->block_title = $block_title;
+        }
     }
 
     public function render()
     {
-        $this->block = Block::where('id', $this->block_id)->with('children')->first();
+        // Get the block either with the ID or the title.
+        $query = Block::query();
+        $query->when($this->block_id, fn ($q) => $q->where('id', $this->block_id));
+        $query->when($this->block_title, fn ($q) => $q->where('global_title', $this->block_title));
+        $this->block = $query->with('children')->first();
+
         return view('prodigy::livewire.block-component');
     }
 

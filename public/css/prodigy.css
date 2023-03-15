@@ -872,6 +872,9 @@ video {
 .pro-z-\[900\] {
   z-index: 900;
 }
+.pro-z-\[999\] {
+  z-index: 999;
+}
 .pro-order-1 {
   order: 1;
 }
@@ -919,6 +922,9 @@ video {
 }
 .pro-mt-3 {
   margin-top: 0.75rem;
+}
+.pro-mt-4 {
+  margin-top: 1rem;
 }
 .pro-mt-\[-4px\] {
   margin-top: -4px;
@@ -1392,6 +1398,10 @@ video {
     position: absolute;
     height: 6px;
     top:-3px;
+}
+
+.hide-when-editing {
+    display: none!important;
 }
 
 

@@ -31,6 +31,7 @@ class TestCase extends Orchestra {
     {
 //        config()->set('database.default', 'testing');
         $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('prodigy.access_emails', ['stephen@bate-man.com']);
 
         $app['config']->set('database.connections.sqlite', [
             'driver' => 'sqlite',

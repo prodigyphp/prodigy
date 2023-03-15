@@ -15,8 +15,7 @@ class InstallCommand extends Command {
     public function handle(): int
     {
 
-        $this->comment('Thanks for using Prodigy. At this moment, it is still in early alpha, so let us know what issues you run into.');
-        $this->newLine(3);
+        $this->comment('Thanks for using Prodigy. It is still in early alpha, so let us know what issues you run into.');
         $this->comment('Publishing Prodigy assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'prodigy-assets']);
 
@@ -26,9 +25,24 @@ class InstallCommand extends Command {
         $this->comment('Publishing Prodigy config file...');
         $this->callSilent('vendor:publish', ['--tag' => 'prodigy-config']);
 
+        $this->comment('Publishing Spatie\'s media config file...');
+        $this->callSilent('vendor:publish', ['--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider', '--tag' => 'migrations']);
+
+        if ($this->confirm('Add a user?')) {
+            $this->call('prodigy:user');
+        }
+
+        if ($this->confirm('Enable dynamic routing?')) {
+            $this->comment('Updating web.php to allow automatic routing to Prodigy...');
+            $this->configureDynamicRouting();
+        }
+
         if ($this->confirm('Would you like a sample schema and block?')) {
-            File::copyDirectory($this->getStubPath('/Stubs/blocks'), resource_path('views/components'));
-            File::copyDirectory($this->getStubPath('/Stubs/schemas'), resource_path('views/components'));
+            $this->comment('Creating some starter blocks in your components folder...');
+            File::copyDirectory($this->getStubPath('/Stubs/blocks'), resource_path('views/components/blocks'));
+
+            $this->comment('Creating a starter schema in your resources folder...');
+            File::copyDirectory($this->getStubPath('/Stubs/schemas'), resource_path('schemas'));
         }
 
         $this->info('Prodigy is installed...make something great!');
@@ -37,8 +51,16 @@ class InstallCommand extends Command {
 
     protected function getStubPath(string $subpath)
     {
-        return __DIR__ . '..' . $subpath;
+        return __DIR__ . '/..' . $subpath;
     }
 
+    protected function configureDynamicRouting(): void
+    {
+        file_put_contents(
+            base_path('routes/web.php'),
+            "Route::get('/{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
+            FILE_APPEND
+        );
+    }
 
 }

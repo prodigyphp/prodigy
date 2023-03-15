@@ -30,6 +30,7 @@ class LoginController {
         }
         session()->regenerate();
 
-        return redirect(config('prodigy.home', '/') . "?pro_editing=true");
+        $redirect_url = "/" . config('prodigy.path') . "/welcome?pro_editing=true";
+        return redirect($redirect_url);
     }
 }

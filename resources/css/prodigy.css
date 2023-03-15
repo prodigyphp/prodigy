@@ -14,6 +14,10 @@
     top:-3px;
 }
 
+.hide-when-editing {
+    display: none!important;
+}
+
 
 .prodigy-dropzone.prodigy-dropzone-regular.prodigy-highlight-dropzone {
     @apply pro-rounded-md pro-p-4 pro-border-2 pro-border-black/50 pro-border-dashed pro-text-black/50 pro-text-center;

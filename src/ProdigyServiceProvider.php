@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Livewire;
+use ProdigyPHP\Prodigy\Commands\InstallCommand;
 use ProdigyPHP\Prodigy\Commands\ProdigyBackupCommand;
+use ProdigyPHP\Prodigy\Commands\UserCommand;
 use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
+use ProdigyPHP\Prodigy\Http\Controllers\WelcomeController;
 use ProdigyPHP\Prodigy\Livewire\BlockComponent;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
 use ProdigyPHP\Prodigy\Livewire\EditEntry;
@@ -32,7 +35,11 @@ class ProdigyServiceProvider extends PackageServiceProvider {
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('2023_03_01_create_prodigy_tables')
-            ->hasCommand(ProdigyBackupCommand::class);
+            ->hasCommands([
+                ProdigyBackupCommand::class,
+                InstallCommand::class,
+                UserCommand::class,
+            ]);
     }
 
     public function bootingPackage(): void
@@ -94,8 +101,9 @@ class ProdigyServiceProvider extends PackageServiceProvider {
                 'web'
             ])
             ->group(function () {
-                Route::get('/login', [LoginController::class, 'index']);
+                Route::get('/login', [LoginController::class, 'index'])->name('prodigy.login');
                 Route::post('/login', [LoginController::class, 'login'])->name('prodigy.login');
+                Route::get('/welcome', [WelcomeController::class, 'index']);
             });
     }
 

@@ -54,7 +54,7 @@
                 {{ __('Log In') }}
             </button>
 
-            <div class="flex items-center justify-center mt-4">
+            <div class="pro-flex pro-items-center pro-justify-center pro-mt-4 pro-hidden">
                 @if (Route::has('password.request'))
                     <a class="text-md text-gray-400 hover:text-gray-900 dark:hover:text-white"
                        href="{{ route('password.request') }}">

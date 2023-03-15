@@ -10,6 +10,6 @@ class Number extends Field {
 
     public function make($key, $data, Block|Entry|null $block)
     {
-        return view('prodigy::components.fields.integer', ['key' => $key, 'data' => $data]);
+        return view('prodigy::components.fields.number', ['key' => $key, 'data' => $data]);
     }
 }

@@ -4,12 +4,15 @@ namespace ProdigyPHP\Prodigy;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\AddBlockAction;
 use ProdigyPHP\Prodigy\Actions\GetDraftAction;
+use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
+use function Pest\Laravel\json;
 
 class ProdigyPage extends Component {
 
@@ -49,7 +52,7 @@ class ProdigyPage extends Component {
      * ties it to the particular page, if someone dropped <x-prodigy-page> on
      * the page.
      */
-    public function getSlug(?string $wildcard) : string
+    public function getSlug(?string $wildcard): string
     {
         return ($wildcard) ? $wildcard : request()->path();
     }
@@ -66,6 +69,12 @@ class ProdigyPage extends Component {
             return Page::where('slug', $slug)->public()->published()->first();
         }
 
+        // Get the special 'prodigy' welcome page, if it isn't there.
+        $prodigy_location = config('prodigy.path', 'prodigy');
+        if ($slug == "{$prodigy_location}/welcome") {
+            $this->createProdigyWelcomePage($slug, $prodigy_location);
+        }
+
         // Users CAN see unpublished pages, too.
         $page = Page::where('slug', $slug)->public()->first();
 
@@ -76,6 +85,24 @@ class ProdigyPage extends Component {
 
         // return the regular page for regular visitors
         return $page;
+    }
+
+    protected function createProdigyWelcomePage($slug, $prodigy_location): Page
+    {
+        return DB::transaction(function () use ($slug, $prodigy_location) {
+            return Page::where('slug', $slug)->firstOr(function () use ($slug, $prodigy_location) {
+                $page = Page::create(['title' => 'Welcome to Prodigy', 'slug' => "{$prodigy_location}/welcome"]);
+
+                $block = Block::create([
+                    'key' => 'prodigy::blocks.basic.texteditor',
+                    'content' => ['text' => "<h3 style='font-size:24px; margin-bottom:1rem;font-weight:bold;'>Welcome to Prodigy!</h3><p style='margin-bottom:2rem;'>Thanks for checking out Prodigy! I hope it is useful for you. This text is managed by the CMS, so press `escape` to start editing or create a new page.</p><p><a href='/". $slug ."?pro_editing=true&editor_state=pageEditor' class='hover:pro-bg-blue-600 pro-rounded-md' style='padding: 0.5rem 1rem;margin-right:1rem; background-color: #496CEB; color: white; font-weight:bold;'>Create Page</a><a href='https://prodigyphp.com/docs' class='hover:pro-text-blue-700'>Read docs</a></p>", 'show_on_page' => 'show', 'padding_left' => 0, 'padding_top' => 0, 'padding_right' => 0, 'padding_bottom' => 0]
+                ]);
+
+                $page->children()->attach($block->id, ['order' => 1]);
+
+                return $page;
+            });
+        });
     }
 
 

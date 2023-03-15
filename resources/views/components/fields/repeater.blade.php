@@ -29,7 +29,7 @@
         @empty
         @endforelse
         <x-prodigy::editor.button
-                x-on:click="Livewire.emit('addChildBlockThenEdit', 'repeater', {{ $block->id }});">+ Add New
+                x-on:click="Livewire.emit('addChildBlockThenEdit', 'repeater', {{ $block->id }});">+ {{ _('Add New') }}
         </x-prodigy::editor.button>
     </div>
 
