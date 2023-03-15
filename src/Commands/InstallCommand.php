@@ -16,6 +16,10 @@ class InstallCommand extends Command {
     {
 
         $this->comment('Thanks for using Prodigy. It is still in early alpha, so let us know what issues you run into.');
+        $this->comment('Doing an initial migration to make sure we have a users table....');
+        $this->callSilent('migrate');
+
+
         $this->comment('Publishing Prodigy assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'prodigy-assets']);
 
@@ -45,7 +49,14 @@ class InstallCommand extends Command {
             File::copyDirectory($this->getStubPath('/Stubs/schemas'), resource_path('schemas'));
         }
 
+        $this->comment('Doing a second migration to add Prodigy\'s tables...');
+        $this->callSilent('migrate');
+
+        $this->comment('Running storage:link to make images visible...');
+        $this->call('storage:link');
+
         $this->info('Prodigy is installed...make something great!');
+        $this->info('Log in at' . config('app.url') . '/prodigy/login');
         return self::SUCCESS;
     }
 
