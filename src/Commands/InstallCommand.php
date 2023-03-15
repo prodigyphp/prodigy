@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 use ProdigyPHP\Prodigy\Actions\BackupAction;
 use Illuminate\Support\Facades\File;
 
@@ -26,11 +27,16 @@ class InstallCommand extends Command {
         $this->comment('Publishing Prodigy config file...');
         $this->callSilent('vendor:publish', ['--tag' => 'prodigy-config']);
 
-        $this->comment('Publishing Spatie\'s media config file...');
-        $this->callSilent('vendor:publish', ['--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider', '--tag' => 'migrations']);
+        // Spatie creates a table here, so it MUST only run one time.
+        if (!Schema::hasTable('media')) {
+            $this->comment('Publishing Spatie\'s media config file...');
+            $this->callSilent('vendor:publish', ['--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider', '--tag' => 'migrations']);
+        } else {
+            $this->comment('Spatie\'s media config file is already published. Skipping.');
+        }
 
         $this->comment('Doing an initial migration to make sure we have a users table....');
-        $this->callSilent('migrate');
+        $this->call('migrate');
 
         if ($this->confirm('Add a user?')) {
             $this->call('prodigy:user');
