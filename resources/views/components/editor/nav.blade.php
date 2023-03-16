@@ -96,7 +96,15 @@
                 @endforelse
             @endif
 
+            <x-prodigy::editor.nav-separator/>
+            <form method="post" action="/prodigy/logout">
+                @csrf
+                <x-prodigy::editor.nav-button type="submit" class="pro-text-gray-500">
+                    {{ _('Log out') }}
+                </x-prodigy::editor.nav-button>
+            </form>
         </div>
+
 
     </div>
     {{ $slot }}

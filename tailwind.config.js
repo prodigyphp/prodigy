@@ -7,9 +7,9 @@ module.exports = {
         './resources/**/*.blade.php',
     ],
     extend: {},
-    corePlugins: {
-        preflight: false,
-    },
+    // corePlugins: {
+    //     preflight: false,
+    // },
     theme: {
         extend: {
             fontFamily: {

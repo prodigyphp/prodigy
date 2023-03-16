@@ -22,7 +22,7 @@
                     </button>
                     <button class="pro-text-gray-500 hover:pro-text-red-500 pro-relative pro-top-[0.2rem]"
                             x-on:click="alert('todo')">
-                        <x-prodigy::icons.close class="w-4"/>
+                        <x-prodigy::icons.close class="pro-w-4"/>
                     </button>
                 </x-slot:actions>
             </x-prodigy::editor.block-row>

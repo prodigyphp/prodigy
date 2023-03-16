@@ -112,6 +112,7 @@ class Editor extends Component {
 
         $link = Link::find($link_id);
         (new DeleteLinkAction($link))->execute();
+        $this->updateState('blocksList');
         $this->emit('fireGlobalRefresh');
     }
 

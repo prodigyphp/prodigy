@@ -1,6 +1,7 @@
 <div
         @keydown.meta.enter="$wire.save;"
         class="not-prose lg:not-prose pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-max-h-screen pro-min-h-screen">
+    @if($block)
     <div class="pro-flex-grow pro-overflow-scroll">
         <div class="pro-p-4 pro-flex pro-flex-wrap">
             <x-prodigy::editor.h2 class="pro-px-2 pro-flex">
@@ -58,6 +59,7 @@
 
         </div>
     </div>
+    @endif
     <div class="pro-flex pro-gap-2 pro-p-2 pro-w-full">
         <x-prodigy::editor.button class="pro-flex-grow" wire:click="save">
             Save

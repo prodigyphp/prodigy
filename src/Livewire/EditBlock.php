@@ -16,7 +16,7 @@ class EditBlock extends Component {
     use WithFileUploads;
 
     public Link $link;
-    public Block $block;
+    public ?Block $block = null;
     public $schema;
     public array $fields;
 
@@ -63,12 +63,15 @@ class EditBlock extends Component {
     public function mount(int $block_id, GetSchemaAction $schemaBuilder)
     {
         Gate::authorize('viewProdigy', auth()->user());
+
         $this->block = Block::find($block_id);
 
         // get registered fields list.
         $this->fields = config('prodigy.fields');
 
-        $this->getSchema($schemaBuilder);
+        if ($this->block) {
+            $this->getSchema($schemaBuilder);
+        }
     }
 
     public function updating()
@@ -155,7 +158,8 @@ class EditBlock extends Component {
         return (new $this->fields[$field_slug])->subfields;
     }
 
-    public function testConditionalLogic(string|array $rules): bool
+    public
+    function testConditionalLogic(string|array $rules): bool
     {
         // Convert a string into an array, delimited by |
         if (is_string($rules)) {
@@ -197,7 +201,7 @@ class EditBlock extends Component {
     {
 
         // If it's inside a repeater, go back to editing the repeater block.
-        if ($this->block->key == 'repeater') {
+        if (isset($this->block) && $this->block->key == 'repeater') {
             $parent_id = $this->block->parentBlock()->id;
             $this->emit('editBlock', $parent_id);
             return;

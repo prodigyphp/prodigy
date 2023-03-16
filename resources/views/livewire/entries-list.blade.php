@@ -10,7 +10,7 @@
         </button>
     </x-prodigy::editor.nav>
 
-    <div class=" px-4 pro-overflow-scroll">
+    <div class=" pro-px-4 pro-overflow-scroll">
 
         @forelse($entries as $entry_item)
 
@@ -32,12 +32,12 @@
                     </button>
                     <button class="pro-text-gray-500 hover:pro-text-red-500 pro-relative pro-top-[0.2rem]"
                             x-on:click="deleteEntry({{ $entry_item->id }})">
-                        <x-prodigy::icons.close class="w-4"/>
+                        <x-prodigy::icons.close class="pro-w-4"/>
                     </button>
                 </x-slot:actions>
             </x-prodigy::editor.block-row>
         @empty
-            <div class="px-4">
+            <div class="pro-px-4">
                 <p class="pro-mb-4">No {{ $entry_schema['labels']['plural'] ?? str($entry_schema['type'])->title() }}
                     found.</p>
                 <x-prodigy::editor.button class="pro-flex-grow"

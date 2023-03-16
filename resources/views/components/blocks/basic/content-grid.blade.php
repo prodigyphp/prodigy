@@ -30,13 +30,16 @@
     @forelse ($block->children as $child_block)
         @if($child_block->content)
             <div class="">
-                @if($child_block->content['link_type'] ?? false)
-                    <a href="{{ $child_block->content['link'] ?? '' }}">
-                        @endif
-                        <img src="{{ $child_block->getFirstMediaUrl('prodigy_photos') }}" alt=""/>
+                @if($image_url = $child_block->getFirstMediaUrl('prodigy_photos'))
+                    @if($child_block->content['link_type'] ?? false)
+                        <a href="{{ $child_block->content['link'] ?? '' }}">
+                    @endif
 
-                        @if($child_block->content['link_type'] ?? false)
-                    </a>
+                        <img src="{{ $image_url }}" alt=""/>
+
+                    @if($child_block->content['link_type'] ?? false)
+                        </a>
+                    @endif
                 @endif
 
                 <h3 class="">

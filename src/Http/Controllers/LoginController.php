@@ -21,16 +21,25 @@ class LoginController {
     /**
      * Handle an incoming authentication request.
      */
-    public function login(Request $request) : RedirectResponse
+    public function login(Request $request): RedirectResponse
     {
-        if (! Auth::attempt($request->only(['email', 'password']), true)) {
+        if (!Auth::attempt($request->only(['email', 'password']), true)) {
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);
         }
         session()->regenerate();
 
-        $redirect_url = "/" . config('prodigy.path') . "/welcome?pro_editing=true";
+        $redirect_url = config('prodigy.home') . "?pro_editing=true";
         return redirect($redirect_url);
     }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect(config('prodigy.home'));
+    }
+
 }

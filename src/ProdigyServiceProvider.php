@@ -103,6 +103,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
             ->group(function () {
                 Route::get('/login', [LoginController::class, 'index'])->name('prodigy.login');
                 Route::post('/login', [LoginController::class, 'login'])->name('prodigy.login');
+                Route::post('/logout', [LoginController::class, 'logout'])->name('prodigy.logout');
                 Route::get('/welcome', [WelcomeController::class, 'index']);
             });
     }
