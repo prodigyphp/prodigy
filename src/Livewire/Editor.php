@@ -140,7 +140,7 @@ class Editor extends Component {
         Gate::authorize('viewProdigy', auth()->user());
 
         $page = Page::find($page_id);
-        (new DeletePageAction($page))->execute();
+        (new DeletePageAction($page))->deleteDraft()->execute();
 
         $this->redirect(config('prodigy.home') . "?pro_editing=true");
 //        $this->emit('fireGlobalRefresh');
@@ -170,9 +170,6 @@ class Editor extends Component {
         $new_page = (new DuplicatePageAction($page))->execute();
 
         $this->redirect($new_page->slug . "?pro_editing=true");
-        // @TODO indicate success
-        // @TODO write tests for duplication
-        // @TODO change state to page editor.
     }
 
     public function viewEntriesByType(string $type)

@@ -72,7 +72,7 @@ class InstallCommand extends Command {
     {
         file_put_contents(
             base_path('routes/web.php'),
-            "Route::get('/{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
+            "Route::get('{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
             FILE_APPEND
         );
     }

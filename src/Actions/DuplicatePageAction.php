@@ -24,25 +24,26 @@ class DuplicatePageAction {
     public function execute(): Page
     {
         return DB::transaction(function () {
-            return $this->replicatePage()
-                ->replicateBlocks()
+            return $this->duplicatePage()
+                ->duplicateBlocks()
                 ->duplicateDraft()
                 ->getNewPage();
         });
     }
 
 
-    public function replicatePage(): self
+    public function duplicatePage(): self
     {
         $this->new_page = $this->original_page->replicate(['published_at']); // remove 'published_at' from new page.
         $this->new_page->public_page_id = $this->public_page_id; // attach public_page_id to the draft
+        $this->new_page->title = $this->original_page->title . ' 2'; // Change title so you can tell which is which.
         $this->new_page->slug = ($this->slug) ?? str($this->new_page->slug)->append('-2')->toString(); // add slug
         $this->new_page->save();
 
         return $this;
     }
 
-    public function replicateBlocks(): self
+    public function duplicateBlocks(): self
     {
         $this->blocks->each(function ($block) {
             $block->deepCopy($this->new_page, $block);

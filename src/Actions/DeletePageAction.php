@@ -36,6 +36,14 @@ class DeletePageAction {
         return $this;
     }
 
+    public function deleteDraft(): self
+    {
+        if($draft = $this->page->draftPage) {
+            (new DeletePageAction($draft))->execute();
+        }
+        return $this;
+    }
+
     public function deletePage(): self
     {
         $this->page->delete();
