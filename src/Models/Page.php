@@ -55,6 +55,15 @@ class Page extends Model {
         $query->has('publicPage');
     }
 
+    public function getMenuTitleAttribute()
+    {
+        if(!$this->slug) {
+            return $this->title;
+        }
+        $depth = str($this->slug)->substrCount('/') - 1;
+        return str_repeat('— ', $depth) . $this->title;
+    }
+
     // public pages are pages which do *not* have a public page attached.
     public function scopePublished(Builder $query)
     {

@@ -26,9 +26,15 @@ class PagesList extends Component {
         return view('prodigy::livewire.pages-list');
     }
 
-    public function getPages()
+    public function getPages(): Collection
     {
-        return Page::public()->get();
+        $pages = Page::public()->orderBy('slug')->get();
+
+//        $pages->map(function($page) {
+//            $page->display =
+//        });
+
+        return $pages;
     }
 
 }

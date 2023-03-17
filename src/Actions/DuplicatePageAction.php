@@ -36,7 +36,6 @@ class DuplicatePageAction {
     {
         $this->new_page = $this->original_page->replicate(['published_at']); // remove 'published_at' from new page.
         $this->new_page->public_page_id = $this->public_page_id; // attach public_page_id to the draft
-        $this->new_page->title = $this->original_page->title . ' 2'; // Change title so you can tell which is which.
         $this->new_page->slug = ($this->slug) ?? str($this->new_page->slug)->append('-2')->toString(); // add slug
         $this->new_page->save();
 

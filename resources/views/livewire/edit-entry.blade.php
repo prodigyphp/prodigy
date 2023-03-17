@@ -1,7 +1,7 @@
 <div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full pro-overflow-y-scroll">
     <div class="pro-flex-grow">
         <div class="pro-p-4 pro-flex pro-flex-wrap">
-            <x-prodigy::editor.h2 class="pro-px-2">{{ $block->title }}</x-prodigy::editor.h2>
+            <x-prodigy::editor.h2 class="pro-px-2">{{ $editor_title }}</x-prodigy::editor.h2>
             @if($errors->isNotEmpty())
                 @foreach($errors->all() as $error)
                     <p class="pro-text-red-500 pro-text-sm mb-2">{{ $error }}</p>

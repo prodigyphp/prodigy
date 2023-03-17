@@ -56,6 +56,11 @@ class ProdigyPage extends Component {
     public function getSlug(?string $wildcard): string
     {
         if($wildcard) {
+
+            // just add the damn slash at the beginning. There should always be a slash at the beginning of URLS.
+            if(!str($wildcard)->startsWith('/')) {
+                $wildcard = '/' . $wildcard;
+            }
             return $wildcard;
         }
 
@@ -86,7 +91,6 @@ class ProdigyPage extends Component {
 
         // Users CAN see unpublished pages, too.
         $page = Page::where('slug', $slug)->public()->first();
-
 
         // Find or create the draft to edit as an admin.
         if ($this->editing) {

@@ -10,7 +10,7 @@
         </button>
     </x-prodigy::editor.nav>
 
-    <div class=" pro-px-4 pro-overflow-scroll">
+    <div class=" pro-px-4 pro-overflow-scroll pro-pb-32">
 
         @forelse($entries as $entry_item)
 
@@ -37,16 +37,15 @@
                 </x-slot:actions>
             </x-prodigy::editor.block-row>
         @empty
-            <div class="pro-px-4">
-                <p class="pro-mb-4">No {{ $entry_schema['labels']['plural'] ?? str($entry_schema['type'])->title() }}
-                    found.</p>
+            <div class="">
+                <p class="pro-mb-4">{{ $entry_schema['labels']['plural'] ?? str($entry_schema['type'])->title() }}
+                    {{ _('not found') }}.</p>
                 <x-prodigy::editor.button class="pro-flex-grow"
                                           wire:click="$emit('createEntryByType', '{{$entry_schema['type']}}')">
-                    Create One
+                    {{ _('Create One') }}
                 </x-prodigy::editor.button>
             </div>
 
         @endforelse
-        <div class="pro-pb-8"></div>
     </div>
 </div>

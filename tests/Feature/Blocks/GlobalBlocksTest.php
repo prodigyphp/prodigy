@@ -16,7 +16,7 @@ it('can use a global block as a draft without duplicating', function () {
 
     livewire(PageSettingsEditor::class)
         ->set('page.title', 'Hey You')
-        ->set('page.slug', 'hey-you')
+        ->set('page.slug', '/hey-you')
         ->call('save');
 
     $page = Page::first();

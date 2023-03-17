@@ -1,10 +1,16 @@
 <div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full pro-overflow-y-scroll">
     <x-prodigy::editor.nav :label="$title" :page="$page" currentState="pageEditor">
-        <button class="pro-text-red-500 hover:pro-text-red-700 pro-text-[14px] pro-font-semibold" x-on:click="deletePage({{ $page->id }})">
+        <button class="pro-text-red-500 hover:pro-text-red-700 pro-text-[14px] pro-font-semibold"
+                x-on:click="deletePage({{ $page->id }})">
             {{ _('Delete') }}
         </button>
     </x-prodigy::editor.nav>
     <div class="pro-flex-grow pro-overflow-scroll pro-px-4">
+        @if($errors->isNotEmpty())
+            @foreach($errors->all() as $error)
+                <p class="pro-text-red-500 pro-text-sm mb-2">{{ $error }}</p>
+            @endforeach
+        @endif
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Title" for="title"></x-prodigy::editor.label>

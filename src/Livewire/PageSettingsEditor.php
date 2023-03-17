@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
@@ -16,10 +17,20 @@ class PageSettingsEditor extends Component {
     public $title;
     public bool $creating = false;
 
-    protected $rules = [
-        'page.title' => 'required',
-        'page.slug' => 'required',
-    ];
+    protected function getRules()
+    {
+        return [
+            'page.title' => 'required',
+            'page.slug' => [
+                'required',
+                'starts_with:/',
+                // we validate that the slug is unique *among all public pages*, by ignoring the draft page ID AND the public page ID.
+                Rule::unique('prodigy_pages', 'slug')->ignore($this->page->id)->where(function ($query) {
+                    return $query->where('id', '!=', $this->page->publicPage->id ?? null);
+                })
+            ]
+        ];
+    }
 
     public function mount(int $page_id = null)
     {
@@ -56,7 +67,7 @@ class PageSettingsEditor extends Component {
         ]);
 
         // We need to update both the draft AND the public page, if we have one.
-        if($publicPage = $this->page->publicPage) {
+        if ($publicPage = $this->page->publicPage) {
             $publicPage->update([
                 'slug' => $this->page->slug,
                 'title' => $this->page->title

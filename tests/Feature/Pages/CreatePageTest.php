@@ -12,7 +12,7 @@ it('can create a page', function () {
 
     livewire(PageSettingsEditor::class)
         ->set('page.title', 'Hey You')
-        ->set('page.slug', 'hey-you')
+        ->set('page.slug', '/hey-you')
         ->call('save');
 
     $page = Page::first();
@@ -26,7 +26,7 @@ it('cannot create a with the wrong user', function () {
 
     livewire(PageSettingsEditor::class)
         ->set('page.title', 'Hey You')
-        ->set('page.slug', 'hey-you')
+        ->set('page.slug', '/hey-you')
         ->call('save');
 
     $page = Page::first();
@@ -38,7 +38,7 @@ it('cannot create a with the wrong user', function () {
 it('cannot create a page with no user', function () {
     livewire(PageSettingsEditor::class)
         ->set('page.title', 'Hey You')
-        ->set('page.slug', 'hey-you')
+        ->set('page.slug', '/hey-you')
         ->call('save')
         ->assertForbidden();
 
