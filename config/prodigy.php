@@ -49,7 +49,7 @@ return [
     | where prodigy resides. No need for an opening slash.
     |
     */
-    'path' => 'prodigy',
+    'path' => '/prodigy',
 
     /*
     |--------------------------------------------------------------------------

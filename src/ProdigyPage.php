@@ -50,11 +50,20 @@ class ProdigyPage extends Component {
      * There are two kinds of routing, wildcard and page-based. This tries to pull
      * in the wildcard route, which would be set in the URL. Otherwise, it just
      * ties it to the particular page, if someone dropped <x-prodigy-page> on
-     * the page.
+     * the page. We manually add the first slash but request()->path() returns
+     * the slash for the home page, only, so we have to figure that out.
      */
     public function getSlug(?string $wildcard): string
     {
-        return ($wildcard) ? $wildcard : request()->path();
+        if($wildcard) {
+            return $wildcard;
+        }
+
+        if(request()->path() == '/') {
+            return '/';
+        }
+
+        return '/' . request()->path();
     }
 
     /**
@@ -77,6 +86,7 @@ class ProdigyPage extends Component {
 
         // Users CAN see unpublished pages, too.
         $page = Page::where('slug', $slug)->public()->first();
+
 
         // Find or create the draft to edit as an admin.
         if ($this->editing) {
