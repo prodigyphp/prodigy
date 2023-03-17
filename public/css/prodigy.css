@@ -1,501 +1,162 @@
-.prodigy-editor-root *,
-.prodigy-editor-root ::before,
-.prodigy-editor-root ::after {
-	box-sizing: border-box;
-}
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
 
 /**
-Use a more readable tab size (opinionated).
-*/
-
-.prodigy-editor-root {
-	-moz-tab-size: 4;
-	  -o-tab-size: 4;
-	     tab-size: 4;
-}
-
-/**
-1. Correct the line height in all browsers.
-2. Prevent adjustments of font size after orientation changes in iOS.
-*/
-
-.prodigy-editor-root {
-	line-height: 1.15;
-	/* 1 */
-	-webkit-text-size-adjust: 100%;
-	/* 2 */
-}
-
-/*
-Sections
-========
-*/
-
-/**
-Remove the margin in all browsers.
-*/
-
-.prodigy-editor-root {
-	margin: 0;
-}
-
-/**
-Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
-*/
-
-.prodigy-editor-root {
-	font-family: system-ui,
-	-apple-system, /* Firefox supports this but not yet `system-ui` */ 'Segoe UI',
-	Roboto,
-	Helvetica,
-	Arial,
-	sans-serif,
-	'Apple Color Emoji',
-	'Segoe UI Emoji';
-}
-
-/*
-Grouping content
-================
-*/
-
-/**
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-*/
-
-.prodigy-editor-root hr {
-	height: 0;
-	/* 1 */
-	color: inherit;
-	/* 2 */
-}
-
-/*
-Text-level semantics
-====================
-*/
-
-/**
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
-
-.prodigy-editor-root abbr[title] {
-	-webkit-text-decoration: underline dotted;
-	text-decoration: underline dotted;
-}
-
-/**
-Add the correct font weight in Edge and Safari.
-*/
-
-.prodigy-editor-root b,
-.prodigy-editor-root strong {
-	font-weight: bolder;
-}
-
-/**
-1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
-2. Correct the odd 'em' font sizing in all browsers.
-*/
-
-.prodigy-editor-root code,
-.prodigy-editor-root kbd,
-.prodigy-editor-root samp,
-.prodigy-editor-root pre {
-	font-family: ui-monospace,
-	SFMono-Regular,
-	Consolas,
-	'Liberation Mono',
-	Menlo,
-	monospace;
-	/* 1 */
-	font-size: 1em;
-	/* 2 */
-}
-
-/**
-Add the correct font size in all browsers.
-*/
-
-.prodigy-editor-root small {
-	font-size: 80%;
-}
-
-/**
-Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
-*/
-
-.prodigy-editor-root sub,
-.prodigy-editor-root sup {
-	font-size: 75%;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
-}
-
-.prodigy-editor-root sub {
-	bottom: -0.25em;
-}
-
-.prodigy-editor-root sup {
-	top: -0.5em;
-}
-
-/*
-Tabular data
-============
-*/
-
-/**
-1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
-2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
-*/
-
-.prodigy-editor-root table {
-	text-indent: 0;
-	/* 1 */
-	border-color: inherit;
-	/* 2 */
-}
-
-/*
-Forms
-=====
-*/
-
-/**
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-*/
-
-.prodigy-editor-root button,
-.prodigy-editor-root input,
-.prodigy-editor-root optgroup,
-.prodigy-editor-root select,
-.prodigy-editor-root textarea {
-	font-family: inherit;
-	/* 1 */
-	font-size: 100%;
-	/* 1 */
-	line-height: 1.15;
-	/* 1 */
-	margin: 0;
-	/* 2 */
-}
-
-/**
-Remove the inheritance of text transform in Edge and Firefox.
-1. Remove the inheritance of text transform in Firefox.
-*/
-
-.prodigy-editor-root button,
-.prodigy-editor-root select {
-	/* 1 */
-	text-transform: none;
-}
-
-/**
-Correct the inability to style clickable types in iOS and Safari.
-*/
-
-.prodigy-editor-root button,
-.prodigy-editor-root [type='button'],
-.prodigy-editor-root [type='reset'],
-.prodigy-editor-root [type='submit'] {
-	-webkit-appearance: button;
-}
-
-/**
-Remove the inner border and padding in Firefox.
-*/
-
-.prodigy-editor-root ::-moz-focus-inner {
-	border-style: none;
-	padding: 0;
-}
-
-/**
-Restore the focus styles unset by the previous rule.
-*/
-
-.prodigy-editor-root :-moz-focusring {
-	outline: 1px dotted ButtonText;
-}
-
-/**
-Remove the additional ':invalid' styles in Firefox.
-See: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
-*/
-
-.prodigy-editor-root :-moz-ui-invalid {
-	box-shadow: none;
-}
-
-/**
-Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
-*/
-
-.prodigy-editor-root legend {
-	padding: 0;
-}
-
-/**
-Add the correct vertical alignment in Chrome and Firefox.
-*/
-
-.prodigy-editor-root progress {
-	vertical-align: baseline;
-}
-
-/**
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
-
-.prodigy-editor-root ::-webkit-inner-spin-button,
-.prodigy-editor-root ::-webkit-outer-spin-button {
-	height: auto;
-}
-
-/**
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
-*/
-
-.prodigy-editor-root [type='search'] {
-	-webkit-appearance: textfield;
-	/* 1 */
-	outline-offset: -2px;
-	/* 2 */
-}
-
-/**
-Remove the inner padding in Chrome and Safari on macOS.
-*/
-
-.prodigy-editor-root ::-webkit-search-decoration {
-	-webkit-appearance: none;
-}
-
-/**
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Change font properties to 'inherit' in Safari.
-*/
-
-.prodigy-editor-root ::-webkit-file-upload-button {
-	-webkit-appearance: button;
-	/* 1 */
-	font: inherit;
-	/* 2 */
-}
-
-/*
-Interactive
-===========
-*/
-
-/*
-Add the correct display in Chrome and Safari.
-*/
-
-.prodigy-editor-root summary {
-	display: list-item;
-}
-
-/**
- * Manually forked from SUIT CSS Base: https://github.com/suitcss/base
- * A thin layer on top of normalize.css that provides a starting point more
- * suitable for web applications.
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
+
+.prodigy-editor-root html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
 /**
- * Removes the default spacing and border for appropriate elements.
+ * Remove the margin in all browsers.
  */
 
-.prodigy-editor-root blockquote,
-.prodigy-editor-root dl,
-.prodigy-editor-root dd,
-.prodigy-editor-root h1,
-.prodigy-editor-root h2,
-.prodigy-editor-root h3,
-.prodigy-editor-root h4,
-.prodigy-editor-root h5,
-.prodigy-editor-root h6,
-.prodigy-editor-root hr,
-.prodigy-editor-root figure,
-.prodigy-editor-root p,
-.prodigy-editor-root pre {
-	margin: 0;
-}
-
-.prodigy-editor-root button {
-	background-color: transparent;
-	background-image: none;
-}
-
-.prodigy-editor-root fieldset {
-	margin: 0;
-	padding: 0;
-}
-
-.prodigy-editor-root ol,
-.prodigy-editor-root ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.prodigy-editor-root body {
+  margin: 0;
 }
 
 /**
- * Tailwind custom reset styles
+ * Render the `main` element consistently in IE.
  */
 
-/**
- * 1. Use the user's configured `sans` font-family (with Tailwind's default
- *    sans-serif font stack as a fallback) as a sane default.
- * 2. Use Tailwind's default "normal" line-height so the user isn't forced
- *    to override it to ensure consistency even when using the default theme.
- */
-
-.prodigy-editor-root {
-	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	/* 1 */
-	line-height: 1.5;
-	/* 2 */
+.prodigy-editor-root main {
+  display: block;
 }
 
 /**
- * Inherit font-family and line-height from `html` so users can set them as
- * a class directly on the `html` element.
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
  */
 
-.prodigy-editor-root {
-	font-family: inherit;
-	line-height: inherit;
+.prodigy-editor-root h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
 }
+
+/* Grouping content
+   ========================================================================== */
 
 /**
- * 1. Prevent padding and border from affecting element width.
- *
- *    We used to set this in the html element and inherit from
- *    the parent element for everything else. This caused issues
- *    in shadow-dom-enhanced elements like <details> where the content
- *    is wrapped by a div with box-sizing set to `content-box`.
- *
- *    https://github.com/mozdevs/cssremedy/issues/4
- *
- *
- * 2. Allow adding a border to an element by just adding a border-width.
- *
- *    By default, the way the browser specifies that an element should have no
- *    border is by setting it's border-style to `none` in the user-agent
- *    stylesheet.
- *
- *    In order to easily add borders to elements by just setting the `border-width`
- *    property, we change the default border-style for all elements to `solid`, and
- *    use border-width to hide them instead. This way our `border` utilities only
- *    need to set the `border-width` property instead of the entire `border`
- *    shorthand, making our border utilities much more straightforward to compose.
- *
- *    https://github.com/tailwindcss/tailwindcss/pull/116
- */
-
-.prodigy-editor-root *,
-.prodigy-editor-root ::before,
-.prodigy-editor-root ::after {
-	box-sizing: border-box;
-	/* 1 */
-	border-width: 0;
-	/* 2 */
-	border-style: solid;
-	/* 2 */
-	border-color: currentColor;
-	/* 2 */
-}
-
-/*
- * Ensure horizontal rules are visible by default
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
  */
 
 .prodigy-editor-root hr {
-	border-top-width: 1px;
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
 }
 
 /**
- * Undo the `border-style: none` reset that Normalize applies to images so that
- * our `border-{width}` utilities have the expected effect.
- *
- * The Normalize reset is unnecessary for us since we default the border-width
- * to 0 on all elements.
- *
- * https://github.com/tailwindcss/tailwindcss/issues/362
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
  */
 
-.prodigy-editor-root img {
-	border-style: solid;
+.prodigy-editor-root pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
 }
 
-.prodigy-editor-root textarea {
-	resize: vertical;
-}
-
-.prodigy-editor-root input::-moz-placeholder, .prodigy-editor-root textarea::-moz-placeholder {
-	opacity: 1;
-	color: #9ca3af;
-}
-
-.prodigy-editor-root input::placeholder,
-.prodigy-editor-root textarea::placeholder {
-	opacity: 1;
-	color: #9ca3af;
-}
-
-.prodigy-editor-root button,
-.prodigy-editor-root [role="button"] {
-	cursor: pointer;
-}
+/* Text-level semantics
+   ========================================================================== */
 
 /**
- * Override legacy focus reset from Normalize with modern Firefox focus styles.
- *
- * This is actually an improvement over the new defaults in Firefox in our testing,
- * as it triggers the better focus styles even for links, which still use a dotted
- * outline in Firefox by default.
- */
-
-.prodigy-editor-root :-moz-focusring {
-	outline: auto;
-}
-
-.prodigy-editor-root table {
-	border-collapse: collapse;
-}
-
-.prodigy-editor-root h1,
-.prodigy-editor-root h2,
-.prodigy-editor-root h3,
-.prodigy-editor-root h4,
-.prodigy-editor-root h5,
-.prodigy-editor-root h6 {
-	font-size: inherit;
-	font-weight: inherit;
-}
-
-/**
- * Reset links to optimize for opt-in styling instead of
- * opt-out.
+ * Remove the gray background on active links in IE 10.
  */
 
 .prodigy-editor-root a {
-	color: inherit;
-	text-decoration: inherit;
+  background-color: transparent;
 }
 
 /**
- * Reset form element properties that are easy to forget to
- * style explicitly so you don't inadvertently introduce
- * styles that deviate from your design system. These styles
- * supplement a partial reset that is already applied by
- * normalize.css.
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+.prodigy-editor-root abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+.prodigy-editor-root b,
+.prodigy-editor-root strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+.prodigy-editor-root code,
+.prodigy-editor-root kbd,
+.prodigy-editor-root samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+.prodigy-editor-root small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+.prodigy-editor-root sub,
+.prodigy-editor-root sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.prodigy-editor-root sub {
+  bottom: -0.25em;
+}
+
+.prodigy-editor-root sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+
+.prodigy-editor-root img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
  */
 
 .prodigy-editor-root button,
@@ -503,77 +164,191 @@ Add the correct display in Chrome and Safari.
 .prodigy-editor-root optgroup,
 .prodigy-editor-root select,
 .prodigy-editor-root textarea {
-	padding: 0;
-	line-height: inherit;
-	color: inherit;
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
 }
 
 /**
- * Use the configured 'mono' font family for elements that
- * are expected to be rendered with a monospace font, falling
- * back to the system monospace stack if there is no configured
- * 'mono' font family.
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
  */
 
-.prodigy-editor-root pre,
-.prodigy-editor-root code,
-.prodigy-editor-root kbd,
-.prodigy-editor-root samp {
-	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.prodigy-editor-root button,
+.prodigy-editor-root input { /* 1 */
+  overflow: visible;
 }
 
 /**
- * 1. Make replaced elements `display: block` by default as that's
- *    the behavior you want almost all of the time. Inspired by
- *    CSS Remedy, with `svg` added as well.
- *
- *    https://github.com/mozdevs/cssremedy/issues/14
- *
- * 2. Add `vertical-align: middle` to align replaced elements more
- *    sensibly by default when overriding `display` by adding a
- *    utility like `inline`.
- *
- *    This can trigger a poorly considered linting error in some
- *    tools but is included by design.
- *
- *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
  */
 
-.prodigy-editor-root img,
-.prodigy-editor-root svg,
-.prodigy-editor-root video,
-.prodigy-editor-root canvas,
-.prodigy-editor-root audio,
-.prodigy-editor-root iframe,
-.prodigy-editor-root embed,
-.prodigy-editor-root object {
-	display: block;
-	/* 1 */
-	vertical-align: middle;
-	/* 2 */
+.prodigy-editor-root button,
+.prodigy-editor-root select { /* 1 */
+  text-transform: none;
 }
 
 /**
- * Constrain images and videos to the parent width and preserve
- * their intrinsic aspect ratio.
- *
- * https://github.com/mozdevs/cssremedy/issues/14
+ * Correct the inability to style clickable types in iOS and Safari.
  */
 
-.prodigy-editor-root img,
-.prodigy-editor-root video {
-	max-width: 100%;
-	height: auto;
+.prodigy-editor-root button,
+.prodigy-editor-root [type="button"],
+.prodigy-editor-root [type="reset"],
+.prodigy-editor-root [type="submit"] {
+  -webkit-appearance: button;
 }
 
 /**
- * Ensure the default browser behavior of the `hidden` attribute.
+ * Remove the inner border and padding in Firefox.
+ */
+
+.prodigy-editor-root button::-moz-focus-inner,
+.prodigy-editor-root [type="button"]::-moz-focus-inner,
+.prodigy-editor-root [type="reset"]::-moz-focus-inner,
+.prodigy-editor-root [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+.prodigy-editor-root button:-moz-focusring,
+.prodigy-editor-root [type="button"]:-moz-focusring,
+.prodigy-editor-root [type="reset"]:-moz-focusring,
+.prodigy-editor-root [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+.prodigy-editor-root fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+.prodigy-editor-root legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+.prodigy-editor-root progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+.prodigy-editor-root textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+.prodigy-editor-root [type="checkbox"],
+.prodigy-editor-root [type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+.prodigy-editor-root [type="number"]::-webkit-inner-spin-button,
+.prodigy-editor-root [type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+.prodigy-editor-root [type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+.prodigy-editor-root [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+.prodigy-editor-root  ::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+.prodigy-editor-root details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+.prodigy-editor-root  summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+.prodigy-editor-root  template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
  */
 
 .prodigy-editor-root [hidden] {
-	display: none;
+  display: none;
 }
-
 /* BASICS */
 
 .CodeMirror {
@@ -910,589 +685,589 @@ div.CodeMirror-dragcursors {
 span.CodeMirror-selectedtext { background: none; }
 
 /*@tailwind base;*/
-.prodigy-editor-root .pro-fixed{
+.pro-fixed{
     position: fixed;
 }
-.prodigy-editor-root .pro-absolute{
+.pro-absolute{
     position: absolute;
 }
-.prodigy-editor-root .pro-relative{
+.pro-relative{
     position: relative;
 }
-.prodigy-editor-root .pro-inset-0{
+.pro-inset-0{
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
 }
-.prodigy-editor-root .pro-bottom-0{
+.pro-bottom-0{
     bottom: 0px;
 }
-.prodigy-editor-root .pro-left-0{
+.pro-left-0{
     left: 0px;
 }
-.prodigy-editor-root .pro-left-1{
+.pro-left-1{
     left: 0.25rem;
 }
-.prodigy-editor-root .pro-left-1\/2{
+.pro-left-1\/2{
     left: 50%;
 }
-.prodigy-editor-root .pro-left-4{
+.pro-left-4{
     left: 1rem;
 }
-.prodigy-editor-root .pro-left-\[-2px\]{
+.pro-left-\[-2px\]{
     left: -2px;
 }
-.prodigy-editor-root .pro-left-\[50\%\]{
+.pro-left-\[50\%\]{
     left: 50%;
 }
-.prodigy-editor-root .pro-right-0{
+.pro-right-0{
     right: 0px;
 }
-.prodigy-editor-root .pro-top-0{
+.pro-top-0{
     top: 0px;
 }
-.prodigy-editor-root .pro-top-1{
+.pro-top-1{
     top: 0.25rem;
 }
-.prodigy-editor-root .pro-top-1\.5{
+.pro-top-1\.5{
     top: 0.375rem;
 }
-.prodigy-editor-root .pro-top-1\/2{
+.pro-top-1\/2{
     top: 50%;
 }
-.prodigy-editor-root .pro-top-\[-1\.2rem\]{
+.pro-top-\[-1\.2rem\]{
     top: -1.2rem;
 }
-.prodigy-editor-root .pro-top-\[-30px\]{
+.pro-top-\[-30px\]{
     top: -30px;
 }
-.prodigy-editor-root .pro-top-\[0\.2rem\]{
+.pro-top-\[0\.2rem\]{
     top: 0.2rem;
 }
-.prodigy-editor-root .pro-z-\[1000\]{
+.pro-z-\[1000\]{
     z-index: 1000;
 }
-.prodigy-editor-root .pro-z-\[20\]{
+.pro-z-\[20\]{
     z-index: 20;
 }
-.prodigy-editor-root .pro-z-\[900\]{
+.pro-z-\[900\]{
     z-index: 900;
 }
-.prodigy-editor-root .pro-z-\[999\]{
+.pro-z-\[999\]{
     z-index: 999;
 }
-.prodigy-editor-root .pro-order-1{
+.pro-order-1{
     order: 1;
 }
-.prodigy-editor-root .pro-order-2{
+.pro-order-2{
     order: 2;
 }
-.prodigy-editor-root .pro-mx-\[-1rem\]{
+.pro-mx-\[-1rem\]{
     margin-left: -1rem;
     margin-right: -1rem;
 }
-.prodigy-editor-root .pro-my-2{
+.pro-my-2{
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
-.prodigy-editor-root .pro-my-4{
+.pro-my-4{
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-.prodigy-editor-root .pro-mb-1{
+.pro-mb-1{
     margin-bottom: 0.25rem;
 }
-.prodigy-editor-root .pro-mb-2{
+.pro-mb-2{
     margin-bottom: 0.5rem;
 }
-.prodigy-editor-root .pro-mb-4{
+.pro-mb-4{
     margin-bottom: 1rem;
 }
-.prodigy-editor-root .pro-mb-8{
+.pro-mb-8{
     margin-bottom: 2rem;
 }
-.prodigy-editor-root .pro-ml-1{
+.pro-ml-1{
     margin-left: 0.25rem;
 }
-.prodigy-editor-root .pro-ml-\[-12px\]{
+.pro-ml-\[-12px\]{
     margin-left: -12px;
 }
-.prodigy-editor-root .pro-ml-\[-17\%\]{
+.pro-ml-\[-17\%\]{
     margin-left: -17%;
 }
-.prodigy-editor-root .pro-mr-2{
+.pro-mr-2{
     margin-right: 0.5rem;
 }
-.prodigy-editor-root .pro-mt-2{
+.pro-mt-2{
     margin-top: 0.5rem;
 }
-.prodigy-editor-root .pro-mt-3{
+.pro-mt-3{
     margin-top: 0.75rem;
 }
-.prodigy-editor-root .pro-mt-4{
+.pro-mt-4{
     margin-top: 1rem;
 }
-.prodigy-editor-root .pro-mt-\[-4px\]{
+.pro-mt-\[-4px\]{
     margin-top: -4px;
 }
-.prodigy-editor-root .pro-mt-\[-5\%\]{
+.pro-mt-\[-5\%\]{
     margin-top: -5%;
 }
-.prodigy-editor-root .pro-block{
+.pro-block{
     display: block;
 }
-.prodigy-editor-root .pro-inline-block{
+.pro-inline-block{
     display: inline-block;
 }
-.prodigy-editor-root .pro-flex{
+.pro-flex{
     display: flex;
 }
-.prodigy-editor-root .pro-grid{
+.pro-grid{
     display: grid;
 }
-.prodigy-editor-root .pro-hidden{
+.pro-hidden{
     display: none;
 }
-.prodigy-editor-root .pro-aspect-\[16\/9\]{
+.pro-aspect-\[16\/9\]{
     aspect-ratio: 16/9;
 }
-.prodigy-editor-root .pro-aspect-\[4\/1\]{
+.pro-aspect-\[4\/1\]{
     aspect-ratio: 4/1;
 }
-.prodigy-editor-root .pro-h-5{
+.pro-h-5{
     height: 1.25rem;
 }
-.prodigy-editor-root .pro-h-\[16px\]{
+.pro-h-\[16px\]{
     height: 16px;
 }
-.prodigy-editor-root .pro-h-full{
+.pro-h-full{
     height: 100%;
 }
-.prodigy-editor-root .pro-max-h-screen{
+.pro-max-h-screen{
     max-height: 100vh;
 }
-.prodigy-editor-root .pro-min-h-screen{
+.pro-min-h-screen{
     min-height: 100vh;
 }
-.prodigy-editor-root .pro-w-20{
+.pro-w-20{
     width: 5rem;
 }
-.prodigy-editor-root .pro-w-4{
+.pro-w-4{
     width: 1rem;
 }
-.prodigy-editor-root .pro-w-5{
+.pro-w-5{
     width: 1.25rem;
 }
-.prodigy-editor-root .pro-w-6{
+.pro-w-6{
     width: 1.5rem;
 }
-.prodigy-editor-root .pro-w-\[16px\]{
+.pro-w-\[16px\]{
     width: 16px;
 }
-.prodigy-editor-root .pro-w-\[28rem\]{
+.pro-w-\[28rem\]{
     width: 28rem;
 }
-.prodigy-editor-root .pro-w-\[325px\]{
+.pro-w-\[325px\]{
     width: 325px;
 }
-.prodigy-editor-root .pro-w-\[34\%\]{
+.pro-w-\[34\%\]{
     width: 34%;
 }
-.prodigy-editor-root .pro-w-full{
+.pro-w-full{
     width: 100%;
 }
-.prodigy-editor-root .pro-min-w-\[120px\]{
+.pro-min-w-\[120px\]{
     min-width: 120px;
 }
-.prodigy-editor-root .pro-min-w-\[60px\]{
+.pro-min-w-\[60px\]{
     min-width: 60px;
 }
-.prodigy-editor-root .pro-max-w-\[50\%\]{
+.pro-max-w-\[50\%\]{
     max-width: 50%;
 }
-.prodigy-editor-root .pro-max-w-xl{
+.pro-max-w-xl{
     max-width: 36rem;
 }
-.prodigy-editor-root .pro-flex-shrink{
+.pro-flex-shrink{
     flex-shrink: 1;
 }
-.prodigy-editor-root .pro-flex-grow{
+.pro-flex-grow{
     flex-grow: 1;
 }
-.prodigy-editor-root .pro-translate-x-\[-50\%\]{
+.pro-translate-x-\[-50\%\]{
     --tw-translate-x: -50%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.prodigy-editor-root .pro--rotate-90{
+.pro--rotate-90{
     --tw-rotate: -90deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.prodigy-editor-root .pro-transform{
+.pro-transform{
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.prodigy-editor-root .pro-cursor-default{
+.pro-cursor-default{
     cursor: default;
 }
-.prodigy-editor-root .pro-cursor-grab{
+.pro-cursor-grab{
     cursor: grab;
 }
-.prodigy-editor-root .pro-cursor-pointer{
+.pro-cursor-pointer{
     cursor: pointer;
 }
-.prodigy-editor-root .pro-list-inside{
+.pro-list-inside{
     list-style-position: inside;
 }
-.prodigy-editor-root .pro-list-disc{
+.pro-list-disc{
     list-style-type: disc;
 }
-.prodigy-editor-root .pro-grid-cols-1{
+.pro-grid-cols-1{
     grid-template-columns: repeat(1, minmax(0, 1fr));
 }
-.prodigy-editor-root .pro-grid-cols-2{
+.pro-grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.prodigy-editor-root .pro-grid-cols-3{
+.pro-grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.prodigy-editor-root .pro-grid-cols-4{
+.pro-grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
-.prodigy-editor-root .pro-grid-cols-5{
+.pro-grid-cols-5{
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
-.prodigy-editor-root .pro-grid-cols-6{
+.pro-grid-cols-6{
     grid-template-columns: repeat(6, minmax(0, 1fr));
 }
-.prodigy-editor-root .pro-flex-col{
+.pro-flex-col{
     flex-direction: column;
 }
-.prodigy-editor-root .pro-flex-wrap{
+.pro-flex-wrap{
     flex-wrap: wrap;
 }
-.prodigy-editor-root .pro-items-center{
+.pro-items-center{
     align-items: center;
 }
-.prodigy-editor-root .pro-justify-center{
+.pro-justify-center{
     justify-content: center;
 }
-.prodigy-editor-root .pro-gap-2{
+.pro-gap-2{
     gap: 0.5rem;
 }
-.prodigy-editor-root .pro-space-x-8 > :not([hidden]) ~ :not([hidden]){
+.pro-space-x-8 > :not([hidden]) ~ :not([hidden]){
     --tw-space-x-reverse: 0;
     margin-right: calc(2rem * var(--tw-space-x-reverse));
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
-.prodigy-editor-root .pro-overflow-hidden{
+.pro-overflow-hidden{
     overflow: hidden;
 }
-.prodigy-editor-root .pro-overflow-scroll{
+.pro-overflow-scroll{
     overflow: scroll;
 }
-.prodigy-editor-root .pro-overflow-y-scroll{
+.pro-overflow-y-scroll{
     overflow-y: scroll;
 }
-.prodigy-editor-root .pro-whitespace-nowrap{
+.pro-whitespace-nowrap{
     white-space: nowrap;
 }
-.prodigy-editor-root .pro-rounded-md{
+.pro-rounded-md{
     border-radius: 0.375rem;
 }
-.prodigy-editor-root .pro-rounded-sm{
+.pro-rounded-sm{
     border-radius: 0.125rem;
 }
-.prodigy-editor-root .pro-rounded-bl-sm{
+.pro-rounded-bl-sm{
     border-bottom-left-radius: 0.125rem;
 }
-.prodigy-editor-root .pro-rounded-tl-sm{
+.pro-rounded-tl-sm{
     border-top-left-radius: 0.125rem;
 }
-.prodigy-editor-root .pro-border{
+.pro-border{
     border-width: 1px;
 }
-.prodigy-editor-root .pro-border-0{
+.pro-border-0{
     border-width: 0px;
 }
-.prodigy-editor-root .pro-border-2{
+.pro-border-2{
     border-width: 2px;
 }
-.prodigy-editor-root .pro-border-b{
+.pro-border-b{
     border-bottom-width: 1px;
 }
-.prodigy-editor-root .pro-border-l{
+.pro-border-l{
     border-left-width: 1px;
 }
-.prodigy-editor-root .pro-border-r{
+.pro-border-r{
     border-right-width: 1px;
 }
-.prodigy-editor-root .pro-border-r-0{
+.pro-border-r-0{
     border-right-width: 0px;
 }
-.prodigy-editor-root .pro-border-t{
+.pro-border-t{
     border-top-width: 1px;
 }
-.prodigy-editor-root .pro-border-dashed{
+.pro-border-dashed{
     border-style: dashed;
 }
-.prodigy-editor-root .pro-border-blue-600{
+.pro-border-blue-600{
     --tw-border-opacity: 1;
     border-color: rgb(71 63 235 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-border-blue-700{
+.pro-border-blue-700{
     --tw-border-opacity: 1;
     border-color: rgb(50 38 212 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-border-gray-100{
+.pro-border-gray-100{
     --tw-border-opacity: 1;
     border-color: rgb(245 245 245 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-border-gray-200{
+.pro-border-gray-200{
     --tw-border-opacity: 1;
     border-color: rgb(229 229 229 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-border-gray-300{
+.pro-border-gray-300{
     --tw-border-opacity: 1;
     border-color: rgb(212 212 212 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-border-orange-600{
+.pro-border-orange-600{
     --tw-border-opacity: 1;
     border-color: rgb(234 88 12 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-bg-blue-500{
+.pro-bg-blue-500{
     --tw-bg-opacity: 1;
     background-color: rgb(62 109 243 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .pro-bg-gray-100{
+.pro-bg-gray-100{
     --tw-bg-opacity: 1;
     background-color: rgb(245 245 245 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .pro-bg-gray-50{
+.pro-bg-gray-50{
     --tw-bg-opacity: 1;
     background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .pro-bg-gray-700\/10{
+.pro-bg-gray-700\/10{
     background-color: rgb(64 64 64 / 0.1);
 }
-.prodigy-editor-root .pro-bg-gray-700\/25{
+.pro-bg-gray-700\/25{
     background-color: rgb(64 64 64 / 0.25);
 }
-.prodigy-editor-root .pro-bg-transparent{
+.pro-bg-transparent{
     background-color: transparent;
 }
-.prodigy-editor-root .pro-bg-white{
+.pro-bg-white{
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .pro-bg-gradient-to-bl{
+.pro-bg-gradient-to-bl{
     background-image: linear-gradient(to bottom left, var(--tw-gradient-stops));
 }
-.prodigy-editor-root .pro-from-blue-400{
+.pro-from-blue-400{
     --tw-gradient-from: #6F9CF8;
     --tw-gradient-to: rgb(111 156 248 / 0);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
-.prodigy-editor-root .pro-from-blue-600{
+.pro-from-blue-600{
     --tw-gradient-from: #473FEB;
     --tw-gradient-to: rgb(71 63 235 / 0);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
-.prodigy-editor-root .pro-to-blue-400{
+.pro-to-blue-400{
     --tw-gradient-to: #6F9CF8;
 }
-.prodigy-editor-root .pro-to-blue-600{
+.pro-to-blue-600{
     --tw-gradient-to: #473FEB;
 }
-.prodigy-editor-root .pro-p-2{
+.pro-p-2{
     padding: 0.5rem;
 }
-.prodigy-editor-root .pro-p-2\.5{
+.pro-p-2\.5{
     padding: 0.625rem;
 }
-.prodigy-editor-root .pro-p-4{
+.pro-p-4{
     padding: 1rem;
 }
-.prodigy-editor-root .pro-px-1{
+.pro-px-1{
     padding-left: 0.25rem;
     padding-right: 0.25rem;
 }
-.prodigy-editor-root .pro-px-2{
+.pro-px-2{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
-.prodigy-editor-root .pro-px-3{
+.pro-px-3{
     padding-left: 0.75rem;
     padding-right: 0.75rem;
 }
-.prodigy-editor-root .pro-px-4{
+.pro-px-4{
     padding-left: 1rem;
     padding-right: 1rem;
 }
-.prodigy-editor-root .pro-px-5{
+.pro-px-5{
     padding-left: 1.25rem;
     padding-right: 1.25rem;
 }
-.prodigy-editor-root .pro-py-1{
+.pro-py-1{
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 }
-.prodigy-editor-root .pro-py-2{
+.pro-py-2{
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
-.prodigy-editor-root .pro-py-2\.5{
+.pro-py-2\.5{
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
 }
-.prodigy-editor-root .pro-py-3{
+.pro-py-3{
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
 }
-.prodigy-editor-root .pro-py-4{
+.pro-py-4{
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
-.prodigy-editor-root .pro-pb-1{
+.pro-pb-1{
     padding-bottom: 0.25rem;
 }
-.prodigy-editor-root .pro-pb-2{
+.pro-pb-2{
     padding-bottom: 0.5rem;
 }
-.prodigy-editor-root .pro-pb-4{
+.pro-pb-4{
     padding-bottom: 1rem;
 }
-.prodigy-editor-root .pro-pb-8{
+.pro-pb-8{
     padding-bottom: 2rem;
 }
-.prodigy-editor-root .pro-pl-2{
+.pro-pl-2{
     padding-left: 0.5rem;
 }
-.prodigy-editor-root .pro-pl-5{
+.pro-pl-5{
     padding-left: 1.25rem;
 }
-.prodigy-editor-root .pro-pr-1{
+.pro-pr-1{
     padding-right: 0.25rem;
 }
-.prodigy-editor-root .pro-pr-4{
+.pro-pr-4{
     padding-right: 1rem;
 }
-.prodigy-editor-root .pro-pt-1{
+.pro-pt-1{
     padding-top: 0.25rem;
 }
-.prodigy-editor-root .pro-pt-2{
+.pro-pt-2{
     padding-top: 0.5rem;
 }
-.prodigy-editor-root .pro-text-left{
+.pro-text-left{
     text-align: left;
 }
-.prodigy-editor-root .pro-font-sans{
+.pro-font-sans{
     font-family: Mona Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-.prodigy-editor-root .pro-text-\[14px\]{
+.pro-text-\[14px\]{
     font-size: 14px;
 }
-.prodigy-editor-root .pro-text-\[16px\]{
+.pro-text-\[16px\]{
     font-size: 16px;
 }
-.prodigy-editor-root .pro-text-sm{
+.pro-text-sm{
     font-size: 0.875rem;
     line-height: 1.25rem;
 }
-.prodigy-editor-root .pro-text-xl{
+.pro-text-xl{
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
-.prodigy-editor-root .pro-text-xs{
+.pro-text-xs{
     font-size: 0.75rem;
     line-height: 1rem;
 }
-.prodigy-editor-root .pro-font-bold{
+.pro-font-bold{
     font-weight: 700;
 }
-.prodigy-editor-root .pro-font-medium{
+.pro-font-medium{
     font-weight: 500;
 }
-.prodigy-editor-root .pro-font-semibold{
+.pro-font-semibold{
     font-weight: 600;
 }
-.prodigy-editor-root .pro-uppercase{
+.pro-uppercase{
     text-transform: uppercase;
 }
-.prodigy-editor-root .pro-text-black\/50{
+.pro-text-black\/50{
     color: rgb(0 0 0 / 0.5);
 }
-.prodigy-editor-root .pro-text-blue-500{
+.pro-text-blue-500{
     --tw-text-opacity: 1;
     color: rgb(62 109 243 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-blue-600{
+.pro-text-blue-600{
     --tw-text-opacity: 1;
     color: rgb(71 63 235 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-gray-400{
+.pro-text-gray-400{
     --tw-text-opacity: 1;
     color: rgb(163 163 163 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-gray-500{
+.pro-text-gray-500{
     --tw-text-opacity: 1;
     color: rgb(115 115 115 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-gray-600{
+.pro-text-gray-600{
     --tw-text-opacity: 1;
     color: rgb(82 82 82 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-gray-700{
+.pro-text-gray-700{
     --tw-text-opacity: 1;
     color: rgb(64 64 64 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-gray-900{
+.pro-text-gray-900{
     --tw-text-opacity: 1;
     color: rgb(23 23 23 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-orange-600{
+.pro-text-orange-600{
     --tw-text-opacity: 1;
     color: rgb(234 88 12 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-red-500{
+.pro-text-red-500{
     --tw-text-opacity: 1;
     color: rgb(239 68 68 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-red-600{
+.pro-text-red-600{
     --tw-text-opacity: 1;
     color: rgb(220 38 38 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-white{
+.pro-text-white{
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-text-white\/80{
+.pro-text-white\/80{
     color: rgb(255 255 255 / 0.8);
 }
-.prodigy-editor-root .pro-antialiased{
+.pro-antialiased{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.prodigy-editor-root .pro-shadow{
+.pro-shadow{
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.prodigy-editor-root .pro-shadow-md{
+.pro-shadow-md{
     --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.prodigy-editor-root .pro-shadow-sm{
+.pro-shadow-sm{
     --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.prodigy-editor-root .pro-shadow-xl{
+.pro-shadow-xl{
     --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.prodigy-editor-root .pro-transition{
+.pro-transition{
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
@@ -1609,175 +1384,175 @@ span.CodeMirror-selectedtext { background: none; }
   font-weight: 200 900;
   font-stretch: 75% 125%;
 }
-.prodigy-editor-root .hover\:pro-cursor-default:hover{
+.hover\:pro-cursor-default:hover{
     cursor: default;
 }
-.prodigy-editor-root .hover\:pro-cursor-grab:hover{
+.hover\:pro-cursor-grab:hover{
     cursor: grab;
 }
-.prodigy-editor-root .hover\:pro-border-blue-500:hover{
+.hover\:pro-border-blue-500:hover{
     --tw-border-opacity: 1;
     border-color: rgb(62 109 243 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .hover\:pro-border-gray-100:hover{
+.hover\:pro-border-gray-100:hover{
     --tw-border-opacity: 1;
     border-color: rgb(245 245 245 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .hover\:pro-bg-blue-600:hover{
+.hover\:pro-bg-blue-600:hover{
     --tw-bg-opacity: 1;
     background-color: rgb(71 63 235 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .hover\:pro-bg-gray-200:hover{
+.hover\:pro-bg-gray-200:hover{
     --tw-bg-opacity: 1;
     background-color: rgb(229 229 229 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .hover\:pro-bg-gray-50:hover{
+.hover\:pro-bg-gray-50:hover{
     --tw-bg-opacity: 1;
     background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .hover\:pro-bg-gray-700\/10:hover{
+.hover\:pro-bg-gray-700\/10:hover{
     background-color: rgb(64 64 64 / 0.1);
 }
-.prodigy-editor-root .hover\:pro-bg-white:hover{
+.hover\:pro-bg-white:hover{
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.prodigy-editor-root .hover\:pro-from-blue-600:hover{
+.hover\:pro-from-blue-600:hover{
     --tw-gradient-from: #473FEB;
     --tw-gradient-to: rgb(71 63 235 / 0);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
-.prodigy-editor-root .hover\:pro-to-blue-700:hover{
+.hover\:pro-to-blue-700:hover{
     --tw-gradient-to: #3226D4;
 }
-.prodigy-editor-root .hover\:pro-text-blue-500:hover{
+.hover\:pro-text-blue-500:hover{
     --tw-text-opacity: 1;
     color: rgb(62 109 243 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .hover\:pro-text-blue-700:hover{
+.hover\:pro-text-blue-700:hover{
     --tw-text-opacity: 1;
     color: rgb(50 38 212 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .hover\:pro-text-red-500:hover{
+.hover\:pro-text-red-500:hover{
     --tw-text-opacity: 1;
     color: rgb(239 68 68 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .hover\:pro-text-red-700:hover{
+.hover\:pro-text-red-700:hover{
     --tw-text-opacity: 1;
     color: rgb(185 28 28 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .hover\:pro-underline:hover{
+.hover\:pro-underline:hover{
     text-decoration-line: underline;
 }
-.prodigy-editor-root .hover\:pro-shadow-sm:hover{
+.hover\:pro-shadow-sm:hover{
     --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.prodigy-editor-root .hover\:pro-ring-2:hover{
+.hover\:pro-ring-2:hover{
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-.prodigy-editor-root .hover\:pro-ring-blue-300:hover{
+.hover\:pro-ring-blue-300:hover{
     --tw-ring-opacity: 1;
     --tw-ring-color: rgb(149 185 251 / var(--tw-ring-opacity));
 }
-.prodigy-editor-root .focus\:pro-border-blue-500:focus{
+.focus\:pro-border-blue-500:focus{
     --tw-border-opacity: 1;
     border-color: rgb(62 109 243 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .focus\:pro-ring-0:focus{
+.focus\:pro-ring-0:focus{
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-.prodigy-editor-root .focus\:pro-ring-blue-500:focus{
+.focus\:pro-ring-blue-500:focus{
     --tw-ring-opacity: 1;
     --tw-ring-color: rgb(62 109 243 / var(--tw-ring-opacity));
 }
-.prodigy-editor-root .disabled\:pro-text-gray-500:disabled{
+.disabled\:pro-text-gray-500:disabled{
     --tw-text-opacity: 1;
     color: rgb(115 115 115 / var(--tw-text-opacity));
 }
-.prodigy-editor-root .pro-group\/column:hover .group-hover\/column\:pro-flex{
+.pro-group\/column:hover .group-hover\/column\:pro-flex{
     display: flex;
 }
-.prodigy-editor-root .pro-group\/row:hover .group-hover\/row\:pro-flex{
+.pro-group\/row:hover .group-hover\/row\:pro-flex{
     display: flex;
 }
-.prodigy-editor-root .pro-group\/column:hover .group-hover\/column\:pro-border-2{
+.pro-group\/column:hover .group-hover\/column\:pro-border-2{
     border-width: 2px;
 }
-.prodigy-editor-root .pro-group\/row:hover .group-hover\/row\:pro-border-2{
+.pro-group\/row:hover .group-hover\/row\:pro-border-2{
     border-width: 2px;
 }
-.prodigy-editor-root .pro-group\/column:hover .group-hover\/column\:pro-border-blue-400{
+.pro-group\/column:hover .group-hover\/column\:pro-border-blue-400{
     --tw-border-opacity: 1;
     border-color: rgb(111 156 248 / var(--tw-border-opacity));
 }
-.prodigy-editor-root .pro-group\/row:hover .group-hover\/row\:pro-border-blue-400{
+.pro-group\/row:hover .group-hover\/row\:pro-border-blue-400{
     --tw-border-opacity: 1;
     border-color: rgb(111 156 248 / var(--tw-border-opacity));
 }
 @media (min-width: 768px){
-    .prodigy-editor-root .md\:pro-grid-cols-1{
+    .md\:pro-grid-cols-1{
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }
-    .prodigy-editor-root .md\:pro-grid-cols-2{
+    .md\:pro-grid-cols-2{
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .prodigy-editor-root .md\:pro-grid-cols-3{
+    .md\:pro-grid-cols-3{
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .prodigy-editor-root .md\:pro-grid-cols-4{
+    .md\:pro-grid-cols-4{
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-    .prodigy-editor-root .md\:pro-grid-cols-5{
+    .md\:pro-grid-cols-5{
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
-    .prodigy-editor-root .md\:pro-grid-cols-6{
+    .md\:pro-grid-cols-6{
         grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 }
 @media (min-width: 1024px){
-    .prodigy-editor-root .lg\:pro-relative{
+    .lg\:pro-relative{
         position: relative;
     }
-    .prodigy-editor-root .lg\:pro-inset-auto{
+    .lg\:pro-inset-auto{
         top: auto;
         right: auto;
         bottom: auto;
         left: auto;
     }
-    .prodigy-editor-root .lg\:pro-max-h-screen{
+    .lg\:pro-max-h-screen{
         max-height: 100vh;
     }
-    .prodigy-editor-root .lg\:pro-min-h-screen{
+    .lg\:pro-min-h-screen{
         min-height: 100vh;
     }
-    .prodigy-editor-root .lg\:pro-grid-cols-1{
+    .lg\:pro-grid-cols-1{
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }
-    .prodigy-editor-root .lg\:pro-grid-cols-2{
+    .lg\:pro-grid-cols-2{
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .prodigy-editor-root .lg\:pro-grid-cols-3{
+    .lg\:pro-grid-cols-3{
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .prodigy-editor-root .lg\:pro-grid-cols-4{
+    .lg\:pro-grid-cols-4{
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-    .prodigy-editor-root .lg\:pro-grid-cols-5{
+    .lg\:pro-grid-cols-5{
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
-    .prodigy-editor-root .lg\:pro-grid-cols-6{
+    .lg\:pro-grid-cols-6{
         grid-template-columns: repeat(6, minmax(0, 1fr));
     }
-    .prodigy-editor-root .lg\:pro-rounded-lg{
+    .lg\:pro-rounded-lg{
         border-radius: 0.5rem;
     }
-    .prodigy-editor-root .lg\:pro-p-12{
+    .lg\:pro-p-12{
         padding: 3rem;
     }
 }
