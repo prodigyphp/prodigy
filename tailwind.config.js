@@ -3,6 +3,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
     prefix: 'pro-',
+    important: '.prodigy-editor-root',
     content: [
         './resources/**/*.blade.php',
     ],
