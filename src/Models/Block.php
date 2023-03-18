@@ -77,13 +77,11 @@ class Block extends Model implements HasMedia {
         $this
             ->addMediaConversion('preview')
             ->fit(Manipulations::FIT_CROP, 300, 300);
-
     }
 
     public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaCollection('prodigy_photos');
+        $this->addMediaCollection('prodigy');
     }
 
     /**
@@ -105,7 +103,7 @@ class Block extends Model implements HasMedia {
         $newBlock = $oldBlock->replicate();
         $newBlock->save();
 
-        if($oldBlock->hasMedia('prodigy_photos')) {
+        if($oldBlock->hasMedia('prodigy')) {
             $this->syncMedia($oldBlock, $newBlock);
         }
 
@@ -119,9 +117,9 @@ class Block extends Model implements HasMedia {
 
     public function syncMedia(Block $oldBlock, Block $newBlock) : Media
     {
-        $media = $oldBlock->getFirstMedia('prodigy_photos');
+        $media = $oldBlock->getFirstMedia('prodigy');
 
-        return $media->copy($newBlock, 'prodigy_photos');
+        return $media->copy($newBlock, 'prodigy');
     }
 
 

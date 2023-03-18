@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\FieldTypes;
 
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
+use ProdigyPHP\Prodigy\Models\Page;
 
 abstract class Field {
 

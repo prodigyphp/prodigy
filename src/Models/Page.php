@@ -10,16 +10,20 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Database\Factories\PageFactory;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Page extends Model {
+class Page extends Model implements HasMedia {
 
     use HasFactory;
+    use InteractsWithMedia;
 
     protected $guarded = [];
 
     protected $table = 'prodigy_pages';
 
     protected $casts = [
+        'content' => 'collection',
         'published_at' => 'datetime'
     ];
 

@@ -57,6 +57,12 @@ class GetSchemaAction {
 
     }
 
+    public static function pageSchema(): array
+    {
+        $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/page-schema.yml');
+        return Yaml::parseFile($path);
+    }
+
     public static function standardSchema(): array
     {
         $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/standard-schema.yml');

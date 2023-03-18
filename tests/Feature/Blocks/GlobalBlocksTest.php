@@ -15,8 +15,8 @@ it('can use a global block as a draft without duplicating', function () {
     $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
 
     livewire(PageSettingsEditor::class)
-        ->set('page.title', 'Hey You')
-        ->set('page.slug', '/hey-you')
+        ->set('block.title', 'Hey You')
+        ->set('block.slug', '/hey-you')
         ->call('save');
 
     $page = Page::first();

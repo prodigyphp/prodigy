@@ -47,7 +47,7 @@
 
          // Show background image
          if($fields->has('background_type') && ($fields['background_type'] == 'photo') ) {
-                $url = $block->getFirstMediaUrl('prodigy_photos');
+                $url = $block->getFirstMediaUrl('prodigy');
 
                 $styles .= ($url) ? "background-image: url('{$url}');" : '';
                 $styles .= ($fields->has('background_size')) ? "background-size: {$fields['background_size']};" : '';

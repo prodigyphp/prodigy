@@ -14,7 +14,7 @@
     <a href="{{ $link ?? '' }}">
 @endif
         <div style="{{ $alignment_style ?? '' }}">
-            <img src="{{ $block->getFirstMediaUrl('prodigy_photos') }}" style="{{ $style ?? '' }}" alt=""/>
+            <img src="{{ $block->getFirstMediaUrl('prodigy') }}" style="{{ $style ?? '' }}" alt=""/>
         </div>
 
 @if(isset($link_type) && $link_type == 'url' ?? false)

@@ -2,6 +2,7 @@
 
 use ProdigyPHP\Prodigy\BlockGroups\CustomBlocksGroup;
 use ProdigyPHP\Prodigy\BlockGroups\ProdigyBlocksGroup;
+use ProdigyPHP\Prodigy\FieldTypes\Boolean;
 use ProdigyPHP\Prodigy\FieldTypes\Code;
 use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
@@ -62,6 +63,7 @@ return [
     |
     */
     'fields' => [
+        'boolean' => Boolean::class,
         'code' => Code::class,
         'color' => Color::class,
         'dropdown' => Dropdown::class,

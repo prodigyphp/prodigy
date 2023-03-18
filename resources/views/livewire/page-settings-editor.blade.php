@@ -1,7 +1,7 @@
 <div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full pro-overflow-y-scroll">
-    <x-prodigy::editor.nav :label="$title" :page="$page" currentState="pageEditor">
+    <x-prodigy::editor.nav :label="$title" :page="$block" currentState="pageEditor">
         <button class="pro-text-red-500 hover:pro-text-red-700 pro-text-[14px] pro-font-semibold"
-                x-on:click="deletePage({{ $page->id }})">
+                x-on:click="deletePage({{ $block->id }})">
             {{ _('Delete') }}
         </button>
     </x-prodigy::editor.nav>
@@ -14,13 +14,21 @@
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Title" for="title"></x-prodigy::editor.label>
-            <x-prodigy::editor.input wire:model="page.title" id="title"></x-prodigy::editor.input>
+            <x-prodigy::editor.input wire:model="block.title" id="title"></x-prodigy::editor.input>
         </x-prodigy::editor.field-wrapper>
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Slug" for="slug"></x-prodigy::editor.label>
-            <x-prodigy::editor.input wire:model="page.slug" id="slug"></x-prodigy::editor.input>
+            <x-prodigy::editor.input wire:model="block.slug" id="slug"></x-prodigy::editor.input>
         </x-prodigy::editor.field-wrapper>
+
+        @if($schema)
+            @foreach($schema['fields'] as $key => $meta)
+                {{ $this->getField($key, $meta) }}
+            @endforeach
+        @else
+            No editable fields found.
+        @endif
 
 
     </div>

@@ -14,14 +14,19 @@ class EditEntry extends Component {
     use WithFileUploads;
     use LoadsFieldFormElements;
 
-    protected string $model = 'block';
+    /**
+     * -- Why this is called Block --
+     * We call the page a "block" because every field has `block.content` hardcoded
+     * as a reference to Livewire, which expects a variable on the class called
+     * `block`. The other option is to pass down the words `block`, `entry` and
+     * `page` to each field.
+     */
     public Entry $block;
     public $schema;
     public array $fields;
 
     public string $editor_title;
 
-    // @TODO RULES
     protected function rules()
     {
         if (!$this->schema) {

@@ -1,24 +1,34 @@
 fields:
+  featured_image:
+    type: image
 
-  spacing_group:
+  seo_group:
     type: group
     expanded: false
-    label: Spacing / Visibility
+    label: SEO & Social
     fields:
-      margin:
-        width: 50
-        type: pixelgroup
-      padding:
-        width: 50
-        type: pixelgroup
-      show_on_page:
-        type: dropdown
-        label: Show on Page
-        default: show
-        options:
-          - Show
-          - Hide
-      custom_css_classes:
+      social_image:
+        type: image
+      seo_title:
         type: text
-        label: CSS Classes
-        help: "Do not include the '.'"
+      seo_description:
+        type: texteditor
+      show_in_search:
+        label: Show in Search Results
+        type: boolean
+        default: true
+        label_for_true: Visible
+        label_for_false: Hidden
+
+  code_group:
+    type: group
+    expanded: false
+    label: Advanced
+    fields:
+      page_js_code:
+        label: JavaScript for Page
+        type: code
+      page_css_code:
+        label: CSS for Page
+        type: code
+
