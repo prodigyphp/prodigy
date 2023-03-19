@@ -20,11 +20,14 @@ fields:
         label_for_true: Visible
         label_for_false: Hidden
 
-  code_group:
+  advanced_group:
     type: group
     expanded: false
     label: Advanced
     fields:
+      redirect_page:
+        type: link
+        label: Redirect page
       page_js_code:
         label: JavaScript for Page
         type: code

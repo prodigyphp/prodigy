@@ -1276,6 +1276,10 @@ video {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.pro-py-px {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
 .pro-pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -1397,6 +1401,10 @@ video {
 }
 .pro-text-white\/80 {
   color: rgb(255 255 255 / 0.8);
+}
+.pro-text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity));
 }
 .pro-antialiased {
   -webkit-font-smoothing: antialiased;

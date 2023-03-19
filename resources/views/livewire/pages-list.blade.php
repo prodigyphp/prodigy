@@ -16,6 +16,9 @@
                     href="{{ $page_item->slug  }}?pro_editing=true">
 
                 <p class="pro-flex-grow">{{ $page_item->menu_title }}</p>
+                @if(isset($page_item->content['redirect_page']) && $page_item->content['redirect_page'])
+                    <div class="pro-text-xs pro-uppercase pro-py-px pro-px-1 pro-text-orange-500 pro-border pro-border-orange-600 pro-mr-2">{{ _('Redirect') }}</div>
+                @endif
                 <button wire:click.prevent="$emit('editPageSettings', {{ $page_item->id }})">
                     <x-prodigy::icons.cog class="w-5 hover:pro-text-blue-500"></x-prodigy::icons.cog>
                 </button>

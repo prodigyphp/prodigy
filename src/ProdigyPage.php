@@ -78,9 +78,14 @@ class ProdigyPage extends Component {
     {
         $slug = $this->getSlug($wildcard);
 
-        // visitors get the published page.
+        // visitors get the published page or the redirect.
         if (!auth()->check()) {
-            return Page::where('slug', $slug)->public()->published()->first();
+            $page = Page::where('slug', $slug)->public()->published()->first();
+            if(isset($page->content['redirect_page'] ) && $page->content['redirect_page']){
+                $this->redirect($page->content['redirect_page']);
+            }
+
+            return $page;
         }
 
         // Get the special 'prodigy' welcome page, if it isn't there.
