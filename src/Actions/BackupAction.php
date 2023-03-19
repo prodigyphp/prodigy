@@ -39,8 +39,8 @@ class BackupAction {
 
     public function backupMedia(): self
     {
-        $media_path = storage_path('app/public');
-        File::copyDirectory($media_path, $this->destination_path .'/public');
+        $media_path = config('filesystems.disks.prodigy.root');
+        File::copyDirectory($media_path, $this->destination_path .'/media');
 
         return $this;
     }
@@ -50,7 +50,7 @@ class BackupAction {
      */
     public function backupDatabase(): self
     {
-        $database_path = database_path('prodigy.sqlite');
+        $database_path = env('DB_DATABASE');
 //        $database = collect(glob($database_path . '*.sqlite'))->first();
         File::copy($database_path, $this->destination_path . '/prodigy.sqlite');
 

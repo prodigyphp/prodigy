@@ -45,18 +45,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     public function bootingPackage(): void
     {
 
-        // Add livewire components
-        Livewire::component('prodigy-page', ProdigyPage::class);
-        Livewire::component('prodigy-block', BlockComponent::class);
-
-        Livewire::component('prodigy-editor', Editor::class);
-        Livewire::component('prodigy-edit-block', EditBlock::class);
-        Livewire::component('prodigy-blocks-list', BlocksList::class);
-        Livewire::component('prodigy-pages-list', PagesList::class);
-        Livewire::component('prodigy-page-settings-edit', PageSettingsEditor::class);
-        Livewire::component('prodigy-photo-uploader', PhotoUploader::class);
-        Livewire::component('prodigy-entries-list', EntriesList::class);
-        Livewire::component('prodigy-edit-entry', EditEntry::class);
+        $this->registerLivewireComponents();
 
         // load blade components
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'prodigy');
@@ -76,7 +65,48 @@ class ProdigyServiceProvider extends PackageServiceProvider {
             'block' => 'ProdigyPHP\Prodigy\Models\Block',
         ]);
 
+        $this->defineProdigyUploadDisk();
+
+
         $this->gate();
+    }
+
+    /**
+     * Registers a custom media disk, which allows us to
+     * put uploads at /prodigy/media. This makes site
+     * conversions, especially manual ones, a lot easier.
+     */
+    public function defineProdigyUploadDisk()
+    {
+        app()->config["filesystems.disks.prodigy"] = [
+            'driver' => 'local',
+            'root' => base_path('prodigy/media'),
+            'url' => env('APP_URL') . '/prodigy',
+        ];
+
+        // Consider opening up this to be more flexible.
+        // This is spliced in in such a weird way because
+        // if the folder contains a period (as in /prodigyphp.com)
+        // the link will break.
+        config(['filesystems.links' => [
+            ...app()->config['filesystems.links'],
+            public_path('prodigy') => base_path('prodigy/media')
+        ]]);
+    }
+
+    public function registerLivewireComponents()
+    {
+        Livewire::component('prodigy-page', ProdigyPage::class);
+        Livewire::component('prodigy-block', BlockComponent::class);
+
+        Livewire::component('prodigy-editor', Editor::class);
+        Livewire::component('prodigy-edit-block', EditBlock::class);
+        Livewire::component('prodigy-blocks-list', BlocksList::class);
+        Livewire::component('prodigy-pages-list', PagesList::class);
+        Livewire::component('prodigy-page-settings-edit', PageSettingsEditor::class);
+        Livewire::component('prodigy-photo-uploader', PhotoUploader::class);
+        Livewire::component('prodigy-entries-list', EntriesList::class);
+        Livewire::component('prodigy-edit-entry', EditEntry::class);
     }
 
     protected function configureComponents()
@@ -118,7 +148,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     protected function gate()
     {
         Gate::define('viewProdigy', function ($user) {
-            return in_array($user->email, config('prodigy.access_emails') );
+            return in_array($user->email, config('prodigy.access_emails'));
         });
     }
 

@@ -52,7 +52,8 @@ class Entry extends Model implements HasMedia {
     public function registerMediaCollections(): void
     {
         $this
-            ->addMediaCollection('prodigy');
+            ->addMediaCollection('prodigy')
+            ->useDisk('prodigy');
     }
 
 

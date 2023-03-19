@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Database\Factories\PageFactory;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Page extends Model implements HasMedia {
 
@@ -61,7 +63,7 @@ class Page extends Model implements HasMedia {
 
     public function getMenuTitleAttribute()
     {
-        if(!$this->slug) {
+        if (!$this->slug) {
             return $this->title;
         }
         $depth = str($this->slug)->substrCount('/') - 1;
@@ -77,6 +79,19 @@ class Page extends Model implements HasMedia {
     protected static function newFactory(): PageFactory
     {
         return new PageFactory();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('prodigy')
+            ->useDisk('prodigy');
     }
 
     /**

@@ -81,7 +81,7 @@ class Block extends Model implements HasMedia {
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('prodigy');
+        $this->addMediaCollection('prodigy')->useDisk('prodigy');
     }
 
     /**
