@@ -1,3 +1,4 @@
+@php use ProdigyPHP\Prodigy\Facades\Prodigy; @endphp
 @section('title')
     {{ $page->title }}
 @endsection

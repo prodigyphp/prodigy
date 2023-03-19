@@ -1,0 +1,6 @@
+fields:
+  title:
+    type: text
+
+  subtitle:
+    type: text

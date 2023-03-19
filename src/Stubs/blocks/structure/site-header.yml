@@ -1,6 +1,0 @@
-fields:
-  logo:
-    type: image
-
-  menu:
-    type: menu

@@ -47,13 +47,11 @@ class InstallCommand extends Command {
             $this->configureDynamicRouting();
         }
 
-        if ($this->confirm('Would you like a sample schema and block?')) {
-            $this->comment('Creating some starter blocks in your components folder...');
-            File::copyDirectory($this->getStubPath('/Stubs/blocks'), resource_path('views/components/blocks'));
+        $this->comment('Creating some starter blocks in your components folder...');
+        File::copyDirectory($this->getStubPath('/Stubs/blocks'), resource_path('views/components/blocks'));
 
-            $this->comment('Creating a starter schema in your resources folder...');
-            File::copyDirectory($this->getStubPath('/Stubs/schemas'), resource_path('schemas'));
-        }
+        $this->comment('Creating a starter schema in your resources folder...');
+        File::copyDirectory($this->getStubPath('/Stubs/schemas'), resource_path('schemas'));
 
         $this->comment('Running storage:link to make images visible...');
         $this->call('storage:link');
