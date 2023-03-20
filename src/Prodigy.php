@@ -2,6 +2,7 @@
 
 namespace ProdigyPHP\Prodigy;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -12,6 +13,11 @@ class Prodigy {
     public static function path()
     {
         return config('prodigy.path', '/prodigy');
+    }
+
+    public static function userCanAccessEditor()
+    {
+        return Gate::check('viewProdigy', auth()->user());
     }
 
     public static function getEntrySchemas(): Collection

@@ -4,12 +4,14 @@ namespace ProdigyPHP\Prodigy;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\AddBlockAction;
 use ProdigyPHP\Prodigy\Actions\CreateWelcomePageAction;
 use ProdigyPHP\Prodigy\Actions\GetDraftAction;
+use ProdigyPHP\Prodigy\Actions\UnparseUrlAction;
 use ProdigyPHP\Prodigy\Models\Page;
 
 class ProdigyPage extends Component {
@@ -33,7 +35,7 @@ class ProdigyPage extends Component {
     {
 
         // Show edit screen if user can edit, and has requested edit access.
-        $this->editing = Gate::check('viewProdigy', auth()->user()) && request('pro_editing');
+        $this->editing = Gate::check('viewProdigy', auth()->user()) && request('pro_editing') == 'true';
 
         $this->page = $this->getPage($wildcard);
 
@@ -88,6 +90,7 @@ class ProdigyPage extends Component {
     {
         // Get the first published page we can find at that slug.
         $page = Page::where('slug', $slug)->public()->published()->first();
+
 
         // Send back the redirect if there is one.
         if (isset($page->content['redirect_page']) && $page->content['redirect_page']) {
@@ -182,19 +185,36 @@ class ProdigyPage extends Component {
 
     /**
      * Toggle the "editing" flag so it edits the page.
-     * @TODO needs to be more thoughtful
      */
     protected function toggleProdigyPanel(bool $startEditing = true)
     {
         $url = Str::of(request()->header('Referer'));
+        $parsed_url = parse_url($url);
 
-        if ($startEditing) {
-            $url = $url->append('?pro_editing=true');
-        } else {
-            $url = $url->remove('?pro_editing=true');
+        // If we already have a query, we have extra logic to do....
+        if (isset($parsed_url['query'])) {
+
+            // Convert query params into an array
+            parse_str($parsed_url['query'], $query_params);
+
+            // Update the array property
+            $query_params['pro_editing'] = ($startEditing) ? 'true' : 'false';
+
+            // Push the changed string back into the array
+            $parsed_url['query'] = Arr::query($query_params);
+
+            // unparse the URL back into a string
+            $new_url = (new UnparseUrlAction())->execute($parsed_url);
+
+            return redirect($new_url);
         }
 
-        return redirect($url);
+        // If we didn't have a query string, all we need to do is toggle the property.
+        $new_url = ($startEditing) ?
+            $url->append('?pro_editing=true') :
+            $url->remove('?pro_editing=true');
+        return redirect($new_url);
+
     }
 
     public function canFindView(string $key): bool

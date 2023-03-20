@@ -13,10 +13,16 @@ class InstallCommand extends Command {
     public $signature = 'prodigy:install';
     public $description = 'Install prodigy';
 
+    public $isFresh = false;
+
     public function handle(): int
     {
 
-        $this->comment('Thanks for using Prodigy. It is still in early alpha, so let us know what issues you run into.');
+        $this->comment('Thanks for using Prodigy. It is still in alpha, so let us know what issues you find.');
+
+        if ($this->confirm('Are you installing into a fresh Laravel app?', true)) {
+            $this->isFresh = true;
+        }
 
         $this->comment('Publishing Prodigy assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'prodigy-assets']);
@@ -27,7 +33,7 @@ class InstallCommand extends Command {
         $this->comment('Publishing Prodigy config file...');
         $this->callSilent('vendor:publish', ['--tag' => 'prodigy-config']);
 
-        // Spatie creates a table here, so it MUST only run one time.
+        // Spatie creates a table here, so it must only run once.
         if (!Schema::hasTable('media')) {
             $this->comment('Publishing Spatie\'s media config file...');
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider', '--tag' => 'migrations']);
@@ -35,16 +41,20 @@ class InstallCommand extends Command {
             $this->comment('Spatie\'s media config file is already published. Skipping.');
         }
 
-        $this->comment('Doing an initial migration to make sure we have a users table....');
+        // Initial migration ensures we have a users table.
+        $this->comment('Doing an initial migration...');
         $this->call('migrate');
 
-        if ($this->confirm('Add a user?')) {
+        if ($this->confirm('Add a user?', true)) {
             $this->call('prodigy:user');
         }
 
-        if ($this->confirm('Enable dynamic routing?')) {
+        if ($this->confirm('Enable dynamic routing?', true)) {
             $this->comment('Updating web.php to allow automatic routing to Prodigy...');
             $this->configureDynamicRouting();
+        } else {
+            $this->info('It\'s perfectly fine to not use dynamic routing, but the application will not work until you set up a route and add <livewire:prodigy-page /> to your template.');
+
         }
 
         $this->comment('Creating some starter blocks in your components folder...');
@@ -66,11 +76,31 @@ class InstallCommand extends Command {
         return __DIR__ . '/..' . $subpath;
     }
 
+    /**
+     * If it's a fresh application, we remove the default welcome view,
+     * since we will be replacing that view with our own.
+     */
     protected function configureDynamicRouting(): void
     {
+        $web_routes_file = base_path('routes/web.php');
+
+        $web_routes_file_contents = file_get_contents($web_routes_file);
+
+        // Remove the default view if it's a fresh installation.
+        if($this->isFresh) {
+            str_replace(
+                "Route::get('/', function () {".PHP_EOL."return view('welcome');".PHP_EOL."});",
+                "",
+                $web_routes_file_contents
+            );
+
+            file_put_contents($web_routes_file, $web_routes_file_contents);
+        }
+
+        // Add the dynamic route.
         file_put_contents(
-            base_path('routes/web.php'),
-            "Route::get('{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
+            $web_routes_file,
+            PHP_EOL."Route::get('{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
             FILE_APPEND
         );
     }

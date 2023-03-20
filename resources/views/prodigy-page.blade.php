@@ -3,7 +3,16 @@
     {{ $page->title }}
 @endsection
 
-<div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }} prodigy-page-root">
+@section('pro_head')
+    @if ( isset($page->content['page_css_code']))
+        <style>{!! $page->content['page_css_code'] !!}</style>
+    @endif
+
+    @if ( isset($page->content['page_js_code']) && !$editing)
+        <script>
+            {!! $page->content['page_js_code'] !!}
+        </script>
+    @endif
 
     @if($editing)
         @isset($cssPath)
@@ -21,7 +30,12 @@
         @isset($jsPath)
             <script>{!! file_get_contents($jsPath) !!}</script>
         @endisset
+    @endif
+@endsection
 
+<div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }} prodigy-page-root">
+
+    @if($editing)
 
         <livewire:prodigy-editor :page="$page"/>
 
@@ -31,7 +45,7 @@
             @endif
 
             <main>
-                @if(Auth::check() && !$editing)
+                @if(Prodigy::userCanAccessEditor() && !$editing)
                     <button wire:click="openProdigyPanel"
                             style="z-index:9999;position: fixed; top:0; left:0;">
                         <x-prodigy::icons.arrow-down-right-mini></x-prodigy::icons.arrow-down-right-mini>
@@ -53,7 +67,8 @@
                         @continue
                     @endif
 
-                    <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing" :block="$block">
+                    <x-prodigy::structure.wrapper wire:key="{{ $block->id }}" :editing="$editing"
+                                                  :block="$block">
                         @if($editing)
                             <x-prodigy::structure.dropzone style="minimal" :block_order="$block->pivot->order"/>
                         @endif
@@ -76,7 +91,9 @@
                     @endif
                 @endforelse
 
-                <x-prodigy::structure.dropzone :block_order="$blocks->count() + 1"/>
+                @if($editing)
+                    <x-prodigy::structure.dropzone :block_order="$blocks->count() + 1"/>
+                @endif
             </main>
 
             @if($editing)
