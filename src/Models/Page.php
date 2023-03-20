@@ -101,6 +101,7 @@ class Page extends Model implements HasMedia {
     protected static function booted(): void
     {
         static::deleting(function (Page $page) {
+            dd('yo');
             (new DeletePageAction($page))->removeBlocks();
         });
 

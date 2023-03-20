@@ -42,7 +42,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
             ]);
     }
 
-    public function bootingPackage(): void
+public function bootingPackage(): void
     {
 
         $this->registerLivewireComponents();

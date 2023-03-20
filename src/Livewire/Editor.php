@@ -161,11 +161,11 @@ class Editor extends Component {
         $this->updateState('pageEditor');
     }
 
-    public function duplicatePageFromDraft(int $page_id)
+    public function duplicatePageFromDraft(int $draft_id)
     {
         Gate::authorize('viewProdigy', auth()->user());
 
-        $draft = Page::find($page_id);
+        $draft = Page::find($draft_id);
         $page = Page::find($draft->public_page_id); // get the *published* page
         $new_page = (new DuplicatePageAction($page))->execute();
 
