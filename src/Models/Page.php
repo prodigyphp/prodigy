@@ -67,6 +67,11 @@ class Page extends Model implements HasMedia {
             return $this->title;
         }
         $depth = str($this->slug)->substrCount('/') - 1;
+
+        // Kind of a hack just in case slugs aren't present.
+        if($depth < 0) {
+            $depth = 0;
+        }
         return str_repeat('— ', $depth) . $this->title;
     }
 

@@ -21,6 +21,7 @@ class EditEntry extends Component {
      * `block`. The other option is to pass down the words `block`, `entry` and
      * `page` to each field.
      */
+    public $model = 'block';
     public Entry $block;
     public $schema;
     public array $fields;
