@@ -43,6 +43,7 @@ class PageSettingsEditor extends Component {
                     return $query->where('id', '!=', $this->block->publicPage->id ?? null);
                 }),
             ],
+            'block.published_at' => 'date|nullable',
             ...(new GetSchemaRulesAction($this->schema, $this->fields, 'block'))->execute()
         ];
     }

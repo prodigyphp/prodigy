@@ -32,11 +32,22 @@ class DuplicatePageAction {
     }
 
 
-    public function duplicatePage(): self
+    public function duplicatePage($shouldBePublishable = false): self
     {
-        $this->new_page = $this->original_page->replicate(['published_at']); // remove 'published_at' from new page.
-        $this->new_page->public_page_id = $this->public_page_id; // attach public_page_id to the draft
-        $this->new_page->slug = ($this->slug) ?? str($this->new_page->slug)->append('-2')->toString(); // add slug
+        // new drafts are "duplicated" but need published_at to be preserved.
+        // new duplicated pages should not be published on created.
+        if ($shouldBePublishable) {
+            $this->new_page = $this->original_page->replicate(); // Don't remove anything for the draft.
+        } else {
+            $this->new_page = $this->original_page->replicate(['published_at']); // remove 'published_at' from new page.
+        }
+
+        // attach public_page_id to the draft
+        $this->new_page->public_page_id = $this->public_page_id;
+
+        // add slug
+        $this->new_page->slug = ($this->slug) ?? str($this->new_page->slug)->append('-2')->toString();
+
         $this->new_page->save();
 
         return $this;

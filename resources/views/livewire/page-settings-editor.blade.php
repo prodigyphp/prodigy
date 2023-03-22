@@ -14,12 +14,46 @@
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Title" for="title"></x-prodigy::editor.label>
-            <x-prodigy::editor.input wire:model="block.title" id="title"></x-prodigy::editor.input>
+            <x-prodigy::editor.input wire:model="block.title" id="title"/>
         </x-prodigy::editor.field-wrapper>
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Slug" for="slug"></x-prodigy::editor.label>
-            <x-prodigy::editor.input wire:model="block.slug" id="slug"></x-prodigy::editor.input>
+            <x-prodigy::editor.input wire:model="block.slug" id="slug"/>
+        </x-prodigy::editor.field-wrapper>
+
+        <x-prodigy::editor.field-wrapper>
+            <x-prodigy::editor.label :label="_('Page Status')" for="title"></x-prodigy::editor.label>
+            <div class="pro-flex" x-cloak x-data="{
+                    toggle: false,
+                    published_at: @entangle("block.published_at"),
+                    setDefaultValue() {
+                        if(!this.published_at) {
+                            this.published_at = ''
+                        }
+                        if(this.published_at) {
+                            this.toggle = true
+                        }
+                    },
+                    toggleValue() {
+                        if(this.toggle) {
+                            this.published_at = null;
+                        } else {
+                            let date = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                            this.published_at = date;
+                        }
+                    }
+                }" x-init="setDefaultValue()">
+                <label class="pro-relative pro-inline-flex pro-items-center pro-cursor-pointer">
+                    <input type="hidden" x-model="published_at">
+                    <input type="checkbox" x-model="toggle" x-on:click="toggleValue()" :checked="toggle" class="pro-sr-only pro-peer">
+                    <div class="pro-w-11 pro-h-6 pro-bg-gray-200 peer-focus:pro-outline-none peer-focus:pro-ring-4 peer-focus:pro-ring-blue-300 pro-rounded-full pro-peer peer-checked:after:pro-translate-x-full peer-checked:after:pro-border-white after:pro-content-[''] after:pro-absolute after:pro-top-[2px] after:pro-left-[2px] after:pro-bg-white after:pro-border-gray-300 after:pro-border after:pro-rounded-full after:pro-h-5 after:pro-w-5 after:pro-transition-all peer-checked:pro-bg-blue-600"></div>
+                    <span class="pro-ml-3 pro-text-sm pro-font-medium pro-text-gray-900 pro-dark:text-gray-300"
+                          x-show="toggle">{{ _('Published') }}</span>
+                    <span class="pro-ml-3 pro-text-sm pro-font-medium pro-text-gray-900 pro-dark:text-gray-300"
+                          x-show="!toggle">{{ _('Draft') }}</span>
+                </label>
+            </div>
         </x-prodigy::editor.field-wrapper>
 
         @if($schema)

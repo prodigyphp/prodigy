@@ -27,7 +27,13 @@ class UserCommand extends Command {
 
         $user = (new CreateUserAction($this->user_name, $this->email, $this->password))->execute();
 
+        $this->line('------------------');
         $this->info('New user created!');
+        $this->line('<fg=white;bg=blue> One more step! </>');
+        $this->line('  Add email to the config/prodigy.php access_emails array.');
+        $this->line('------------------');
+        $this->ask('Once you\'ve added ' . $this->email . ' to config/prodigy.php, press enter.');
+
         return self::SUCCESS;
     }
 
