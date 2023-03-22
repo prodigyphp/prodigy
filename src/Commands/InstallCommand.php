@@ -39,6 +39,8 @@ class InstallCommand extends Command {
 
         $this->addDefaultResources();
 
+        $this->addToGitIgnore();
+
         $this->info('<fg=white;bg=green>Success!</> Prodigy is installed...make something great!');
         $this->info('Log in at ' . config('app.url') . '/prodigy/login');
         return self::SUCCESS;
@@ -118,6 +120,17 @@ class InstallCommand extends Command {
         file_put_contents(
             $web_routes_file,
             PHP_EOL . "Route::get('{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
+            FILE_APPEND
+        );
+    }
+
+    protected function addToGitIgnore(): void
+    {
+        $this->info('Updating gitignore...');
+        $ignore_file = base_path('.gitignore');
+        file_put_contents(
+            $ignore_file,
+            PHP_EOL . "/prodigy" . PHP_EOL . "/public/prodigy" . PHP_EOL . "/storage/backups",
             FILE_APPEND
         );
     }
