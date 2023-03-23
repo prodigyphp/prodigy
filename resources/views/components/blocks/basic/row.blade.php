@@ -11,7 +11,6 @@
         @foreach(range(1, $block->content['columns'] ?? 1) as $column_index)
             <div class="prodigy_column">
                 @foreach($children->where('pivot.column', $column_index) as $child)
-                <p class="pro-font-bold">{{ $child->pivot?->order }} • {{ $child->id }}</p>
                     @if(!Prodigy::canFindView("{$block->key}"))
                         @continue
                     @endif
