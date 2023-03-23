@@ -71,6 +71,7 @@
                                                   :block="$block">
                         @if($editing)
                             <x-prodigy::structure.dropzone style="minimal" :block_order="$block->pivot->order"/>
+                            <p class="pro-font-bold">{{ $block->pivot->order }} • {{ $block->id }}</p>
                         @endif
                         <x-prodigy::structure.inner :editing="$editing" :block="$block">
                             <x-dynamic-component :component="$block->key"

@@ -5,6 +5,7 @@ namespace ProdigyPHP\Prodigy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -141,21 +142,26 @@ class ProdigyPage extends Component {
             ->intoColumn($column_index)
             ->atColumnPosition($column_order);
 
+//        dd($block_order);
+
         /**
          * Three options for adding blocks:
          * 1. $block_key is a number, so we're reordering
          * 2. $block_key starts with _GLOBAL_ so it's a global block that needs to be attached.
          * 3. $block_key is a keyed path to a block, so it needs to be created.
          */
-        if (is_numeric($block_key)) {
-            $block = $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
-        } elseif (str($block_key)->startsWith('_GLOBAL')) {
-            $id = str($block_key)->remove('_GLOBAL_')->toInteger();
-            $block = $blockAdder->attachGlobalBlock($id)->execute();
-        } else {
-            $block = $blockAdder->createBlockByKey($block_key)->execute();
-            $this->emit('editBlock', $block->id); // Open the editor once it's been created.
-        }
+        $block = DB::transaction(function () use ($block_key, $blockAdder) {
+                    if (is_numeric($block_key)) {
+                        return $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
+                    } elseif (str($block_key)->startsWith('_GLOBAL')) {
+                        $id = str($block_key)->remove('_GLOBAL_')->toInteger();
+                        return $blockAdder->attachGlobalBlock($id)->execute();
+                    } else {
+                        $block = $blockAdder->createBlockByKey($block_key)->execute();
+                        $this->emit('editBlock', $block->id); // Open the editor once it's been created.
+                        return $block;
+                    }
+                });
 
         // Refresh is required in order to update order on all blocks in the frontend.
         $this->emitSelf('fireGlobalRefresh');

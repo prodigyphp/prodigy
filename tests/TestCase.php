@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Schema;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use ProdigyPHP\Prodigy\Models\User;
 use ProdigyPHP\Prodigy\ProdigyServiceProvider;
 
 class TestCase extends Orchestra {
@@ -49,6 +50,10 @@ class TestCase extends Orchestra {
         $migration = include __DIR__ . '/../database/migrations/2023_03_01_create_prodigy_tables.php.stub';
         $migration->up();
 
+    }
+
+    public function loginCorrectUser() {
+        $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
     }
 
 }

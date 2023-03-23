@@ -19,8 +19,8 @@ class BlockFactory extends Factory
     public function definition()
     {
         return [
-            'key' => 'blocks.header',
-            'content' => '{"title": "What is the answer to life?", "subtitle": "42"}'
+            'key' => 'prodigy::blocks.basic.text',
+            'content' => '{"text": '. $this->faker->sentence .', "show_on_page": "show"}'
         ];
     }
 }

@@ -21,6 +21,9 @@
         <div class="pro-px-4" x-show="active_tab == 'blocks'">
             @foreach($groups as $group)
                 @foreach($group['folders'] as $folder)
+                    @if($folder['blocks']->isEmpty())
+                        @continue
+                    @endif
                     <div class="pro-w-full pro-pb-4" x-data="{ expanded: true }">
                         <div @click="expanded = ! expanded"
                              class="pro-px-2 pro-pb-2 pro-bg-gray-700/10 pro-mx-[-1rem] pro-py-2">

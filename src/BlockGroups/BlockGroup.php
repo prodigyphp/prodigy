@@ -65,8 +65,10 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
         $slug = Str::of($basename)->remove('.blade.php');               // "video"
         $title = $slug->replace('-', ' ')->title()->toString();  // "Video"
 
-        $key = ($this->namespace) ? "{$this->namespace}::" : '';                // "prodigy::" (or nothing, if local blocks)
-        $key.= "blocks.{$folder}.{$slug}";                                       // "blocks.calls-to-action.cta-primary"
+        $key = ($this->namespace) ? "{$this->namespace}::" : "";                // "prodigy::" (or nothing, if local blocks)
+        $key .= "blocks.";                                                      // "prodigy::blocks." (add hardcoded word "blocks")
+        $key .= ($folder) ? "{$folder}." : "";                                  // "prodigy::blocks.cta" (add folder if we have one)
+        $key.= "{$slug}";                                                       // "prodigy::blocks.cta.cta-primary" (add actual name of block)
 
         return collect([
             'key' => $key,
@@ -100,7 +102,7 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
 
     public function buildFolders(): Collection
     {
-        return $this->getDirectories()
+        $directories =  $this->getDirectories()
             ->map(function ($directory) {
                 $slug = basename($directory); // goes from /components/blocks/group-name to 'group-name'
                 return collect([
@@ -108,6 +110,13 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
                     'title' => $this->titleFromSlug($slug)
                 ]);
             });
+
+        $directories->push(collect([
+            'slug' => '',
+            'title' => _('Uncategorized')
+        ]));
+
+        return $directories;
     }
 
     protected function titleFromSlug($slug): string

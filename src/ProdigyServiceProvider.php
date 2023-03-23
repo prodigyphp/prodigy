@@ -10,6 +10,7 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Livewire;
 use ProdigyPHP\Prodigy\Commands\InstallCommand;
 use ProdigyPHP\Prodigy\Commands\ProdigyBackupCommand;
+use ProdigyPHP\Prodigy\Commands\PruneCommand;
 use ProdigyPHP\Prodigy\Commands\UserCommand;
 use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Http\Controllers\WelcomeController;
@@ -39,6 +40,7 @@ class ProdigyServiceProvider extends PackageServiceProvider {
                 ProdigyBackupCommand::class,
                 InstallCommand::class,
                 UserCommand::class,
+                PruneCommand::class,
             ]);
     }
 

@@ -40,7 +40,7 @@ class DuplicateLinkAction {
     }
 
     // Taken from https://laracasts.com/discuss/channels/eloquent/deep-replication-model-relations
-    public function replicateWithRelations(Block $block) : Block
+    public function replicateWithRelations(Block $block): Block
     {
         $block->load('children');
         $newBlock = $block->replicate();
@@ -60,9 +60,7 @@ class DuplicateLinkAction {
                 $childModel = $model->replicate();
                 $childModel->push();
                 $childModel->setRelations([]);
-
                 $newModel->{$relation}()->attach($childModel, ['order' => 0, 'column' => 0]); // saving whatever columns $childModel has except foreign keys relative to it's parent model. If there were any other foreign keys other than the parent model, in this case, those scenarios are not handled.
-
                 static::replicateRelations($model, $childModel);
             }
         }
