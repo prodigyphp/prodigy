@@ -1,20 +1,12 @@
 @php use ProdigyPHP\Prodigy\Facades\Prodigy; @endphp
+
 @section('title')
     {{ $page->title }}
 @endsection
 
 @section('pro_head')
-    @if ( isset($page->content['page_css_code']))
-        <style>{!! $page->content['page_css_code'] !!}</style>
-    @endif
-
-    @if ( isset($page->content['page_js_code']) && !$editing)
-        <script>
-            {!! $page->content['page_js_code'] !!}
-        </script>
-    @endif
-
     @if($editing)
+
         @isset($cssPath)
             <style>{!! file_get_contents($cssPath) !!}</style>
             <style>
@@ -30,6 +22,26 @@
         @isset($jsPath)
             <script>{!! file_get_contents($jsPath) !!}</script>
         @endisset
+
+    @else
+
+        @if ( isset($page->content['page_css_code']))
+            <style>{!! $page->content['page_css_code'] !!}</style>
+        @endif
+
+        @if ( isset($page->content['page_js_code']) )
+            <script>
+                {!! $page->content['page_js_code'] !!}
+            </script>
+        @endif
+    @endif
+
+    <title>{{ $page_seo_title }}</title>
+    <meta property="og:title" content="{{ $page_seo_title }}"/>
+    <meta property="og:description" content="{{ $page_seo_description }}"/>
+    <meta property="og:image" content="{{ $featured_image_url ?? '' }}"/>
+    @if(isset($page->content['show_in_search']) && $page->content['show_in_search'] == false)
+        <meta name="robots" content="noindex">
     @endif
 @endsection
 

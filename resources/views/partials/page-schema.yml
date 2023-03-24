@@ -12,7 +12,8 @@ fields:
       seo_title:
         type: text
       seo_description:
-        type: texteditor
+        type: text
+        multiline: true
       show_in_search:
         label: Show in Search Results
         type: boolean

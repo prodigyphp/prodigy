@@ -136,4 +136,10 @@ return [
         'max_width' => '1500',
     ],
 
+    'seo' => [
+        'description' => 'Prodigy is an open-source page builder and CMS for Laravel developers. Drag and drop for the win.',
+        'title_separator' => ' – ',
+        'default_share_image_url' => '',
+    ]
+
 ];

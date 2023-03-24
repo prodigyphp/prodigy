@@ -57,7 +57,7 @@ class PhotoUploader extends Component {
     {
         Gate::authorize('viewProdigy', auth()->user());
 
-        $this->block->getFirstMedia('prodigy')->delete();
+        $this->block->getFirstMedia('prodigy', ['key' => $this->key])->delete();
         $this->emit('fireGlobalRefresh');
         $this->emitSelf('refresh');
     }

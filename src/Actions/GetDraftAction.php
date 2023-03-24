@@ -26,6 +26,7 @@ class GetDraftAction {
                 ->setSlug($public_page->slug)
                 ->setPublicPageForDraftPage($public_page->id)
                 ->duplicatePage(true)
+                ->duplicateMedia()
                 ->duplicateBlocks()
                 ->duplicateDraft()
                 ->getNewPage();

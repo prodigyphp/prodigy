@@ -26,6 +26,7 @@ class DuplicatePageAction {
         return DB::transaction(function () {
             return $this->duplicatePage()
                 ->duplicateBlocks()
+                ->duplicateMedia()
                 ->duplicateDraft()
                 ->getNewPage();
         });
@@ -49,6 +50,18 @@ class DuplicatePageAction {
         $this->new_page->slug = ($this->slug) ?? str($this->new_page->slug)->append('-2')->toString();
 
         $this->new_page->save();
+
+        return $this;
+    }
+
+    public function duplicateMedia(): self
+    {
+
+        $media_collection = $this->original_page->getMedia('prodigy');
+        info($media_collection->count());
+        foreach($media_collection as $media) {
+            $media->copy($this->new_page, 'prodigy');
+        }
 
         return $this;
     }

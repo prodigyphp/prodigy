@@ -60,6 +60,7 @@ class GetSchemaAction {
     public static function pageSchema(): array
     {
         $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/page-schema.yml');
+//        $path = __DIR__ . '../../vendor/prodigyphp/prodigy/resources/views/partials/page-schema.yml';
         return Yaml::parseFile($path);
     }
 

@@ -27,6 +27,10 @@ class ProdigyPage extends Component {
 
     public array $temp;
 
+    public ?string $page_seo_title;
+    public ?string $page_seo_description;
+    public ?string $featured_image_url;
+
     public $cssPath = __DIR__ . '/../public/css/prodigy.css';
     public $jsPath = __DIR__ . '/../public/js/prodigy.js';
 
@@ -92,7 +96,6 @@ class ProdigyPage extends Component {
         // Get the first published page we can find at that slug.
         $page = Page::where('slug', $slug)->public()->published()->first();
 
-
         // Send back the redirect if there is one.
         if (isset($page->content['redirect_page']) && $page->content['redirect_page']) {
             $this->redirect($page->content['redirect_page']);
@@ -151,17 +154,17 @@ class ProdigyPage extends Component {
          * 3. $block_key is a keyed path to a block, so it needs to be created.
          */
         $block = DB::transaction(function () use ($block_key, $blockAdder) {
-                    if (is_numeric($block_key)) {
-                        return $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
-                    } elseif (str($block_key)->startsWith('_GLOBAL')) {
-                        $id = str($block_key)->remove('_GLOBAL_')->toInteger();
-                        return $blockAdder->attachGlobalBlock($id)->execute();
-                    } else {
-                        $block = $blockAdder->createBlockByKey($block_key)->execute();
-                        $this->emit('editBlock', $block->id); // Open the editor once it's been created.
-                        return $block;
-                    }
-                });
+            if (is_numeric($block_key)) {
+                return $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
+            } elseif (str($block_key)->startsWith('_GLOBAL')) {
+                $id = str($block_key)->remove('_GLOBAL_')->toInteger();
+                return $blockAdder->attachGlobalBlock($id)->execute();
+            } else {
+                $block = $blockAdder->createBlockByKey($block_key)->execute();
+                $this->emit('editBlock', $block->id); // Open the editor once it's been created.
+                return $block;
+            }
+        });
 
         // Refresh is required in order to update order on all blocks in the frontend.
         $this->emitSelf('fireGlobalRefresh');
@@ -184,9 +187,63 @@ class ProdigyPage extends Component {
     {
         $this->blocks = $this->page->blocks()->with('children')->withPivot('order', 'id')->orderBy('order', 'asc')->get();
 
+        $this->featured_image_url = $this->getFeaturedImage();
+        $this->page_seo_title = $this->getSeoTitle();
+        $this->page_seo_description = $this->getDescription();
+
         $layout = config('prodigy.full_page_layout', 'layouts.app');
 
         return view('prodigy::prodigy-page')->layout($layout);
+    }
+
+    protected function getFeaturedImage()
+    {
+        $media_collection = $this->page->getMedia('prodigy');
+
+        // Get the social media item
+        $featured_image = $media_collection->filter(fn($media) => $media->getCustomProperty('key') == 'social_image')->first();
+        if ($featured_image) {
+            return $featured_image->getFullUrl();
+        }
+
+        // Fallback to the featured image.
+        $featured_image = $media_collection->filter(fn($media) => $media->getCustomProperty('key') == 'featured_image')->first();
+        if ($featured_image) {
+            return $featured_image->getFullUrl();
+        }
+
+        // fallback to default image or nothing.
+        return config('prodigy.seo.default_share_image_url', '');
+    }
+
+    protected function getSeoTitle()
+    {
+        $page_title = '';
+
+        if ($this->page->content && $this->page->content->has('seo_title')) {
+            $page_title = $this->page->content['seo_title'];
+        }
+
+        if(!$page_title) {
+            $page_title = $this->page->title ?? '';
+        }
+
+        $separator = config('prodigy.seo.title_separator', ' – ');
+        $app_name = config('app.name');
+        return ($page_title) ? "{$page_title}{$separator}{$app_name}" : $app_name;
+    }
+
+    protected function getDescription()
+    {
+        $description = '';
+
+        if($this->page->content && $this->page->content->has('seo_description')) {
+            $description = $this->page->content['seo_description'];
+        }
+        if(!$description) {
+            $description = config('prodigy.seo.description', '');
+        }
+        return  $description;
     }
 
     /**
