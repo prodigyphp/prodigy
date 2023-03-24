@@ -30,6 +30,11 @@ class Prodigy {
         return (new GetSchemaAction())->getTaxonomySchemas();
     }
 
+    public static function getModelSlug($model): string
+    {
+        return str(class_basename($model))->lower()->toString();
+    }
+
     /**
      * This is a quirk of Laravel's component system. Local components remove the 'components.'
      * part of the component name. So something in /components/blocks/header.blade.php would

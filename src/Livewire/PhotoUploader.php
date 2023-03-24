@@ -2,19 +2,13 @@
 
 namespace ProdigyPHP\Prodigy\Livewire;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
-use ProdigyPHP\Prodigy\Models\Block;
-use ProdigyPHP\Prodigy\Models\Entry;
-use ProdigyPHP\Prodigy\Models\Page;
+use ProdigyPHP\Prodigy\Prodigy;
 use Spatie\MediaLibrary\HasMedia;
-use Symfony\Component\Yaml\Yaml;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 
 class PhotoUploader extends Component {
 
@@ -23,8 +17,9 @@ class PhotoUploader extends Component {
     public $photo;
     public HasMedia $block;
     public string $key;
+    public string $file_key;
 
-    public string $preview;
+    public ?Media $preview;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -53,6 +48,7 @@ class PhotoUploader extends Component {
         $this->block
             ->addMedia($this->photo->getRealPath())
             ->usingName($this->photo->getClientOriginalName())
+            ->withCustomProperties(['key' => $this->key])
             ->toMediaCollection('prodigy');
 
     }
@@ -68,7 +64,7 @@ class PhotoUploader extends Component {
 
     public function render()
     {
-        $this->preview = $this->block->getFirstMediaUrl('prodigy', 'thumb');
+        $this->preview = $this->block->getFirstMedia('prodigy', ['key' => $this->key]);
         return view('prodigy::partials.photo-uploader');
     }
 
