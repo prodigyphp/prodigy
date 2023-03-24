@@ -15,7 +15,7 @@
 
     <div x-show="expanded" class="pro-flex pro-flex-wrap pro-pt-1">
         @forelse($data['fields'] as $key => $meta)
-            {{ $this->getField($key, $meta) }}
+                {{ $this->getField($key, $meta) }}
         @empty
             No fields found.
         @endforelse

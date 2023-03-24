@@ -5,7 +5,7 @@
     $value_if_false = $data['label_for_false'] ?? _('False');
 @endphp
 
-<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" x-data>
+<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" x-data :key="$key">
     <x-prodigy::editor.label :data="$data" :key="$key" for="block.content.{{$key}}" class="pro-pb-2"/>
     <div class="pro-flex" x-data="{
             toggle: @entangle("block.content.{$key}"),

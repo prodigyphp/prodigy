@@ -1,16 +1,50 @@
 @php extract($content ?? []); @endphp
 @php
-    // I'm not sure why I had it dynamically querying.
-    //    $children = $block->children()->withPivot('order', 'column', 'id')->get();
-    $children = $block->children;
+    $column_count = $block->content['columns'] ?? 1;
+    $column_widths = [  $block->content['column_1_width'] ?? 0,
+                        $block->content['column_2_width'] ?? 0,
+                        $block->content['column_3_width'] ?? 0,
+                        $block->content['column_4_width'] ?? 0];
+
 @endphp
-<div style="{{ ($editing) ? 'padding:20px;' : '' }} display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 1.5rem;"
-     class="">
+
+<style>
+    .prodigy-row-{{$block->id}}         {
+        display: flex;
+        width: 100%;
+    }
+
+    .prodigy-row-{{$block->id}}   > .prodigy-column {
+        flex-basis: 1fr;
+        flex-grow: 1;
+    }
+
+    @foreach($column_widths as $column_width)
+        .prodigy-row-{{$block->id}}   > .prodigy-column-{{$loop->index + 1}} {
+            flex-basis: {{$column_width}}%;
+        }
+    @endforeach
+
+    @media (max-width: 1023px) {
+        .prodigy-row-{{$block->id}}     {
+            flex-wrap: wrap;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .prodigy-row-{{$block->id}}   > .prodigy-column {
+            width: 100%;
+            flex-basis: 100%;
+        }
+    }
+</style>
+
+<div style="{{ ($editing) ? 'padding:20px;' : '' }}" class="prodigy-row-{{ $block->id }}">
 
     @if($block)
-        @foreach(range(1, $block->content['columns'] ?? 1) as $column_index)
-            <div class="prodigy_column">
-                @foreach($children->where('pivot.column', $column_index) as $child)
+        @foreach(range(1, $column_count) as $column_index)
+            <div class="prodigy-column prodigy-column-{{$column_index}}">
+                @foreach($block->children->where('pivot.column', $column_index) as $child)
                     @if(!Prodigy::canFindView("{$block->key}"))
                         @continue
                     @endif
@@ -32,10 +66,11 @@
 
                     </x-prodigy::structure.inner>
                 @endforeach
-
-                <x-prodigy::structure.dropzone :block_order="$block->pivot?->order"
-                                               :column_order="$block->children->where('pivot.column', $column_index)->count() + 1"
-                                               :column_index="$column_index"/>
+                @if($editing)
+                    <x-prodigy::structure.dropzone :block_order="$block->pivot?->order"
+                                                   :column_order="$block->children->where('pivot.column', $column_index)->count() + 1"
+                                                   :column_index="$column_index"/>
+                @endif
             </div>
         @endforeach
 

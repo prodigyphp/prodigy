@@ -31,6 +31,7 @@ class GetEditorFieldAction {
         // We need a "show" key to test against.
         if (array_key_exists('show', $data)) {
             if (!$this->testConditionalLogic($data['show'])) {
+                info($field_name);
                 return null;
             }
         }
@@ -66,25 +67,54 @@ class GetEditorFieldAction {
             $rules = explode('|', $rules);
         }
 
-        $metaCollection = collect($this->model->content);
-
         // Iterate over each rule
         foreach ($rules as $rule) {
-            $key = str($rule)->before(':')->toString(); // key is before the :
-            $rule_value = str($rule)->after(':')->toString(); // value is after the :
-
-//                info([$key, $value, $this->model->content->contains($key, $value), $this->model->content]);
-            // If we can find the key and value, it passes
-            if ($this->model->content?->has($key)) {
-                $current_value = $this->model->content[$key];
-                if ($current_value == $rule_value) {
-                    return true;
-                }
-            }
+            $result = $this->test_condition($rule);
+            if ($result) return true; // we only return true, not false, since we may have multiple conditions.
         }
 
         // Otherwise, it fails.
         return false;
     }
+
+    protected function test_condition($rule): bool
+    {
+        // 'column:gte:3' becomes 'column'
+        $key = str($rule)->before(':')->toString();
+
+        // 'column:gte:3' becomes '3'
+        $rule_value = str($rule)->afterLast(':')->toString();
+
+        // safety check.
+        if (!$this->model->content?->has($key)) return false;
+
+        // get the current value from the other field.
+        $current_value = $this->model->content[$key];
+
+        return match (true) {
+            str($rule)->contains(':gt:') => ((int) $current_value > (int) $rule_value),
+            str($rule)->contains(':gte:') => ((int) $current_value >= (int) $rule_value),
+            str($rule)->contains(':lt:') => ((int) $current_value < (int) $rule_value),
+            str($rule)->contains(':lte:') => ((int) $current_value <= (int) $rule_value),
+            default => ($current_value == $rule_value)
+        };
+    }
+
+    // This is old code that no longer is needed.
+    // It's just here for reference since I refactored.
+//    protected function show_if_another_field_equals($rule): bool
+//    {
+//        $key = str($rule)->before(':')->toString(); // key is before the :
+//        $rule_value = str($rule)->after(':')->toString(); // value is after the :
+//
+//        // If we can find the key and value, it passes
+//        if ($this->model->content?->has($key)) {
+//            $current_value = $this->model->content[$key];
+//            if ($current_value == $rule_value) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
 }
