@@ -19,7 +19,7 @@
 
         <x-prodigy::editor.field-wrapper>
             <x-prodigy::editor.label label="Page Slug" for="slug"></x-prodigy::editor.label>
-            <x-prodigy::editor.input wire:model="block.slug" id="slug"/>
+            <x-prodigy::editor.input wire:model="block.slug" id="slug" />
         </x-prodigy::editor.field-wrapper>
 
         <x-prodigy::editor.field-wrapper>

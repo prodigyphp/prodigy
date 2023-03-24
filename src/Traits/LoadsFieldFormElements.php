@@ -42,11 +42,6 @@ trait LoadsFieldFormElements {
             $this->$model->content = collect($content_array);
         }
 
-        // Side load the $model ID to be able to upload images.
-        if ($data['type'] == 'image') {
-            $data["{$model}_id"] = $this->$model->id;
-        }
-
         return (new $field_name)->make($key, $data, $this->$model);
 
     }

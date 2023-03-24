@@ -51,12 +51,6 @@ class GetEditorFieldAction {
             $this->model->content = collect($content_array);
         }
 
-        // Side load the model ID to be able to upload images.
-        // @TODO fix the "model_id"
-//        if ($data['type'] == 'image') {
-//            $data['model_id'] = $this->model->id;
-//        }
-
         return (new $field_name)->make($key, $data, $this->model);
     }
 
