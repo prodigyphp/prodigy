@@ -8,9 +8,9 @@ use ProdigyPHP\Prodigy\FieldTypes\Color;
 use ProdigyPHP\Prodigy\FieldTypes\Dropdown;
 use ProdigyPHP\Prodigy\FieldTypes\Group;
 use ProdigyPHP\Prodigy\FieldTypes\Image;
+use ProdigyPHP\Prodigy\FieldTypes\Link;
 use ProdigyPHP\Prodigy\FieldTypes\Menu;
 use ProdigyPHP\Prodigy\FieldTypes\Number;
-use ProdigyPHP\Prodigy\FieldTypes\Link;
 use ProdigyPHP\Prodigy\FieldTypes\NumberWithUnit;
 use ProdigyPHP\Prodigy\FieldTypes\PixelGroup;
 use ProdigyPHP\Prodigy\FieldTypes\Range;
@@ -140,6 +140,6 @@ return [
         'description' => 'Prodigy is an open-source page builder and CMS for Laravel developers. Drag and drop for the win.',
         'title_separator' => ' – ',
         'default_share_image_url' => '',
-    ]
+    ],
 
 ];

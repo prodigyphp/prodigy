@@ -4,10 +4,9 @@ namespace ProdigyPHP\Prodigy\FieldTypes;
 
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
-use ProdigyPHP\Prodigy\Models\Page;
 
-abstract class Field {
-
+abstract class Field
+{
     /**
      * The displayed name of the field.
      *
@@ -19,7 +18,6 @@ abstract class Field {
 
     public function make(string $key, array $meta, Block|Entry|null $block)
     {
-        return;
-    }
 
+    }
 }

@@ -7,9 +7,10 @@ use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class GetEditorFieldAction {
-
+class GetEditorFieldAction
+{
     protected Block|Page|Entry $model;
+
     protected array $fields;
 
     public function __construct(Block|Page|Entry $model)
@@ -20,31 +21,30 @@ class GetEditorFieldAction {
 
     public function execute($key, array $data): View|null
     {
-
         $field_name = $this->fields[$data['type']] ?? null;
 
-        if (!$field_name) {
+        if (! $field_name) {
             return null;
         }
 
         // Check the conditionals to decide if we should render the field at all.
         // We need a "show" key to test against.
         if (array_key_exists('show', $data)) {
-            if (!$this->testConditionalLogic($data['show'])) {
+            if (! $this->testConditionalLogic($data['show'])) {
                 info($field_name);
+
                 return null;
             }
         }
 
         // If there's no model collection yet, add an empty one.
-        if (!$this->model->content) {
+        if (! $this->model->content) {
             $this->model->content = collect();
         }
 
         // Set default values if we have a default value but no set value.
-        if (!$this->model->content->contains($key) &&
+        if (! $this->model->content->contains($key) &&
             array_key_exists('default', $data)) {
-
             // has to drop out to array b/c I can't update the collection directly.
             $content_array = $this->model->content->toArray();
             $content_array[$key] = $content_array[$key] ?? $data['default'];
@@ -64,7 +64,9 @@ class GetEditorFieldAction {
         // Iterate over each rule
         foreach ($rules as $rule) {
             $result = $this->test_condition($rule);
-            if ($result) return true; // we only return true, not false, since we may have multiple conditions.
+            if ($result) {
+                return true;
+            } // we only return true, not false, since we may have multiple conditions.
         }
 
         // Otherwise, it fails.
@@ -80,7 +82,9 @@ class GetEditorFieldAction {
         $rule_value = str($rule)->afterLast(':')->toString();
 
         // safety check.
-        if (!$this->model->content?->has($key)) return false;
+        if (! $this->model->content?->has($key)) {
+            return false;
+        }
 
         // get the current value from the other field.
         $current_value = $this->model->content[$key];
@@ -110,5 +114,4 @@ class GetEditorFieldAction {
 //        }
 //        return false;
 //    }
-
 }

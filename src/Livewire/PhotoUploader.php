@@ -5,18 +5,19 @@ namespace ProdigyPHP\Prodigy\Livewire;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use ProdigyPHP\Prodigy\Prodigy;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-
-class PhotoUploader extends Component {
-
+class PhotoUploader extends Component
+{
     use WithFileUploads;
 
     public $photo;
+
     public HasMedia $block;
+
     public string $key;
+
     public string $file_key;
 
     public ?Media $preview;
@@ -30,7 +31,7 @@ class PhotoUploader extends Component {
     }
 
     protected $rules = [
-        'photo' => 'image|max:4096'
+        'photo' => 'image|max:4096',
     ];
 
     public function updatedPhoto()
@@ -50,7 +51,6 @@ class PhotoUploader extends Component {
             ->usingName($this->photo->getClientOriginalName())
             ->withCustomProperties(['key' => $this->key])
             ->toMediaCollection('prodigy');
-
     }
 
     public function delete()
@@ -65,7 +65,7 @@ class PhotoUploader extends Component {
     public function render()
     {
         $this->preview = $this->block->getFirstMedia('prodigy', ['key' => $this->key]);
+
         return view('prodigy::partials.photo-uploader');
     }
-
 }

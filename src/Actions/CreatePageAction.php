@@ -4,11 +4,9 @@ namespace ProdigyPHP\Prodigy\Actions;
 
 use ProdigyPHP\Prodigy\Models\Page;
 
-class CreatePageAction {
-
-
+class CreatePageAction
+{
     public function execute(Page $page)
     {
-
     }
 }

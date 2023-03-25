@@ -3,11 +3,10 @@
 namespace ProdigyPHP\Prodigy\Actions;
 
 use Illuminate\Support\Facades\DB;
-use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class GetDraftAction {
-
+class GetDraftAction
+{
     public function execute(Page $public_page): Page
     {
         // If we already have a draft, send it back.
@@ -32,5 +31,4 @@ class GetDraftAction {
                 ->getNewPage();
         });
     }
-
 }

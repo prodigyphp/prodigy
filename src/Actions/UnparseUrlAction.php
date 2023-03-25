@@ -2,30 +2,28 @@
 
 namespace ProdigyPHP\Prodigy\Actions;
 
-class UnparseUrlAction {
+class UnparseUrlAction
+{
+    public function execute($parsed_url): string
+    {
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'].'://' : '';
 
-    public function execute($parsed_url) : string
-        {
+        $host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
 
-            $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $port = isset($parsed_url['port']) ? ':'.$parsed_url['port'] : '';
 
-            $host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+        $user = isset($parsed_url['user']) ? $parsed_url['user'] : '';
 
-            $port = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $pass = isset($parsed_url['pass']) ? ':'.$parsed_url['pass'] : '';
 
-            $user = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+        $pass = ($user || $pass) ? "$pass@" : '';
 
-            $pass = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
+        $path = isset($parsed_url['path']) ? $parsed_url['path'] : '';
 
-            $pass = ($user || $pass) ? "$pass@" : '';
+        $query = isset($parsed_url['query']) ? '?'.$parsed_url['query'] : '';
 
-            $path = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+        $fragment = isset($parsed_url['fragment']) ? '#'.$parsed_url['fragment'] : '';
 
-            $query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
-
-            $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
-
-            return "$scheme$user$pass$host$port$path$query$fragment";
-
-        }
+        return "$scheme$user$pass$host$port$path$query$fragment";
+    }
 }

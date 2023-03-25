@@ -6,14 +6,24 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Entry extends Model implements HasMedia {
-
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property ?string $type
+ * @property ?Collection $content
+ * @property int $order
+ * @property ?string $global_title
+ */
+class Entry extends Model implements HasMedia
+{
     use HasFactory;
     use InteractsWithMedia;
 
@@ -22,7 +32,8 @@ class Entry extends Model implements HasMedia {
     protected $guarded = [];
 
     protected $casts = [
-        'content' => 'collection'
+        'content' => 'collection',
+        'published_at' => 'datetime',
     ];
 
     public function taxonomies(): HasMany
@@ -35,7 +46,6 @@ class Entry extends Model implements HasMedia {
         $query->where('type', '=', $type);
     }
 
-
     protected static function newFactory(): BlockFactory
     {
         return new BlockFactory();
@@ -46,7 +56,6 @@ class Entry extends Model implements HasMedia {
         $this
             ->addMediaConversion('preview')
             ->fit(Manipulations::FIT_CROP, 300, 300);
-
     }
 
     public function registerMediaCollections(): void
@@ -55,6 +64,4 @@ class Entry extends Model implements HasMedia {
             ->addMediaCollection('prodigy')
             ->useDisk('prodigy');
     }
-
-
 }

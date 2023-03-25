@@ -4,15 +4,18 @@ namespace ProdigyPHP\Prodigy\Actions;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
-use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class DuplicatePageAction {
-
+class DuplicatePageAction
+{
     protected Page $original_page;
+
     protected Page $new_page;
+
     protected Collection $blocks;
+
     protected ?int $public_page_id = null;
+
     protected ?string $slug = null;
 
     public function __construct(Page $original_page)
@@ -31,7 +34,6 @@ class DuplicatePageAction {
                 ->getNewPage();
         });
     }
-
 
     public function duplicatePage($shouldBePublishable = false): self
     {
@@ -56,10 +58,9 @@ class DuplicatePageAction {
 
     public function duplicateMedia(): self
     {
-
         $media_collection = $this->original_page->getMedia('prodigy');
         info($media_collection->count());
-        foreach($media_collection as $media) {
+        foreach ($media_collection as $media) {
             $media->copy($this->new_page, 'prodigy');
         }
 
@@ -71,6 +72,7 @@ class DuplicatePageAction {
         $this->blocks->each(function ($block) {
             $block->deepCopy($this->new_page, $block);
         });
+
         return $this;
     }
 
@@ -107,5 +109,4 @@ class DuplicatePageAction {
     {
         return $this->new_page;
     }
-
 }

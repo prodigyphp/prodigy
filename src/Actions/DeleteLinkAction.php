@@ -5,10 +5,11 @@ namespace ProdigyPHP\Prodigy\Actions;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 
-class DeleteLinkAction {
-
-
-    public function __construct(protected Link $link) {}
+class DeleteLinkAction
+{
+    public function __construct(protected Link $link)
+    {
+    }
 
     public function execute(): void
     {
@@ -23,9 +24,10 @@ class DeleteLinkAction {
     {
         $block = $this->link->block;
 
-        if (!$block->is_global) {
+        if (! $block->is_global) {
             $block->delete();
         }
+
         return $this;
     }
 
@@ -33,5 +35,4 @@ class DeleteLinkAction {
     {
         $this->link->delete();
     }
-
 }

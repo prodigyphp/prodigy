@@ -6,9 +6,8 @@ use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class PixelGroup extends Field {
-
-
+class PixelGroup extends Field
+{
     public array $subfields = [
         'united_values' => 'nullable|boolean', // boolean. true means keep values together and use all, false means use individual values.
         'top' => 'nullable|numeric',

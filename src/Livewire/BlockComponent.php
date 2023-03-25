@@ -2,16 +2,14 @@
 
 namespace ProdigyPHP\Prodigy\Livewire;
 
-use Illuminate\Support\Collection;
 use Livewire\Component;
-use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
-use ProdigyPHP\Prodigy\Models\Page;
 
-class BlockComponent extends Component {
-
+class BlockComponent extends Component
+{
     // You can send either the ID or the title of the block.
     public ?int $block_id = null;
+
     public ?string $block_title = null;
 
     public ?Block $block;
@@ -35,5 +33,4 @@ class BlockComponent extends Component {
 
         return view('prodigy::livewire.block-component');
     }
-
 }

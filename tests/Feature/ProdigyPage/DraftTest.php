@@ -1,12 +1,11 @@
 <?php
 
+use function Pest\Livewire\livewire;
+use function PHPUnit\Framework\assertEquals;
 use ProdigyPHP\Prodigy\Actions\GetDraftAction;
 use ProdigyPHP\Prodigy\Models\Page;
 use ProdigyPHP\Prodigy\Models\User;
 use ProdigyPHP\Prodigy\ProdigyPage;
-use function Pest\Livewire\livewire;
-use function PHPUnit\Framework\assertEquals;
-
 
 test('visitors cannot see unpublished pages', function () {
     $page = Page::create(['title' => 'Test Page', 'slug' => '/test-page']);
@@ -23,7 +22,7 @@ test('visitors can see published pages', function () {
 
     livewire(ProdigyPage::class, ['wildcard' => '/test-page'])
         ->assertOk()
-        ->assertSee("prodigy-page-root");
+        ->assertSee('prodigy-page-root');
 });
 
 test('users can see unpublished pages', function () {

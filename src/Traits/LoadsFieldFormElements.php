@@ -4,8 +4,8 @@ namespace ProdigyPHP\Prodigy\Traits;
 
 use Illuminate\View\View;
 
-trait LoadsFieldFormElements {
-
+trait LoadsFieldFormElements
+{
     /**
      * Gets the field, loads the view, and sends to the browser.
      * Note: this literally returns a view, which is unusual.
@@ -15,27 +15,26 @@ trait LoadsFieldFormElements {
         $model = $this->model;
         $field_name = $this->fields[$data['type']] ?? null;
 
-        if (!$field_name) {
+        if (! $field_name) {
             return null;
         }
 
         // Check the conditionals to decide if we should render the field at all.
         // We need a "show" key to test against.
         if (array_key_exists('show', $data)) {
-            if (!$this->testConditionalLogic($data['show'])) {
+            if (! $this->testConditionalLogic($data['show'])) {
                 return null;
             }
         }
 
         // If there's no block/entry collection yet, add an empty one.
-        if (!$this->$model->content) {
+        if (! $this->$model->content) {
             $this->$model->content = collect();
         }
 
         // Set default values if we have a default value but no set value.
-        if (!$this->$model->content->contains($key) &&
+        if (! $this->$model->content->contains($key) &&
             array_key_exists('default', $data)) {
-
             // has to drop out to array b/c I can't update the collection directly.
             $content_array = $this->$model->content->toArray();
             $content_array[$key] = $content_array[$key] ?? $data['default'];
@@ -43,7 +42,6 @@ trait LoadsFieldFormElements {
         }
 
         return (new $field_name)->make($key, $data, $this->$model);
-
     }
 
     /**
@@ -64,7 +62,7 @@ trait LoadsFieldFormElements {
         if (is_string($rules)) {
             $rules = explode('|', $rules);
         }
-        
+
         // Iterate over each rule
         foreach ($rules as $rule) {
             $key = str($rule)->before(':')->toString(); // key is before the :
@@ -84,12 +82,11 @@ trait LoadsFieldFormElements {
         return false;
     }
 
-    public function iterateSchemaToBuildRules():array
+    public function iterateSchemaToBuildRules(): array
     {
         $model = $this->model;
         $rules = [];
         foreach ($this->schema['fields'] as $attribute => $element) {
-
             // check for subfields at the top level
             if ($subfields = $this->getSubFields($element['type'])) {
                 foreach ($subfields as $subfield => $subfield_rules_string) {
@@ -102,8 +99,6 @@ trait LoadsFieldFormElements {
             // iterate over fields in groups as well.
             if ($element['type'] == 'group') {
                 foreach ($element['fields'] as $field_key => $field_element) {
-
-
                     // check for subfields at the group level
                     if ($subfields = $this->getSubFields($field_element['type'])) {
                         foreach ($subfields as $subfield => $subfield_rules_string) {
@@ -113,10 +108,9 @@ trait LoadsFieldFormElements {
                         $rules["{$model}.content.{$field_key}"] = $field_element['rules'] ?? '';
                     }
                 }
-
             }
-
         }
+
         return $rules;
     }
 }

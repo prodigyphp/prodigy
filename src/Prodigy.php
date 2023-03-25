@@ -2,14 +2,14 @@
 
 namespace ProdigyPHP\Prodigy;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 
-class Prodigy {
-
+class Prodigy
+{
     public static function path()
     {
         return config('prodigy.path', '/prodigy');
@@ -49,11 +49,11 @@ class Prodigy {
         // It's a package component
         if ($mutated_key->contains('::')) {
             $mutated_key = $mutated_key->replace('::', '::components.')->toString();
+
             return View::exists($mutated_key);
         }
 
         // It's a local component, just return the key.
         return View::exists("components.{$key}");
     }
-
 }

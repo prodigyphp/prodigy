@@ -3,7 +3,6 @@
 namespace ProdigyPHP\Prodigy\Livewire;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\DeleteEntryAction;
@@ -12,25 +11,26 @@ use ProdigyPHP\Prodigy\Actions\DeletePageAction;
 use ProdigyPHP\Prodigy\Actions\DuplicateLinkAction;
 use ProdigyPHP\Prodigy\Actions\DuplicatePageAction;
 use ProdigyPHP\Prodigy\Actions\PublishPageAction;
-use ProdigyPHP\Prodigy\Facades\Prodigy;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class Editor extends Component {
-
+class Editor extends Component
+{
     public Page $page;
 
     public Collection $blocks;
+
     public Collection $groups;
 
-
     public string $editor_state = 'blocksList'; // blocksList, pagesList, blockEditor, pageEditor, entriesList, entryEditor
+
     public int|null $editor_detail = null; // the detail ID to use for editing blocks, entries, or pages.
+
     public null|string $entries_type = null;
 
-     protected $queryString = ['editor_state', 'editor_detail', 'entries_type'];
+    protected $queryString = ['editor_state', 'editor_detail', 'entries_type'];
 
     protected $listeners = [
         'viewEntriesByType',
@@ -97,7 +97,6 @@ class Editor extends Component {
         $this->editBlock($child_block->id);
     }
 
-
     public function duplicateLink(int $link_id)
     {
         Gate::authorize('viewProdigy', auth()->user());
@@ -124,16 +123,16 @@ class Editor extends Component {
     }
 
      public function deleteDraft(int $draft_id)
-    {
-        Gate::authorize('viewProdigy', auth()->user());
+     {
+         Gate::authorize('viewProdigy', auth()->user());
 
-        $draft = Page::find($draft_id);
-        $redirect_slug = $draft->publicPage->slug;
+         $draft = Page::find($draft_id);
+         $redirect_slug = $draft->publicPage->slug;
 
-        (new DeletePageAction($draft))->execute();
+         (new DeletePageAction($draft))->execute();
 
-        $this->redirect($redirect_slug);
-    }
+         $this->redirect($redirect_slug);
+     }
 
     public function deletePage(int $page_id)
     {
@@ -142,7 +141,7 @@ class Editor extends Component {
         $page = Page::find($page_id);
         (new DeletePageAction($page))->deleteDraft()->execute();
 
-        $this->redirect(config('prodigy.home') . "?pro_editing=true");
+        $this->redirect(config('prodigy.home').'?pro_editing=true');
 //        $this->emit('fireGlobalRefresh');
     }
 
@@ -169,7 +168,7 @@ class Editor extends Component {
         $page = Page::find($draft->public_page_id); // get the *published* page
         $new_page = (new DuplicatePageAction($page))->execute();
 
-        $this->redirect($new_page->slug . "?pro_editing=true");
+        $this->redirect($new_page->slug.'?pro_editing=true');
     }
 
     public function viewEntriesByType(string $type)
@@ -185,5 +184,4 @@ class Editor extends Component {
 
         $this->updateState('pageEditor', $page_id);
     }
-
 }

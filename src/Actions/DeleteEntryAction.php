@@ -2,13 +2,10 @@
 
 namespace ProdigyPHP\Prodigy\Actions;
 
-use Illuminate\Database\Eloquent\Collection;
-use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
-use ProdigyPHP\Prodigy\Models\Page;
 
-class DeleteEntryAction {
-
+class DeleteEntryAction
+{
     protected Entry $entry;
 
     public function __construct(Entry $entry)
@@ -24,7 +21,7 @@ class DeleteEntryAction {
     public function deleteEntry(): self
     {
         $this->entry->delete();
+
         return $this;
     }
-
 }

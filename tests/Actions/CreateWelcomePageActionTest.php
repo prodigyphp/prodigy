@@ -3,22 +3,20 @@
 namespace ProdigyPHP\Prodigy\Tests\Actions;
 
 use Livewire\Livewire;
+use function Pest\Livewire\livewire;
+use function PHPUnit\Framework\assertNull;
 use ProdigyPHP\Prodigy\Actions\CreateWelcomePageAction;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 use ProdigyPHP\Prodigy\Models\User;
 use ProdigyPHP\Prodigy\ProdigyPage;
-use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
-use function PHPUnit\Framework\assertContains;
-use function PHPUnit\Framework\assertNull;
 
 beforeEach(function () {
     $this->action = new CreateWelcomePageAction();
 });
 
 test('system doesn\'t create welcome page when visiting pages other than home', function () {
-     // Arrange
+    // Arrange
     $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
     $slug = '/welcome-slug';
     Page::truncate(); // Ensure there are no pages before the test.
@@ -31,7 +29,7 @@ test('system doesn\'t create welcome page when visiting pages other than home', 
 });
 
 test('system creates welcome page when visiting home', function () {
-     // Arrange
+    // Arrange
     $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
     $slug = '/';
     Page::truncate(); // Ensure there are no pages before the test.

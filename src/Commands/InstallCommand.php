@@ -2,23 +2,21 @@
 
 namespace ProdigyPHP\Prodigy\Commands;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Schema;
-use ProdigyPHP\Prodigy\Actions\BackupAction;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 
-class InstallCommand extends Command {
-
+class InstallCommand extends Command
+{
     public $signature = 'prodigy:install';
+
     public $description = 'Install prodigy';
 
     public $isFresh = false;
 
     public function handle(): int
     {
-
         $this->comment('Thanks for using Prodigy. It is still in alpha, so let us know what issues you find.');
 
         if ($this->confirm('Are you installing Prodigy into a fresh Laravel app?', true)) {
@@ -32,7 +30,6 @@ class InstallCommand extends Command {
 
         $this->addUser();
 
-
         $this->setupLayouts();
 
         $this->enableDynamicRouting();
@@ -42,14 +39,15 @@ class InstallCommand extends Command {
         $this->addToGitIgnore();
 
         $this->info('<fg=white;bg=green>Success!</> Prodigy is installed...make something great!');
-        $this->info('Log in at ' . config('app.url') . '/prodigy/login');
+        $this->info('Log in at '.config('app.url').'/prodigy/login');
         $this->info('And don\'t forget to run `npm install && npm run dev` if you haven\'t already.');
+
         return self::SUCCESS;
     }
 
     protected function getStubPath(string $subpath)
     {
-        return __DIR__ . '/..' . $subpath;
+        return __DIR__.'/..'.$subpath;
     }
 
     protected function addUser(): void
@@ -88,14 +86,14 @@ class InstallCommand extends Command {
             File::delete(resource_path('views/welcome.blade.php'));
         }
         // Add the layouts folder
-        if (!is_dir($layoutPath = $this->laravel->resourcePath('views/layouts'))) {
+        if (! is_dir($layoutPath = $this->laravel->resourcePath('views/layouts'))) {
             (new Filesystem)->makeDirectory($layoutPath, 0755, true);
         }
 
         // add layouts/app.blade.php
         $to = $this->laravel->resourcePath('views/layouts/app.blade.php');
         $from = $this->getStubPath('/Stubs/app.blade.stub');
-        if (!file_exists($to)) {
+        if (! file_exists($to)) {
             file_put_contents($to, file_get_contents($from));
         }
     }
@@ -120,7 +118,7 @@ class InstallCommand extends Command {
         // Add the dynamic route.
         file_put_contents(
             $web_routes_file,
-            PHP_EOL . "Route::get('{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
+            PHP_EOL."Route::get('{wildcard}', ProdigyPHP\Prodigy\ProdigyPage::class)->where('wildcard', '.*');",
             FILE_APPEND
         );
     }
@@ -131,7 +129,7 @@ class InstallCommand extends Command {
         $ignore_file = base_path('.gitignore');
         file_put_contents(
             $ignore_file,
-            PHP_EOL . "/prodigy" . PHP_EOL . "/public/prodigy" . PHP_EOL . "/storage/backups",
+            PHP_EOL.'/prodigy'.PHP_EOL.'/public/prodigy'.PHP_EOL.'/storage/backups',
             FILE_APPEND
         );
     }
@@ -139,16 +137,15 @@ class InstallCommand extends Command {
     protected function setupDatabase(): void
     {
         $this->comment('Making /prodigy folder...');
-        if (!File::isDirectory(base_path('/prodigy'))) {
+        if (! File::isDirectory(base_path('/prodigy'))) {
             File::makeDirectory(base_path('/prodigy'));
         }
 
         if ($this->isFresh) {
             if ($this->confirm('Use SQLite as your database? (recommended!)', true)) {
-
                 $this->comment('Making database...');
                 $db_file = base_path('prodigy/prodigy.sqlite');
-                if (!file_exists($db_file)) {
+                if (! file_exists($db_file)) {
                     File::put($db_file, '');
                 }
 
@@ -156,7 +153,7 @@ class InstallCommand extends Command {
                 $this->line('------------------');
                 $this->line('<fg=white;bg=blue>One more step!</> paste this into your .env file now:');
                 $this->line('DB_CONNECTION=sqlite');
-                $this->line('DB_DATABASE=' . $db_file);
+                $this->line('DB_DATABASE='.$db_file);
                 $this->line('DB_FOREIGN_KEYS=true');
                 $this->line('------------------');
                 $this->ask('Once you\'ve added the three lines above to your .env, press enter.');
@@ -186,7 +183,7 @@ class InstallCommand extends Command {
     protected function migrate(): void
     {
         // Spatie creates the media table a bunch, so it needs to only be created once.
-        if (!Schema::hasTable('media')) {
+        if (! Schema::hasTable('media')) {
             $this->comment('Publishing Spatie\'s media config file...');
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider', '--tag' => 'migrations']);
         } else {
@@ -197,5 +194,4 @@ class InstallCommand extends Command {
 //        $this->call('migrate');
         passthru('php artisan migrate');
     }
-
 }

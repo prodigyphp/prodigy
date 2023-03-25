@@ -2,13 +2,11 @@
 
 namespace ProdigyPHP\Prodigy\Tests\Actions;
 
-use ProdigyPHP\Prodigy\Actions\CreateUserAction;
-use PHPUnit\Framework\TestCase;
-use ProdigyPHP\Prodigy\Models\User;
 use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertNull;
+use ProdigyPHP\Prodigy\Actions\CreateUserAction;
+use ProdigyPHP\Prodigy\Models\User;
 
-it('can create a user', function() {
+it('can create a user', function () {
     $users = User::all();
 
     assertEquals($users->isEmpty(), true);

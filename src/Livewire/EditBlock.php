@@ -13,14 +13,18 @@ use ProdigyPHP\Prodigy\Actions\ReorderBlocksAction;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 
-class EditBlock extends Component {
-
+class EditBlock extends Component
+{
     use WithFileUploads;
 
     public Link $link;
+
     public ?Block $block = null;
+
     public $schema;
+
     public array $fields;
+
     protected GetEditorFieldAction $fieldBuilder;
 
     protected function rules()
@@ -28,7 +32,7 @@ class EditBlock extends Component {
         return [
             'block.is_global' => 'nullable',
             'block.global_title' => ($this->block->is_global) ? 'required' : 'nullable',
-            ...(new GetSchemaRulesAction($this->schema, $this->fields, 'block'))->execute()
+            ...(new GetSchemaRulesAction($this->schema, $this->fields, 'block'))->execute(),
         ];
     }
 
@@ -59,6 +63,7 @@ class EditBlock extends Component {
         if ($this->block->key == 'repeater') {
             $parent = $this->block->parentBlock();
             $this->schema = $schemaBuilder->getRepeaterSchema($parent);
+
             return;
         }
 
@@ -76,7 +81,6 @@ class EditBlock extends Component {
         $this->emit('fireGlobalRefresh');
     }
 
-
     /**
      * Gets the field, loads the view, and sends to the browser.
      * Note: this literally returns a view, which is unusual.
@@ -90,7 +94,7 @@ class EditBlock extends Component {
     {
         Gate::authorize('viewProdigy', auth()->user());
         $this->validate();
-        $this->block->content = $this->block->content->filter(fn($val) => $val != null); // removes null values so we don't fill the db with null.
+        $this->block->content = $this->block->content->filter(fn ($val) => $val != null); // removes null values so we don't fill the db with null.
 
         $this->block->save();
         $this->close();
@@ -98,11 +102,11 @@ class EditBlock extends Component {
 
     public function close(): void
     {
-
         // If it's inside a repeater, go back to editing the repeater block.
         if (isset($this->block) && $this->block->key == 'repeater') {
             $parent_id = $this->block->parentBlock()->id;
             $this->emit('editBlock', $parent_id);
+
             return;
         }
 
@@ -119,7 +123,7 @@ class EditBlock extends Component {
         $this->block->is_global = $newValue;
 
         // Set a title if we need to.
-        if ($newValue && !$this->block->global_title) {
+        if ($newValue && ! $this->block->global_title) {
             $this->block->global_title = $this->block->title;
         }
 
@@ -130,5 +134,4 @@ class EditBlock extends Component {
     {
         return view('prodigy::livewire.edit-block');
     }
-
 }

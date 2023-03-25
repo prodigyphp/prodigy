@@ -15,8 +15,8 @@ use ProdigyPHP\Prodigy\Actions\GetDraftAction;
 use ProdigyPHP\Prodigy\Actions\UnparseUrlAction;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class ProdigyPage extends Component {
-
+class ProdigyPage extends Component
+{
     use AuthorizesRequests;
 
     public ?Page $page;
@@ -28,27 +28,28 @@ class ProdigyPage extends Component {
     public array $temp;
 
     public ?string $page_seo_title;
+
     public ?string $page_seo_description;
+
     public ?string $featured_image_url;
 
-    public $cssPath = __DIR__ . '/../public/css/prodigy.css';
-    public $jsPath = __DIR__ . '/../public/js/prodigy.js';
+    public $cssPath = __DIR__.'/../public/css/prodigy.css';
+
+    public $jsPath = __DIR__.'/../public/js/prodigy.js';
 
     protected $listeners = ['editBlock' => '$refresh', 'fireGlobalRefresh' => '$refresh', 'openProdigyPanel', 'closeProdigyPanel'];
 
     public function mount(string $wildcard = null)
     {
-
         // Show edit screen if user can edit, and has requested edit access.
         $this->editing = Gate::check('viewProdigy', auth()->user()) && request('pro_editing') == 'true';
 
         $this->page = $this->getPage($wildcard);
 
         // dynamic routing means we need to not just load for anything.
-        if (!$this->page) {
+        if (! $this->page) {
             abort(404);
         }
-
     }
 
     /**
@@ -61,11 +62,11 @@ class ProdigyPage extends Component {
     public function getSlug(?string $wildcard): string
     {
         if ($wildcard) {
-
             // just add the damn slash at the beginning. There should always be a slash at the beginning of URLS.
-            if (!str($wildcard)->startsWith('/')) {
-                $wildcard = '/' . $wildcard;
+            if (! str($wildcard)->startsWith('/')) {
+                $wildcard = '/'.$wildcard;
             }
+
             return $wildcard;
         }
 
@@ -73,7 +74,7 @@ class ProdigyPage extends Component {
             return '/';
         }
 
-        return '/' . request()->path();
+        return '/'.request()->path();
     }
 
     /**
@@ -84,7 +85,7 @@ class ProdigyPage extends Component {
         $slug = $this->getSlug($wildcard);
 
         // visitors get the published page or the redirect.
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return $this->getPageForVisitors($slug);
         }
 
@@ -136,7 +137,6 @@ class ProdigyPage extends Component {
         });
     }
 
-
     public function addBlock($block_key, $block_order, $column_index = null, $column_order = null)
     {
         Gate::authorize('viewProdigy', auth()->user());
@@ -158,28 +158,31 @@ class ProdigyPage extends Component {
                 return $blockAdder->insertExistingBlockByLinkId($block_key)->execute();
             } elseif (str($block_key)->startsWith('_GLOBAL')) {
                 $id = str($block_key)->remove('_GLOBAL_')->toInteger();
+
                 return $blockAdder->attachGlobalBlock($id)->execute();
             } else {
                 $block = $blockAdder->createBlockByKey($block_key)->execute();
                 $this->emit('editBlock', $block->id); // Open the editor once it's been created.
+
                 return $block;
             }
         });
 
         // Refresh is required in order to update order on all blocks in the frontend.
         $this->emitSelf('fireGlobalRefresh');
-
     }
 
     public function openProdigyPanel()
     {
         Gate::authorize('viewProdigy', auth()->user());
+
         return $this->toggleProdigyPanel(true);
     }
 
     public function closeProdigyPanel()
     {
         Gate::authorize('viewProdigy', auth()->user());
+
         return $this->toggleProdigyPanel(false);
     }
 
@@ -201,13 +204,13 @@ class ProdigyPage extends Component {
         $media_collection = $this->page->getMedia('prodigy');
 
         // Get the social media item
-        $featured_image = $media_collection->filter(fn($media) => $media->getCustomProperty('key') == 'social_image')->first();
+        $featured_image = $media_collection->filter(fn ($media) => $media->getCustomProperty('key') == 'social_image')->first();
         if ($featured_image) {
             return $featured_image->getFullUrl();
         }
 
         // Fallback to the featured image.
-        $featured_image = $media_collection->filter(fn($media) => $media->getCustomProperty('key') == 'featured_image')->first();
+        $featured_image = $media_collection->filter(fn ($media) => $media->getCustomProperty('key') == 'featured_image')->first();
         if ($featured_image) {
             return $featured_image->getFullUrl();
         }
@@ -224,12 +227,13 @@ class ProdigyPage extends Component {
             $page_title = $this->page->content['seo_title'];
         }
 
-        if(!$page_title) {
+        if (! $page_title) {
             $page_title = $this->page->title ?? '';
         }
 
         $separator = config('prodigy.seo.title_separator', ' – ');
         $app_name = config('app.name');
+
         return ($page_title) ? "{$page_title}{$separator}{$app_name}" : $app_name;
     }
 
@@ -237,12 +241,13 @@ class ProdigyPage extends Component {
     {
         $description = '';
 
-        if($this->page->content && $this->page->content->has('seo_description')) {
+        if ($this->page->content && $this->page->content->has('seo_description')) {
             $description = $this->page->content['seo_description'];
         }
-        if(!$description) {
+        if (! $description) {
             $description = config('prodigy.seo.description', '');
         }
+
         return  $description;
     }
 
@@ -256,7 +261,6 @@ class ProdigyPage extends Component {
 
         // If we already have a query, we have extra logic to do....
         if (isset($parsed_url['query'])) {
-
             // Convert query params into an array
             parse_str($parsed_url['query'], $query_params);
 
@@ -276,13 +280,12 @@ class ProdigyPage extends Component {
         $new_url = ($startEditing) ?
             $url->append('?pro_editing=true') :
             $url->remove('?pro_editing=true');
-        return redirect($new_url);
 
+        return redirect($new_url);
     }
 
     public function canFindView(string $key): bool
     {
         return Prodigy::canFindView($key);
     }
-
 }

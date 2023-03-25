@@ -16,18 +16,18 @@ use ProdigyPHP\Prodigy\Http\Controllers\LoginController;
 use ProdigyPHP\Prodigy\Http\Controllers\WelcomeController;
 use ProdigyPHP\Prodigy\Livewire\BlockComponent;
 use ProdigyPHP\Prodigy\Livewire\BlocksList;
+use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\EditEntry;
+use ProdigyPHP\Prodigy\Livewire\Editor;
 use ProdigyPHP\Prodigy\Livewire\EntriesList;
 use ProdigyPHP\Prodigy\Livewire\PageSettingsEditor;
-use ProdigyPHP\Prodigy\Livewire\EditBlock;
-use ProdigyPHP\Prodigy\Livewire\Editor;
 use ProdigyPHP\Prodigy\Livewire\PagesList;
 use ProdigyPHP\Prodigy\Livewire\PhotoUploader;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class ProdigyServiceProvider extends PackageServiceProvider {
-
+class ProdigyServiceProvider extends PackageServiceProvider
+{
     public function configurePackage(Package $package): void
     {
         // Reference: https://github.com/spatie/laravel-package-tools
@@ -45,33 +45,31 @@ class ProdigyServiceProvider extends PackageServiceProvider {
     }
 
 public function bootingPackage(): void
-    {
+{
+    $this->registerLivewireComponents();
 
-        $this->registerLivewireComponents();
+    // load blade components
+    $this->loadViewsFrom(__DIR__.'/../resources/views', 'prodigy');
+    $this->configureComponents();
 
-        // load blade components
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'prodigy');
-        $this->configureComponents();
+    $this->publishes([
+        __DIR__.'/../public' => public_path('vendor/prodigy'),
+    ], 'prodigy-assets');
 
-        $this->publishes([
-            __DIR__ . '/../public' => public_path('vendor/prodigy'),
-        ], 'prodigy-assets');
+    $this->publishes([
+        __DIR__.'/../resources/schemas' => resource_path('schemas'),
+    ], 'prodigy-schemas');
 
-        $this->publishes([
-            __DIR__ . '/../resources/schemas' => resource_path('schemas'),
-        ], 'prodigy-schemas');
+    Relation::enforceMorphMap([
+        'page' => 'ProdigyPHP\Prodigy\Models\Page',
+        'entry' => 'ProdigyPHP\Prodigy\Models\Entry',
+        'block' => 'ProdigyPHP\Prodigy\Models\Block',
+    ]);
 
-        Relation::enforceMorphMap([
-            'page' => 'ProdigyPHP\Prodigy\Models\Page',
-            'entry' => 'ProdigyPHP\Prodigy\Models\Entry',
-            'block' => 'ProdigyPHP\Prodigy\Models\Block',
-        ]);
+    $this->defineProdigyUploadDisk();
 
-        $this->defineProdigyUploadDisk();
-
-
-        $this->gate();
-    }
+    $this->gate();
+}
 
     /**
      * Registers a custom media disk, which allows us to
@@ -80,10 +78,10 @@ public function bootingPackage(): void
      */
     public function defineProdigyUploadDisk()
     {
-        app()->config["filesystems.disks.prodigy"] = [
+        app()->config['filesystems.disks.prodigy'] = [
             'driver' => 'local',
             'root' => base_path('prodigy/media'),
-            'url' => env('APP_URL') . '/prodigy',
+            'url' => env('APP_URL').'/prodigy',
         ];
 
         // Consider opening up this to be more flexible.
@@ -92,7 +90,7 @@ public function bootingPackage(): void
         // the link will break.
         config(['filesystems.links' => [
             ...app()->config['filesystems.links'],
-            public_path('prodigy') => base_path('prodigy/media')
+            public_path('prodigy') => base_path('prodigy/media'),
         ]]);
     }
 
@@ -122,7 +120,7 @@ public function bootingPackage(): void
 
     protected function registerComponent(string $component)
     {
-        Blade::component('prodigy::components.' . $component, 'prodigy-' . $component);
+        Blade::component('prodigy::components.'.$component, 'prodigy-'.$component);
     }
 
     public function packageRegistered()
@@ -130,7 +128,7 @@ public function bootingPackage(): void
         Route::namespace('ProdigyPHP\Prodigy\Http\Controllers')
             ->prefix(Prodigy::path())
             ->middleware([
-                'web'
+                'web',
             ])
             ->group(function () {
                 Route::get('/login', [LoginController::class, 'index'])->name('prodigy.login');
@@ -153,5 +151,4 @@ public function bootingPackage(): void
             return in_array($user->email, config('prodigy.access_emails'));
         });
     }
-
 }

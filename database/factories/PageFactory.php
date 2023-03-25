@@ -11,7 +11,6 @@ use ProdigyPHP\Prodigy\Models\Page;
  */
 class PageFactory extends Factory
 {
-
     protected $model = Page::class;
 
     /**
@@ -22,9 +21,10 @@ class PageFactory extends Factory
     public function definition()
     {
         $title = fake()->jobTitle;
+
         return [
             'title' => $title,
-            'slug' => Str::of($title)->slug
+            'slug' => Str::of($title)->slug,
         ];
     }
 }

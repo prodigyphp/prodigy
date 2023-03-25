@@ -1,15 +1,12 @@
 <?php
 
 use Livewire\Livewire;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
 use ProdigyPHP\Prodigy\Livewire\Editor;
-use ProdigyPHP\Prodigy\Livewire\PageSettingsEditor;
 use ProdigyPHP\Prodigy\Models\Page;
 use ProdigyPHP\Prodigy\Models\User;
 use ProdigyPHP\Prodigy\ProdigyPage;
-use function Pest\Livewire\livewire;
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertNull;
-use function PHPUnit\Framework\assertSame;
 
 it('can discard a draft', function () {
     $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
@@ -32,6 +29,4 @@ it('can discard a draft', function () {
 
     // The event is gone.
     assertNull($page->draftPage()->first());
-
 });
-

@@ -3,21 +3,19 @@
 namespace ProdigyPHP\Prodigy\Actions;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
 use Symfony\Component\Yaml\Yaml;
-use Illuminate\Support\Facades\File;
 
-class GetSchemaAction {
-
-
+class GetSchemaAction
+{
     public function execute(Block $block): array|null
     {
         $path = $this->getPathOfBlockSchema($block);
 
         return $this->getSchemaFromFile($path);
-
     }
 
     /**
@@ -27,6 +25,7 @@ class GetSchemaAction {
     {
         $parent_schema = $this->execute($parent_block);
         $fields = $parent_schema['fields']['repeater'];
+
         return $fields;
     }
 
@@ -49,12 +48,11 @@ class GetSchemaAction {
 
     public function getAllDataSchemas(): Collection
     {
-        $path = resource_path("schemas");
+        $path = resource_path('schemas');
 
         $paths = $this->glob_recursive($path, '*.{yml,yaml}', GLOB_BRACE);
 
-        return collect($paths)->map(fn($path) => $this->getSchemaFromFile($path));
-
+        return collect($paths)->map(fn ($path) => $this->getSchemaFromFile($path));
     }
 
     public static function pageSchema(): array
@@ -67,6 +65,7 @@ class GetSchemaAction {
     public static function standardSchema(): array
     {
         $path = base_path('vendor/prodigyphp/prodigy/resources/views/partials/standard-schema.yml');
+
         return Yaml::parseFile($path);
     }
 
@@ -81,6 +80,7 @@ class GetSchemaAction {
         if (File::isFile($path)) {
             return Yaml::parseFile($path);
         }
+
         return null;
     }
 
@@ -90,13 +90,14 @@ class GetSchemaAction {
         $search_key = $key->replace('.', '/');
 
         // It's a package block, so we need to get the right namespace from the declaration.
-        if ($key->contains("::")) {
-            $namespace = $key->before("::");
+        if ($key->contains('::')) {
+            $namespace = $key->before('::');
             $blockGroup = collect(config('prodigy.block_paths'))
-                ->map(fn(string $blockGroup) => (new $blockGroup))
-                ->filter(fn(BlockGroup $blockGroup) => $blockGroup->namespace == $namespace)
+                ->map(fn (string $blockGroup) => (new $blockGroup))
+                ->filter(fn (BlockGroup $blockGroup) => $blockGroup->namespace == $namespace)
                 ->firstOrFail();
             $search_key = $search_key->remove("{$namespace}::blocks");
+
             return base_path("{$blockGroup->path}{$search_key}.yml");
         }
 
@@ -108,17 +109,17 @@ class GetSchemaAction {
     {
         $flags = $flags & ~GLOB_NOCHECK;
 
-        if (substr($base, - 1) !== DIRECTORY_SEPARATOR) {
+        if (substr($base, -1) !== DIRECTORY_SEPARATOR) {
             $base .= DIRECTORY_SEPARATOR;
         }
 
-        $files = glob($base . $pattern, $flags);
-        if (!is_array($files)) {
+        $files = glob($base.$pattern, $flags);
+        if (! is_array($files)) {
             $files = [];
         }
 
-        $dirs = glob($base . '*', GLOB_ONLYDIR | GLOB_NOSORT | GLOB_MARK);
-        if (!is_array($dirs)) {
+        $dirs = glob($base.'*', GLOB_ONLYDIR | GLOB_NOSORT | GLOB_MARK);
+        if (! is_array($dirs)) {
             return $files;
         }
 
@@ -129,5 +130,4 @@ class GetSchemaAction {
 
         return $files;
     }
-
 }

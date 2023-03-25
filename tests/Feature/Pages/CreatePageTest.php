@@ -1,11 +1,11 @@
 <?php
 
-use ProdigyPHP\Prodigy\Livewire\PageSettingsEditor;
-use ProdigyPHP\Prodigy\Models\Page;
-use ProdigyPHP\Prodigy\Models\User;
 use function Pest\Livewire\livewire;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNull;
+use ProdigyPHP\Prodigy\Livewire\PageSettingsEditor;
+use ProdigyPHP\Prodigy\Models\Page;
+use ProdigyPHP\Prodigy\Models\User;
 
 it('can create a page', function () {
     $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
@@ -18,7 +18,6 @@ it('can create a page', function () {
     $page = Page::first();
 
     assertEquals('Hey You', $page->title);
-
 });
 
 it('cannot create a with the wrong user', function () {
@@ -32,7 +31,6 @@ it('cannot create a with the wrong user', function () {
     $page = Page::first();
 
     assertNull($page);
-
 });
 
 it('cannot create a page with no user', function () {
@@ -45,5 +43,4 @@ it('cannot create a page with no user', function () {
     $page = Page::first();
 
     assertNull($page);
-
 });

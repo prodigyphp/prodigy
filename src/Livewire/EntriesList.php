@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Actions\ReorderEntriesAction;
-use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
-use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class EntriesList extends Component {
-
-
+class EntriesList extends Component
+{
     public Page $page;
+
     public Collection $entries;
 
     public string $entry_type;
+
     public array $entry_schema;
 
     public function mount(Page $page, string $type)
@@ -44,7 +43,7 @@ class EntriesList extends Component {
                 return $q->orderBy($orderByField);
             })
             ->get();
+
         return view('prodigy::livewire.entries-list');
     }
-
 }

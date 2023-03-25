@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Collection;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class DeletePageAction {
-
+class DeletePageAction
+{
     protected $page;
+
     protected Collection $blocks;
 
     public function __construct(Page $page)
@@ -28,7 +29,7 @@ class DeletePageAction {
         $this->blocks->map(function ($block) {
             $this->removeChildren($block);
             $this->removeBlockFromPage($block, $this->page);
-            if (!$block->is_global) {
+            if (! $block->is_global) {
                 $block->delete();
             }
         });
@@ -38,15 +39,17 @@ class DeletePageAction {
 
     public function deleteDraft(): self
     {
-        if($draft = $this->page->draftPage) {
+        if ($draft = $this->page->draftPage) {
             (new DeletePageAction($draft))->execute();
         }
+
         return $this;
     }
 
     public function deletePage(): self
     {
         $this->page->delete();
+
         return $this;
     }
 
@@ -55,7 +58,7 @@ class DeletePageAction {
         // Delete non-global child blocks.
         $block->children->map(function ($child) use ($block) {
             $block->children()->detach($child->id);
-            if (!$child->is_global) {
+            if (! $child->is_global) {
                 $child->delete();
             }
         });
@@ -65,5 +68,4 @@ class DeletePageAction {
     {
         $page->children()->detach($block->id);
     }
-
 }

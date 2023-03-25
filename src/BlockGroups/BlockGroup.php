@@ -2,15 +2,14 @@
 
 namespace ProdigyPHP\Prodigy\BlockGroups;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\Contracts\ProdigyBlockGroupContract;
 use Symfony\Component\Finder\SplFileInfo;
-use Illuminate\Support\Facades\File;
 
-use Illuminate\Support\Collection;
-
-abstract class BlockGroup implements ProdigyBlockGroupContract {
-
+abstract class BlockGroup implements ProdigyBlockGroupContract
+{
     /**
      * Is the absolute path to the package, from the root of the project.
      * For example, the standard Prodigy blocks live at
@@ -41,12 +40,11 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
 
     public function getFolders(): Collection
     {
-
         return $this->buildFolders()
             ->map(function (Collection $folder) {
                 return [
                     ...$folder,
-                    'blocks' => $this->getBlocksByFolder($folder->get('slug'))
+                    'blocks' => $this->getBlocksByFolder($folder->get('slug')),
                 ];
             });
     }
@@ -54,8 +52,8 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
     public function getBlocksByFolder(string $folder_slug): Collection
     {
         return $this->bladeComponents
-            ->filter(fn(SplFileInfo $component) => $component->getRelativePath() == $folder_slug)
-            ->map(fn($component) => $this->buildBlockArray($component));
+            ->filter(fn (SplFileInfo $component) => $component->getRelativePath() == $folder_slug)
+            ->map(fn ($component) => $this->buildBlockArray($component));
     }
 
     protected function buildBlockArray(SplFileInfo $block): Collection
@@ -65,10 +63,10 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
         $slug = Str::of($basename)->remove('.blade.php');               // "video"
         $title = $slug->replace('-', ' ')->title()->toString();  // "Video"
 
-        $key = ($this->namespace) ? "{$this->namespace}::" : "";                // "prodigy::" (or nothing, if local blocks)
-        $key .= "blocks.";                                                      // "prodigy::blocks." (add hardcoded word "blocks")
-        $key .= ($folder) ? "{$folder}." : "";                                  // "prodigy::blocks.cta" (add folder if we have one)
-        $key.= "{$slug}";                                                       // "prodigy::blocks.cta.cta-primary" (add actual name of block)
+        $key = ($this->namespace) ? "{$this->namespace}::" : '';                // "prodigy::" (or nothing, if local blocks)
+        $key .= 'blocks.';                                                      // "prodigy::blocks." (add hardcoded word "blocks")
+        $key .= ($folder) ? "{$folder}." : '';                                  // "prodigy::blocks.cta" (add folder if we have one)
+        $key .= "{$slug}";                                                       // "prodigy::blocks.cta.cta-primary" (add actual name of block)
 
         return collect([
             'key' => $key,
@@ -83,17 +81,17 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
      */
     public function getBladeComponents(): Collection
     {
-        if(!is_dir($this->absolutePath())) {
+        if (! is_dir($this->absolutePath())) {
             return collect();
         }
 
         return collect(File::allFiles($this->absolutePath()))
-            ->filter(fn($file) => $file->getExtension() == 'php');
+            ->filter(fn ($file) => $file->getExtension() == 'php');
     }
 
     protected function getDirectories(): Collection
     {
-        if(!is_dir($this->absolutePath())) {
+        if (! is_dir($this->absolutePath())) {
             return collect();
         }
 
@@ -102,18 +100,19 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
 
     public function buildFolders(): Collection
     {
-        $directories =  $this->getDirectories()
+        $directories = $this->getDirectories()
             ->map(function ($directory) {
                 $slug = basename($directory); // goes from /components/blocks/group-name to 'group-name'
+
                 return collect([
                     'slug' => $slug,
-                    'title' => $this->titleFromSlug($slug)
+                    'title' => $this->titleFromSlug($slug),
                 ]);
             });
 
         $directories->push(collect([
             'slug' => '',
-            'title' => _('Uncategorized')
+            'title' => _('Uncategorized'),
         ]));
 
         return $directories;
@@ -128,5 +127,4 @@ abstract class BlockGroup implements ProdigyBlockGroupContract {
     {
         return base_path($this->getPath());
     }
-
 }

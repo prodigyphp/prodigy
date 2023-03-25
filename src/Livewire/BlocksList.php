@@ -8,12 +8,14 @@ use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class BlocksList extends Component {
-
+class BlocksList extends Component
+{
     public Page $page;
 
     public Collection $blocks;
+
     public Collection $groups;
+
     public Collection $global_blocks;
 
     public function mount(Page $page)
@@ -25,6 +27,7 @@ class BlocksList extends Component {
     {
         $this->groups = $this->getBlocks();
         $this->global_blocks = $this->getGlobalBlocks();
+
         return view('prodigy::livewire.blocks-list');
     }
 
@@ -36,14 +39,12 @@ class BlocksList extends Component {
     public function getBlocks()
     {
         return collect(config('prodigy.block_paths'))
-            ->map(fn(string $blockGroup) => (new $blockGroup))
+            ->map(fn (string $blockGroup) => (new $blockGroup))
             ->map(function (BlockGroup $blockGroup) {
                 return [
                     'title' => $blockGroup->title,
-                    'folders' => $blockGroup->getFolders()
+                    'folders' => $blockGroup->getFolders(),
                 ];
             });
-
     }
-
 }

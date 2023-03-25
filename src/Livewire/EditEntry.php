@@ -9,8 +9,8 @@ use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Traits\LoadsFieldFormElements;
 
-class EditEntry extends Component {
-
+class EditEntry extends Component
+{
     use WithFileUploads;
     use LoadsFieldFormElements;
 
@@ -22,17 +22,21 @@ class EditEntry extends Component {
      * `page` to each field.
      */
     public $model = 'block';
+
     public Entry $block;
+
     public $schema;
+
     public array $fields;
 
     public string $editor_title;
 
     protected function rules()
     {
-        if (!$this->schema) {
+        if (! $this->schema) {
             return [];
         }
+
         return $this->iterateSchemaToBuildRules();
     }
 
@@ -44,7 +48,7 @@ class EditEntry extends Component {
         // get registered fields list.
         $this->fields = config('prodigy.fields');
 
-        $this->schema = $schemaBuilder->getEntrySchema($this->block->type) ?? []; // if content field is empty (as opposed to []), it'll error.
+        $this->schema = $schemaBuilder->getEntrySchema($this->block->type);
     }
 
     public function save()
@@ -52,7 +56,7 @@ class EditEntry extends Component {
         $this->validate();
         $this->block->content = $this->block->content->filter(); // removes null values so we don't fill the db with null.
 
-        if($this->needsOrder()) {
+        if ($this->needsOrder()) {
             $this->setOrder();
         }
 
@@ -60,16 +64,17 @@ class EditEntry extends Component {
         $this->close();
     }
 
-    public function needsOrder() : bool
+    public function needsOrder(): bool
     {
-        return !$this->block->order &&
+        return ! $this->block->order &&
                 array_key_exists('orderBy', $this->schema) &&
                 $this->schema['orderBy'] == 'order';
     }
 
-    public function setOrder() {
+    public function setOrder()
+    {
         $highest_entry = Entry::ofType($this->schema['type'])->orderBy('order', 'desc')->select('order')->first() ?? 0;
-        $this->block->order = $highest_entry->order +1;
+        $this->block->order = $highest_entry->order + 1;
     }
 
     public function close(): void
@@ -82,5 +87,4 @@ class EditEntry extends Component {
     {
         return view('prodigy::livewire.edit-entry');
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace ProdigyPHP\Prodigy\Livewire;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -10,12 +9,11 @@ use Livewire\Component;
 use ProdigyPHP\Prodigy\Actions\GetEditorFieldAction;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Actions\GetSchemaRulesAction;
-use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class PageSettingsEditor extends Component {
-
+class PageSettingsEditor extends Component
+{
     /**
      * -- Why this is called Block --
      * We call the page a "block" because every field has `block.content` hardcoded
@@ -26,9 +24,11 @@ class PageSettingsEditor extends Component {
     public Page $block;
 
     public $title;
+
     public bool $creating = false;
 
     public array $fields;
+
     public $schema;
 
     protected function getRules()
@@ -44,7 +44,7 @@ class PageSettingsEditor extends Component {
                 }),
             ],
             'block.published_at' => 'date|nullable',
-            ...(new GetSchemaRulesAction($this->schema, $this->fields, 'block'))->execute()
+            ...(new GetSchemaRulesAction($this->schema, $this->fields, 'block'))->execute(),
         ];
     }
 
@@ -52,19 +52,19 @@ class PageSettingsEditor extends Component {
     {
         $this->block = Page::findOr($page_id, function () {
             $this->creating = true;
+
             return new Page();
         });
 
         // We must edit the draft page, not the public page.
-        if($draft = $this->block->draftPage){
+        if ($draft = $this->block->draftPage) {
             $this->block = $draft;
         }
 
-        $this->title = ($this->creating) ? "Create Page" : "Settings – {$this->block->title}";
+        $this->title = ($this->creating) ? 'Create Page' : "Settings – {$this->block->title}";
 
         $this->fields = config('prodigy.fields');
         $this->schema = $schemaBuilder->pageSchema();
-
     }
 
     /**
@@ -90,30 +90,30 @@ class PageSettingsEditor extends Component {
         if ($this->creating) {
             $this->block->create([
                 'slug' => $this->block->slug,
-                'title' => $this->block->title
+                'title' => $this->block->title,
             ]);
             $this->close();
+
             return;
         }
 
         $this->block->update([
             'slug' => $this->block->slug,
-            'title' => $this->block->title
+            'title' => $this->block->title,
         ]);
 
         // We need to update both the draft AND the public page, if we have one.
         if ($publicPage = $this->block->publicPage) {
             $publicPage->update([
                 'slug' => $this->block->slug,
-                'title' => $this->block->title
+                'title' => $this->block->title,
             ]);
         }
-        $this->redirect($this->block->slug . '?pro_editing=true');
+        $this->redirect($this->block->slug.'?pro_editing=true');
     }
 
     public function close()
     {
         $this->emit('updateState', 'pagesList');
     }
-
 }

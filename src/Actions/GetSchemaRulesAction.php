@@ -2,25 +2,24 @@
 
 namespace ProdigyPHP\Prodigy\Actions;
 
-class GetSchemaRulesAction {
-
-
+class GetSchemaRulesAction
+{
     public function __construct(
         protected $schema,
         protected array $fields,
         protected string $model_key = 'block')
-    {}
-
-    public function execute() : array
     {
-        if (!$this->schema) {
+    }
+
+    public function execute(): array
+    {
+        if (! $this->schema) {
             return [];
         }
 
         $rules = [];
 
         foreach ($this->schema['fields'] as $attribute => $element) {
-
             // check for subfields at the top level
             if ($subfields = $this->getSubFields($element['type'])) {
                 foreach ($subfields as $subfield => $subfield_rules_string) {
@@ -33,8 +32,6 @@ class GetSchemaRulesAction {
             // iterate over fields in groups as well.
             if ($element['type'] == 'group') {
                 foreach ($element['fields'] as $field_key => $field_element) {
-
-
                     // check for subfields at the group level
                     if ($subfields = $this->getSubFields($field_element['type'])) {
                         foreach ($subfields as $subfield => $subfield_rules_string) {
@@ -46,9 +43,9 @@ class GetSchemaRulesAction {
                 }
             }
         }
+
         return $rules;
     }
-
 
     /**
      * Each field class has a property "subfields" which can be set to an array.

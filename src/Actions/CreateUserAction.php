@@ -3,19 +3,19 @@
 namespace ProdigyPHP\Prodigy\Actions;
 
 use Illuminate\Support\Facades\Hash;
-use ProdigyPHP\Prodigy\Models\Page;
-use ProdigyPHP\Prodigy\Models\User;
 
-class CreateUserAction {
+class CreateUserAction
+{
+    public function __construct(public string $name, public string $email, public string $password)
+    {
+    }
 
-    public function __construct(public string $name, public string $email, public string $password){}
-
-    public function execute() : mixed
+    public function execute(): mixed
     {
         return $this->createUser();
     }
 
-    protected function createUser() : mixed
+    protected function createUser(): mixed
     {
         $guard = config('auth.defaults.guard');
 
@@ -23,7 +23,7 @@ class CreateUserAction {
 
         $model = config("auth.providers.{$provider}.model");
 
-        if((new $model)::where('email', $this->email)->get()->isNotEmpty()) {
+        if ((new $model)::where('email', $this->email)->get()->isNotEmpty()) {
             abort(403, 'That user already exists. Email must be unique.');
         }
 
@@ -33,5 +33,4 @@ class CreateUserAction {
             'password' => Hash::make($this->password),
         ]))->save();
     }
-
 }

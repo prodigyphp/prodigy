@@ -5,8 +5,8 @@ namespace ProdigyPHP\Prodigy\Actions;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Link;
 
-class DuplicateLinkAction {
-
+class DuplicateLinkAction
+{
     protected Link $link;
 
     public function __construct(int $link_id)
@@ -23,7 +23,6 @@ class DuplicateLinkAction {
         $new_link->save();
 
         // @TODO handle reordering
-
     }
 
     protected function handleDeepDuplication(Block $block): Block
@@ -36,7 +35,6 @@ class DuplicateLinkAction {
         // loading children replicates them as well
 
         return $this->replicateWithRelations($block);
-
     }
 
     // Taken from https://laracasts.com/discuss/channels/eloquent/deep-replication-model-relations
@@ -67,5 +65,4 @@ class DuplicateLinkAction {
 
         return $newModel;
     }
-
 }

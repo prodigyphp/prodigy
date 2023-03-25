@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class CreateWelcomePageAction {
-
+class CreateWelcomePageAction
+{
     public function execute($slug): Page
     {
         return DB::transaction(function () use ($slug) {
@@ -21,8 +21,8 @@ class CreateWelcomePageAction {
                     'padding_left' => 0,
                     'padding_top' => 0,
                     'padding_right' => 0,
-                    'padding_bottom' => 0
-                ]
+                    'padding_bottom' => 0,
+                ],
             ]);
 
             $page->children()->attach($block->id, ['order' => 1]);
@@ -30,5 +30,4 @@ class CreateWelcomePageAction {
             return $page;
         });
     }
-
 }

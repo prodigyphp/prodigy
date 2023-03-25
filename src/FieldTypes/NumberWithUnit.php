@@ -6,9 +6,8 @@ use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class NumberWithUnit extends Field {
-
-
+class NumberWithUnit extends Field
+{
     public array $subfields = [
         'value' => 'nullable|numeric',
         'unit' => 'required',

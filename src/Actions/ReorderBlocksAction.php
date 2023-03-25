@@ -4,12 +4,13 @@ namespace ProdigyPHP\Prodigy\Actions;
 
 use Illuminate\Database\Eloquent\Collection;
 use ProdigyPHP\Prodigy\Models\Block;
-use ProdigyPHP\Prodigy\Models\Entry;
 
-class ReorderBlocksAction {
-
+class ReorderBlocksAction
+{
     protected Collection $blocks;
+
     protected Block $block_to_reorder;
+
     protected Block $parent_block;
 
     public function __construct(Block $block_to_reorder)
@@ -25,7 +26,7 @@ class ReorderBlocksAction {
         $this->parent_block->children()->detach();
 
         // Remove the existing block from the list.
-        $blocks = $this->blocks->filter(function($e){
+        $blocks = $this->blocks->filter(function ($e) {
             return $e->id != $this->block_to_reorder->id;
         });
 
@@ -37,10 +38,9 @@ class ReorderBlocksAction {
 
         // Reorder the blocks
         $order = 1;
-        foreach($blocks as $newly_ordered_block) {
+        foreach ($blocks as $newly_ordered_block) {
             $this->parent_block->children()->attach($newly_ordered_block->id, ['order' => $order]);
             $order++;
         }
     }
-
 }

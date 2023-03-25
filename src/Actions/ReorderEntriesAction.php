@@ -5,10 +5,12 @@ namespace ProdigyPHP\Prodigy\Actions;
 use Illuminate\Database\Eloquent\Collection;
 use ProdigyPHP\Prodigy\Models\Entry;
 
-class ReorderEntriesAction {
-
+class ReorderEntriesAction
+{
     protected Collection $blocks;
+
     protected Entry $entry;
+
     protected string $type;
 
     public function __construct($entry)
@@ -22,7 +24,7 @@ class ReorderEntriesAction {
         $entries = Entry::ofType($this->type)->orderBy('order')->get();
 
         // Remove the existing entry from the list.
-        $entries = $entries->filter(function($e){
+        $entries = $entries->filter(function ($e) {
             return $e->id != $this->entry->id;
         });
 
@@ -34,15 +36,14 @@ class ReorderEntriesAction {
 
         // Reorder the blocks
         $order = 1;
-        foreach($entries as $newly_ordered_entry) {
+        foreach ($entries as $newly_ordered_entry) {
             $newly_ordered_entry->update(['order' => $order]);
             $order++;
         }
     }
 
-    public function forEntriesByType() : self
+    public function forEntriesByType(): self
     {
-
         return $this;
     }
 }

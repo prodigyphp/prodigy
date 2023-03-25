@@ -2,10 +2,8 @@
 
 namespace ProdigyPHP\Prodigy\BlockGroups;
 
-use ProdigyPHP\Prodigy\Contracts\ProdigyBlockGroupContract;
-
-class ProdigyBlocksGroup extends BlockGroup {
-
+class ProdigyBlocksGroup extends BlockGroup
+{
     public string $namespace = 'prodigy';
 
     public string $title = 'Standard';
@@ -14,5 +12,4 @@ class ProdigyBlocksGroup extends BlockGroup {
     {
         return 'vendor/prodigyphp/prodigy/resources/views/components/blocks';
     }
-
 }
