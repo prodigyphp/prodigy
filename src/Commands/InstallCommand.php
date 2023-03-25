@@ -43,6 +43,7 @@ class InstallCommand extends Command {
 
         $this->info('<fg=white;bg=green>Success!</> Prodigy is installed...make something great!');
         $this->info('Log in at ' . config('app.url') . '/prodigy/login');
+        $this->info('And don\'t forget to run `npm install && npm run dev` if you haven\'t already.');
         return self::SUCCESS;
     }
 

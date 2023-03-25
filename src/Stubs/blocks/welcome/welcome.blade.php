@@ -12,6 +12,8 @@
 <style>
     .page-wrapper {
         display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         min-height: 100vh;
         background-image: linear-gradient(to bottom left, #473FEB, #6F9CF8);
