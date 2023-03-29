@@ -1,4 +1,4 @@
-<div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full pro-overflow-y-scroll">
+<div class="pro-bg-gray-100 pro-flex-grow pro-flex pro-flex-col pro-h-full pro-overflow-y-scroll pro-overscroll-contain">
     <x-prodigy::editor.nav :label="$title" :page="$block" currentState="pageEditor">
         <button class="pro-text-red-500 hover:pro-text-red-700 pro-text-[14px] pro-font-semibold"
                 x-on:click="deletePage({{ $block->id }})">

@@ -8,13 +8,13 @@ use ProdigyPHP\Prodigy\Models\Page;
 
 class PagesList extends Component
 {
-    public Page $page;
+    public ?Page $page;
 
     public Collection $blocks;
 
     public Collection $pages;
 
-    public function mount(Page $page)
+    public function mount(?Page $page)
     {
         $this->page = $page;
     }

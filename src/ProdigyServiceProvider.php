@@ -20,6 +20,7 @@ use ProdigyPHP\Prodigy\Livewire\EditBlock;
 use ProdigyPHP\Prodigy\Livewire\EditEntry;
 use ProdigyPHP\Prodigy\Livewire\Editor;
 use ProdigyPHP\Prodigy\Livewire\EntriesList;
+use ProdigyPHP\Prodigy\Livewire\ProdigyEntry;
 use ProdigyPHP\Prodigy\Livewire\PageSettingsEditor;
 use ProdigyPHP\Prodigy\Livewire\PagesList;
 use ProdigyPHP\Prodigy\Livewire\PhotoUploader;
@@ -98,6 +99,7 @@ public function bootingPackage(): void
     {
         Livewire::component('prodigy-page', ProdigyPage::class);
         Livewire::component('prodigy-block', BlockComponent::class);
+        Livewire::component('prodigy-entry', ProdigyEntry::class);
 
         Livewire::component('prodigy-editor', Editor::class);
         Livewire::component('prodigy-edit-block', EditBlock::class);

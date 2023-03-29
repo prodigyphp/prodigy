@@ -3,7 +3,7 @@
     <x-prodigy::editor.nav :label="$page->title" :page="$page" currentState="blocksList">
         <x-prodigy::editor.publish-dropdown :page="$page"/>
     </x-prodigy::editor.nav>
-    <div class="pro-flex-grow pro-overflow-y-scroll pro-pb-32">
+    <div class="pro-flex-grow pro-overflow-y-scroll pro-overscroll-contain pro-pb-32">
         <nav class="pro-px-4 pro-flex pro-space-x-8 pro-justify-center" aria-label="Tabs">
             <button x-on:click="active_tab = 'blocks'"
                     :class="{'pro-text-blue-600 pro-font-semibold': active_tab == 'blocks'}"

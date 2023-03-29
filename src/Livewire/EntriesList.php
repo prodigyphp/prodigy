@@ -12,7 +12,7 @@ use ProdigyPHP\Prodigy\Models\Page;
 
 class EntriesList extends Component
 {
-    public Page $page;
+    public ?Page $page;
 
     public Collection $entries;
 
@@ -20,7 +20,7 @@ class EntriesList extends Component
 
     public array $entry_schema;
 
-    public function mount(Page $page, string $type)
+    public function mount(?Page $page, string $type)
     {
         $this->page = $page;
         $this->entry_type = $type;

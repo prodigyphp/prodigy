@@ -10,7 +10,7 @@ use ProdigyPHP\Prodigy\Models\Page;
 
 class BlocksList extends Component
 {
-    public Page $page;
+    public ?Page $page;
 
     public Collection $blocks;
 
@@ -18,7 +18,7 @@ class BlocksList extends Component
 
     public Collection $global_blocks;
 
-    public function mount(Page $page)
+    public function mount(?Page $page)
     {
         $this->page = $page;
     }

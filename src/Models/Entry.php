@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use ProdigyPHP\Prodigy\Database\Factories\BlockFactory;
 use Spatie\Image\Manipulations;
@@ -63,5 +64,10 @@ class Entry extends Model implements HasMedia
         $this
             ->addMediaCollection('prodigy')
             ->useDisk('prodigy');
+    }
+
+    public function children(): MorphToMany
+    {
+        return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order', 'id')->orderByPivot('order');
     }
 }

@@ -4,10 +4,10 @@
     <div class="hover:pro-cursor-grab">
         <x-prodigy::icons.move class="pro-w-4 pro-text-gray-500"/>
     </div>
-    <div class="pro-flex-grow">
+    <div class="pro-flex-grow pro-text-ellipsis	pro-whitespace-nowrap pro-overflow-hidden">
         {{ $label }}
     </div>
-    <div>
+    <div class="pro-shrink-0">
         {{ $actions }}
     </div>
 </div>

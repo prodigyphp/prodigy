@@ -5,7 +5,7 @@
         </button>
     </x-prodigy::editor.nav>
 
-    <div class="pro-flex-grow pro-overflow-y-scroll pro-pb-32">
+    <div class="pro-flex-grow pro-overflow-y-scroll pro-overscroll-contain pro-pb-32">
 
         @forelse($pages as $page_item)
             <a

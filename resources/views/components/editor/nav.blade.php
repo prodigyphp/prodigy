@@ -56,20 +56,22 @@
                 class="pro-absolute pro-overflow-hidden pro-left-4 pro-mt-2  pro-w-[325px] pro-rounded-md pro-bg-white pro-shadow-md"
         >
 
-            <x-prodigy::editor.nav-button
-                    :active="$currentState == 'blocksList'"
-                    x-on:click="Livewire.emit('updateState', 'blocksList')">
-                {{ _('Edit Current Page') }}
-            </x-prodigy::editor.nav-button>
-            <x-prodigy::editor.nav-button x-on:click="Livewire.emit('editPageSettings', {{ $page->id }})">
-                {{ _('Current Page Settings') }}
-            </x-prodigy::editor.nav-button>
-            <x-prodigy::editor.nav-button x-on:click="Livewire.emit('duplicatePageFromDraft', {{ $page->id }})">
-                {{ _('Duplicate') }}
-            </x-prodigy::editor.nav-button>
+            @if($page)
+                <x-prodigy::editor.nav-button
+                        :active="$currentState == 'blocksList'"
+                        x-on:click="Livewire.emit('updateState', 'blocksList')">
+                    {{ _('Edit Current Page') }}
+                </x-prodigy::editor.nav-button>
+                <x-prodigy::editor.nav-button x-on:click="Livewire.emit('editPageSettings', {{ $page->id }})">
+                    {{ _('Current Page Settings') }}
+                </x-prodigy::editor.nav-button>
+                <x-prodigy::editor.nav-button x-on:click="Livewire.emit('duplicatePageFromDraft', {{ $page->id }})">
+                    {{ _('Duplicate') }}
+                </x-prodigy::editor.nav-button>
 
+                <x-prodigy::editor.nav-separator/>
+            @endif
 
-            <x-prodigy::editor.nav-separator/>
 
             <x-prodigy::editor.nav-button
                     :active="$currentState == 'pagesList'"

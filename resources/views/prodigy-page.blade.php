@@ -16,8 +16,8 @@
             </style>
         @endisset
         <script src="/vendor/prodigy/js/alpine.js" defer></script>
-        <script src="/vendor/prodigy/js/ckeditor.js" defer></script>
-        <script src="/vendor/prodigy/js/codemirror.js" defer></script>
+        <script src="/vendor/prodigy/js/ckeditor.js"></script>
+        <script src="/vendor/prodigy/js/codemirror.js"></script>
 
         @isset($jsPath)
             <script>{!! file_get_contents($jsPath) !!}</script>
@@ -57,19 +57,7 @@
             @endif
 
             <main>
-                @if(Prodigy::userCanAccessEditor() && !$editing)
-                    <button wire:click="openProdigyPanel"
-                            style="z-index:9999;position: fixed; top:0; left:0;">
-                        <x-prodigy::icons.arrow-down-right-mini></x-prodigy::icons.arrow-down-right-mini>
-                    </button>
-                    <script>
-                        document.onkeydown = function (e) {
-                            if (e.keyCode == 27) {
-                                window.livewire.emit('openProdigyPanel')
-                            }
-                        };
-                    </script>
-                @endif
+                <x-prodigy::editor.toggler :editing="$editing"/>
 
                 @forelse($blocks as $block)
                     @if(!Prodigy::canFindView("{$block->key}"))

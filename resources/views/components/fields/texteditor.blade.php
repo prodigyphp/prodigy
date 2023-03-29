@@ -1,4 +1,4 @@
-@props(['key', 'data'])
+@props(['key', 'data', 'block'])
 
 @php
     $random_number = rand(1, 999999);
@@ -8,8 +8,22 @@
     <x-prodigy::editor.label :data="$data" :key="$key" for="block.content.{{$key}}"/>
 
     <div wire:ignore>
-        <textarea wire:model="block.content.{{$key}}" id="editor-{{ $random_number }}"></textarea>
+        <textarea wire:model="block.content.{{$key}}" id="editor-{{ $random_number }}">{!! $block->content[$key] ?? '' !!}</textarea>
     </div>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor-{{$random_number}}'))
+            .then(editor => {
+                editor.model.document.on('change:data', () => {
+                    @this.
+                    set("block.content.{{$key}}", editor.getData());
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    </script>
 
     <style>
         .ck-editor__editable_inline {
@@ -53,18 +67,4 @@
             font-weight: revert;
         }
     </style>
-
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor-{{$random_number}}'))
-            .then(editor => {
-                editor.model.document.on('change:data', () => {
-                    @this.
-                    set("block.content.{{$key}}", editor.getData());
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    </script>
 </x-prodigy::editor.field-wrapper>

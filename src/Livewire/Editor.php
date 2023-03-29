@@ -18,7 +18,9 @@ use ProdigyPHP\Prodigy\Models\Page;
 
 class Editor extends Component
 {
-    public Page $page;
+    public ?Page $page;
+    public ?Entry $entry;
+    public ?int $entry_id;
 
     public Collection $blocks;
 
@@ -49,9 +51,13 @@ class Editor extends Component
         'editPageSettings',
         'addChildBlockThenEdit'];
 
-    public function mount(Page $page)
+    public function mount(?Page $page, ?int $entry_id = null)
     {
         $this->page = $page;
+
+        if($entry_id) {
+            $this->updateState('entryEditor', $entry_id);
+        }
     }
 
     public function render()

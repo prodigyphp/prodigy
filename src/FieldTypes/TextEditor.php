@@ -10,6 +10,6 @@ class TextEditor extends Field
 {
     public function make($key, $data, Block|Entry|Page|null $block)
     {
-        return view('prodigy::components.fields.texteditor', ['key' => $key, 'data' => $data]);
+        return view('prodigy::components.fields.texteditor', ['key' => $key, 'data' => $data, 'block' => $block]);
     }
 }

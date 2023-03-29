@@ -16,7 +16,7 @@ class ProdigyBackupCommand extends Command
 
     public function handle(): int
     {
-        if (env('DB_CONNECTION') != 'sqlite') {
+        if (config('database.default') != 'sqlite') {
             $this->comment('This command currently only supports databases using SQLite.');
 
             return self::FAILURE;
