@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
+use ProdigyPHP\Prodigy\Actions\ReorderBlocksAction;
+use ProdigyPHP\Prodigy\Models\Block;
 use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Traits\LoadsFieldFormElements;
 
@@ -69,6 +71,16 @@ class EditEntry extends Component
         return ! $this->block->order &&
                 array_key_exists('orderBy', $this->schema) &&
                 $this->schema['orderBy'] == 'order';
+    }
+
+    public function reorder(int $block_id, int $newOrder)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
+
+        $block = Block::find($block_id);
+        (new ReorderBlocksAction($block))->execute($newOrder);
+
+        $this->emit('fireGlobalRefresh');
     }
 
     public function setOrder()

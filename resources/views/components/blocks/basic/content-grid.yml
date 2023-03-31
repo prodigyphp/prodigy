@@ -55,6 +55,7 @@ fields:
   repeater:
     type: repeater
     label: Grid Items
+    field_label: title
     fields:
       photo:
         type: image

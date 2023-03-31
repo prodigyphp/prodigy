@@ -33,11 +33,11 @@
                 @if($image_url = $child_block->getFirstMediaUrl('prodigy'))
                     @if($child_block->content['link_type'] ?? false)
                         <a href="{{ $child_block->content['link'] ?? '' }}">
-                    @endif
+                            @endif
 
-                        <img src="{{ $image_url }}" alt=""/>
+                            <img src="{{ $image_url }}" alt=""/>
 
-                    @if($child_block->content['link_type'] ?? false)
+                            @if($child_block->content['link_type'] ?? false)
                         </a>
                     @endif
                 @endif
@@ -47,7 +47,10 @@
                 </h3>
                 {!! $child_block->content['body'] ?? '' !!}
 
-                @if($child_block->content['link_type'] ?? false)
+                @php
+                    $has_link = $child_block->content['link_type'] ?? false;
+                @endphp
+                @if($has_link && $has_link != 'none')
                     <a href="{{ $child_block->content['link'] ?? '' }}" class="button">
                         {{ $child_block->content['link_label'] ?? '' }}
                     </a>

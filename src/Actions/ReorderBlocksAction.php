@@ -4,6 +4,7 @@ namespace ProdigyPHP\Prodigy\Actions;
 
 use Illuminate\Database\Eloquent\Collection;
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Entry;
 
 class ReorderBlocksAction
 {
@@ -11,12 +12,12 @@ class ReorderBlocksAction
 
     protected Block $block_to_reorder;
 
-    protected Block $parent_block;
+    protected Block|Entry $parent_block;
 
     public function __construct(Block $block_to_reorder)
     {
         $this->block_to_reorder = $block_to_reorder;
-        $this->parent_block = $this->block_to_reorder->parentBlock();
+        $this->parent_block = $this->block_to_reorder->parent;
         $this->blocks = $this->parent_block->children()->get();
     }
 

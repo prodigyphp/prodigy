@@ -16,6 +16,6 @@
                                       block_key = event.dataTransfer.getData('text/plain');
                                       $wire.addBlock(block_key, block_order, column_index, column_order);
                                       $el.classList.remove('pro-bg-blue-500');"
-        class="prodigy-dropzone pro-z-[1000] pro-relative pro-mb-2 {{ $classes }}">
+        class="prodigy-dropzone pro-z-[100000] pro-relative pro-mb-2 {{ $classes }}">
     {{ $slot }}
 </div>

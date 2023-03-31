@@ -37,10 +37,10 @@
     @if($editing)
         <div wire:click="$emit('editBlock', {{ $block->id }})"
              class="{{ $topOffset }} {{ $group_hover_border_classes }} pro-absolute pro-inset-0"
-             style="z-index:998;"></div>
+             style="z-index:99998;"></div>
         <div x-data
              class="{{ $topOffset }} {{ $group_hover_action_classes }} pro-absolute pro-bg-blue-500 pro-text-white pro-hidden"
-             style="z-index: 999;">
+             style="z-index: 99999;">
             <button class="pro-px-2 pro-py-2 pro-text-sm hover:pro-cursor-grab hover:pro-bg-blue-600"
                     draggable="true"
                     x-on:dragstart="showDropzone(); $event.dataTransfer.setData('text/plain', {{ $block->pivot->id }});"
@@ -64,7 +64,7 @@
                 <x-prodigy::icons.m-x-mark class="pro-w-5"/>
             </button>
 
-            <div class="pro-text-white/80 pro-text-sm pro-p-2 pro-ml-1 pro-border-l pro-border-blue-600 pro-pl-2">{{ $block->title }}</div>
+            <div wire:click="$emit('editBlock', {{ $block->id }})" class="pro-text-white/80 pro-text-sm pro-p-2 pro-ml-1 pro-border-l pro-border-blue-600 pro-pl-2">{{ $block->title }}</div>
         </div>
     @endif
 

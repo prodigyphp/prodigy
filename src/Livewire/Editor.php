@@ -16,8 +16,8 @@ use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Link;
 use ProdigyPHP\Prodigy\Models\Page;
 
-class Editor extends Component
-{
+class Editor extends Component {
+
     public ?Page $page;
     public ?Entry $entry;
     public ?int $entry_id;
@@ -55,7 +55,7 @@ class Editor extends Component
     {
         $this->page = $page;
 
-        if($entry_id) {
+        if ($entry_id) {
             $this->updateState('entryEditor', $entry_id);
         }
     }
@@ -67,6 +67,7 @@ class Editor extends Component
 
     public function editBlock($id)
     {
+        info("edit {$id}");
         $this->editor_detail = $id;
         $this->editor_state = 'blockEditor';
     }
@@ -92,9 +93,13 @@ class Editor extends Component
         $this->emit('fireGlobalRefresh');
     }
 
-    public function addChildBlockThenEdit($key, $parent_block_id): void
+    public function addChildBlockThenEdit($key, $parent_model, $parent_block_id): void
     {
-        $block = Block::find($parent_block_id);
+        if ($parent_model == 'block') {
+            $block = Block::find($parent_block_id);
+        } else {
+            $block = Entry::find($parent_block_id);
+        }
 
         $child_block = Block::create(['key' => $key]);
 
@@ -128,17 +133,17 @@ class Editor extends Component
         (new PublishPageAction($draft))->execute();
     }
 
-     public function deleteDraft(int $draft_id)
-     {
-         Gate::authorize('viewProdigy', auth()->user());
+    public function deleteDraft(int $draft_id)
+    {
+        Gate::authorize('viewProdigy', auth()->user());
 
-         $draft = Page::find($draft_id);
-         $redirect_slug = $draft->publicPage->slug;
+        $draft = Page::find($draft_id);
+        $redirect_slug = $draft->publicPage->slug;
 
-         (new DeletePageAction($draft))->execute();
+        (new DeletePageAction($draft))->execute();
 
-         $this->redirect($redirect_slug);
-     }
+        $this->redirect($redirect_slug);
+    }
 
     public function deletePage(int $page_id)
     {
@@ -147,7 +152,7 @@ class Editor extends Component
         $page = Page::find($page_id);
         (new DeletePageAction($page))->deleteDraft()->execute();
 
-        $this->redirect(config('prodigy.home').'?pro_editing=true');
+        $this->redirect(config('prodigy.home') . '?pro_editing=true');
 //        $this->emit('fireGlobalRefresh');
     }
 
@@ -174,7 +179,7 @@ class Editor extends Component
         $page = Page::find($draft->public_page_id); // get the *published* page
         $new_page = (new DuplicatePageAction($page))->execute();
 
-        $this->redirect($new_page->slug.'?pro_editing=true');
+        $this->redirect($new_page->slug . '?pro_editing=true');
     }
 
     public function viewEntriesByType(string $type)
@@ -190,4 +195,5 @@ class Editor extends Component
 
         $this->updateState('pageEditor', $page_id);
     }
+
 }

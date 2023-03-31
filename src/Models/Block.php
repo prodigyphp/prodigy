@@ -22,12 +22,13 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int $is_global
  * @property string $global_title
  */
-class Block extends Model implements HasMedia
-{
+class Block extends Model implements HasMedia {
+
     use HasFactory;
     use InteractsWithMedia;
 
     protected $table = 'prodigy_blocks';
+    public $model = 'block';
 
     protected $guarded = [];
 
@@ -41,22 +42,32 @@ class Block extends Model implements HasMedia
      */
     public function prodigy_links(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo('prodigy_links', 'prodigy_links_type', 'prodigy_links_id');
     }
 
-    public function parentBlock(): Block
+//    public function parentBlock(): Block
+//    {
+//        return $this->morphedByMany(Block::class, 'prodigy_links')->first();
+//    }
+
+    public function parent(): MorphTo
     {
-        return $this->morphedByMany(Block::class, 'prodigy_links')->first();
+        return $this->link->parent();
     }
 
     public function pages(): MorphToMany
     {
-        return $this->morphedByMany(Page::class, 'prodigy_links');
+        return $this->morphedByMany(Page::class, 'block_id');
     }
 
     public function children(): MorphToMany
     {
         return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order', 'id')->orderByPivot('order');
+    }
+
+    public function link()
+    {
+        return $this->hasOne(Link::class);
     }
 
     public function getIsRepeaterAttribute()
@@ -124,10 +135,16 @@ class Block extends Model implements HasMedia
         return $media->copy($newBlock, 'prodigy');
     }
 
+    public function content($key)
+    {
+        return $this->content[$key] ?? '';
+    }
+
     protected static function booted(): void
     {
         static::deleting(function (Block $block) {
             (new DeleteBlockChildrenAction())->execute($block);
         });
     }
+
 }

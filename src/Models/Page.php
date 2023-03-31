@@ -117,6 +117,11 @@ class Page extends Model implements HasMedia
             ->useDisk('prodigy');
     }
 
+    public function content($key)
+    {
+        return $this->content[$key] ?? '';
+    }
+
     /**
      * Handle events for Page
      * Most specifically, when deleting needs to cascade.

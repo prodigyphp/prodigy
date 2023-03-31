@@ -44,24 +44,24 @@ fields:
         label: Column 1
         type: number
         width: 25
-        rules: numeric|min:0|max:100
+        rules: nullable|numeric|min:0|max:100
       column_2_width:
         label: Column 2
         type: number
         width: 25
-        rules: numeric|min:0|max:100
+        rules: nullable|numeric|min:0|max:100
         show: columns:gte:2
       column_3_width:
         label: Column 3
         type: number
         width: 25
-        rules: numeric|min:0|max:100
+        rules: nullable|numeric|min:0|max:100
         show: columns:gte:3
       column_4_width:
         label: Column 4
         type: number
         width: 25
-        rules: numeric|min:0|max:100
+        rules: nullable|numeric|min:0|max:100
         show: columns:gte:4
 
 

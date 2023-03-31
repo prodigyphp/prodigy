@@ -64,10 +64,10 @@
     @endif
     <div class="pro-flex pro-gap-2 pro-p-2 pro-w-full">
         <x-prodigy::editor.button class="pro-flex-grow" wire:click="save">
-            Save
+            {{ __('Save') }}
         </x-prodigy::editor.button>
         <x-prodigy::editor.button class="pro-flex-grow" wire:click="close">
-            Cancel
+            {{ __('Cancel') }}
         </x-prodigy::editor.button>
     </div>
 </div>

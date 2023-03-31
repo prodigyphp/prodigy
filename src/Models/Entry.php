@@ -29,6 +29,7 @@ class Entry extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $table = 'prodigy_entries';
+    public string $model = 'entry';
 
     protected $guarded = [];
 
@@ -69,5 +70,10 @@ class Entry extends Model implements HasMedia
     public function children(): MorphToMany
     {
         return $this->morphToMany(Block::class, 'prodigy_links')->withPivot('column', 'order', 'id')->orderByPivot('order');
+    }
+
+    public function content($key)
+    {
+        return $this->content[$key] ?? '';
     }
 }

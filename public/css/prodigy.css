@@ -893,6 +893,9 @@ video {
 .pro-z-\[9999\] {
   z-index: 9999;
 }
+.pro-z-\[100000\] {
+  z-index: 100000;
+}
 .pro-order-1 {
   order: 1;
 }

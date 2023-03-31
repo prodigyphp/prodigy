@@ -11,10 +11,11 @@ use ProdigyPHP\Prodigy\Actions\GetSchemaAction;
 use ProdigyPHP\Prodigy\Actions\GetSchemaRulesAction;
 use ProdigyPHP\Prodigy\Actions\ReorderBlocksAction;
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Entry;
 use ProdigyPHP\Prodigy\Models\Link;
 
-class EditBlock extends Component
-{
+class EditBlock extends Component {
+
     use WithFileUploads;
 
     public Link $link;
@@ -61,14 +62,13 @@ class EditBlock extends Component
     {
         // Build the schema for a repeater block
         if ($this->block->key == 'repeater') {
-            $parent = $this->block->parentBlock();
+            $parent = $this->block->link->prodigy_links;
             $this->schema = $schemaBuilder->getRepeaterSchema($parent);
-
             return;
         }
 
         $this->schema = $schemaBuilder->execute($this->block) ?? []; // if content field is empty (as opposed to []), it'll error.
-        $this->schema = array_merge_recursive($this->schema, $schemaBuilder->standardSchema()); // add all the normal fields.
+        $this->schema = array_merge_recursive($this->schema, $schemaBuilder->standardSchema()); // add   all the normal fields.
     }
 
     public function reorder(int $block_id, int $newOrder)
@@ -94,24 +94,35 @@ class EditBlock extends Component
     {
         Gate::authorize('viewProdigy', auth()->user());
         $this->validate();
-        $this->block->content = $this->block->content->filter(fn ($val) => $val != null); // removes null values so we don't fill the db with null.
+        $this->block->content = $this->block->content->filter(fn($val) => $val != null); // removes null values so we don't fill the db with null.
 
         $this->block->save();
         $this->close();
     }
 
+
     public function close(): void
     {
         // If it's inside a repeater, go back to editing the repeater block.
         if (isset($this->block) && $this->block->key == 'repeater') {
-            $parent_id = $this->block->parentBlock()->id;
-            $this->emit('editBlock', $parent_id);
+            $parent = $this->block->link->prodigy_links; // The "point" is to get the block's parent ID. Wasn't working.
+            if ($parent->model == 'entry') {
+                $this->emit('editEntry', $parent->id);
+            } else {
+                $this->emit('editBlock', $parent->id);
+
+            }
 
             return;
         }
 
         // Otherwise go back to the blocks list.
         $this->emit('updateState', 'blocksList');
+    }
+
+    public function test()
+    {
+        dd('yo');
     }
 
     /**
@@ -123,7 +134,7 @@ class EditBlock extends Component
         $this->block->is_global = $newValue;
 
         // Set a title if we need to.
-        if ($newValue && ! $this->block->global_title) {
+        if ($newValue && !$this->block->global_title) {
             $this->block->global_title = $this->block->title;
         }
 
@@ -134,4 +145,5 @@ class EditBlock extends Component
     {
         return view('prodigy::livewire.edit-block');
     }
+
 }

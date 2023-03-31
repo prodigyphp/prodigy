@@ -1,4 +1,4 @@
-@section('pro_head')
+@push('pro_head')
     @if($editing)
         @isset($cssPath)
             <style>{!! file_get_contents($cssPath) !!}</style>
@@ -11,13 +11,12 @@
             <script>{!! file_get_contents($jsPath) !!}</script>
         @endisset
     @endif
-@endsection
 
-@section('pro_footer')
-@endsection
+@endpush
 
 <div class="pro-relative">
-    <x-prodigy::editor.toggler :editing="$editing"/>
+
+    <x-prodigy::editor.toggler :editing="$editing" left="28rem"/>
     @if($editing)
         <style>
             body {

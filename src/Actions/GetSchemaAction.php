@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ProdigyPHP\Prodigy\BlockGroups\BlockGroup;
 use ProdigyPHP\Prodigy\Models\Block;
+use ProdigyPHP\Prodigy\Models\Entry;
+use ProdigyPHP\Prodigy\Models\Page;
 use Symfony\Component\Yaml\Yaml;
 
-class GetSchemaAction
-{
-    public function execute(Block $block): array|null
+class GetSchemaAction {
+
+    public function execute(Page|Entry|Block $block): array|null
     {
         $path = $this->getPathOfBlockSchema($block);
 
@@ -19,11 +21,16 @@ class GetSchemaAction
     }
 
     /**
-     * Repeater schemas are pulled from their parent block.
+     * Repeater schemas are pulled from their parent block or entry.
      */
-    public function getRepeaterSchema(Block $parent_block): array
+    public function getRepeaterSchema(Entry|Block $parent_block): array
     {
-        $parent_schema = $this->execute($parent_block);
+
+        if ($parent_block->model == 'entry') {
+            $parent_schema = $this->getEntrySchema($parent_block->type);
+        } else {
+            $parent_schema = $this->execute($parent_block);
+        }
         $fields = $parent_schema['fields']['repeater'];
 
         return $fields;
@@ -52,7 +59,7 @@ class GetSchemaAction
 
         $paths = $this->glob_recursive($path, '*.{yml,yaml}', GLOB_BRACE);
 
-        return collect($paths)->map(fn ($path) => $this->getSchemaFromFile($path));
+        return collect($paths)->map(fn($path) => $this->getSchemaFromFile($path));
     }
 
     public static function pageSchema(): array
@@ -93,8 +100,8 @@ class GetSchemaAction
         if ($key->contains('::')) {
             $namespace = $key->before('::');
             $blockGroup = collect(config('prodigy.block_paths'))
-                ->map(fn (string $blockGroup) => (new $blockGroup))
-                ->filter(fn (BlockGroup $blockGroup) => $blockGroup->namespace == $namespace)
+                ->map(fn(string $blockGroup) => (new $blockGroup))
+                ->filter(fn(BlockGroup $blockGroup) => $blockGroup->namespace == $namespace)
                 ->firstOrFail();
             $search_key = $search_key->remove("{$namespace}::blocks");
 
@@ -109,17 +116,17 @@ class GetSchemaAction
     {
         $flags = $flags & ~GLOB_NOCHECK;
 
-        if (substr($base, -1) !== DIRECTORY_SEPARATOR) {
+        if (substr($base, - 1) !== DIRECTORY_SEPARATOR) {
             $base .= DIRECTORY_SEPARATOR;
         }
 
-        $files = glob($base.$pattern, $flags);
-        if (! is_array($files)) {
+        $files = glob($base . $pattern, $flags);
+        if (!is_array($files)) {
             $files = [];
         }
 
-        $dirs = glob($base.'*', GLOB_ONLYDIR | GLOB_NOSORT | GLOB_MARK);
-        if (! is_array($dirs)) {
+        $dirs = glob($base . '*', GLOB_ONLYDIR | GLOB_NOSORT | GLOB_MARK);
+        if (!is_array($dirs)) {
             return $files;
         }
 
@@ -130,4 +137,5 @@ class GetSchemaAction
 
         return $files;
     }
+
 }

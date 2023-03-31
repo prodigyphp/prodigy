@@ -4,7 +4,7 @@
     {{ $page->title }}
 @endsection
 
-@section('pro_head')
+@push('pro_head')
     @if($editing)
 
         @isset($cssPath)
@@ -43,7 +43,7 @@
     @if(isset($page->content['show_in_search']) && $page->content['show_in_search'] == false)
         <meta name="robots" content="noindex">
     @endif
-@endsection
+@endpush
 
 <div class="{{ ($editing) ? 'lg:flex w-full h-full' : '' }} prodigy-page-root">
 

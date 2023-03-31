@@ -3,22 +3,25 @@
 namespace ProdigyPHP\Prodigy\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use ProdigyPHP\Prodigy\Models\User;
+use ProdigyPHP\Prodigy\Prodigy;
 use ProdigyPHP\Prodigy\ProdigyServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
-class TestCase extends Orchestra
-{
+class TestCase extends Orchestra {
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'ProdigyPHP\\Prodigy\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn(string $modelName) => 'ProdigyPHP\\Prodigy\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -45,11 +48,16 @@ class TestCase extends Orchestra
 
         $app['config']->set('app.key', 'base64:iSHOeoNKQaK1OCzOFR2D6bfoDhas2YJ3NOlu/4S9YEw=');
 
+        // We have to manually alias since
+        // the composer extras alias isn't getting picked up.
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Prodigy', \ProdigyPHP\Prodigy\Prodigy::class);
+
         /**
          * We have to move the schema files into place for the test runner to find them.
          */
         $to = base_path('vendor/prodigyphp/prodigy/resources/views/partials');
-        $from = __DIR__.'/../resources/views/partials';
+        $from = __DIR__ . '/../resources/views/partials';
         File::copyDirectory($from, $to);
 
         /**
@@ -57,13 +65,13 @@ class TestCase extends Orchestra
          */
         Schema::dropAllTables();
 
-        $migration = include __DIR__.'/../database/migrations/2014_create_users_table.php';
+        $migration = include __DIR__ . '/../database/migrations/2014_create_users_table.php';
         $migration->up();
 
-        $migration = include __DIR__.'/../database/migrations/2015_create_media_table.php';
+        $migration = include __DIR__ . '/../database/migrations/2015_create_media_table.php';
         $migration->up();
 
-        $migration = include __DIR__.'/../database/migrations/2023_03_01_create_prodigy_tables.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/2023_03_01_create_prodigy_tables.php.stub';
         $migration->up();
     }
 
@@ -71,4 +79,5 @@ class TestCase extends Orchestra
     {
         $this->actingAs(User::factory()->create(['name' => 'Stephen', 'email' => 'stephen@bate-man.com']));
     }
+
 }

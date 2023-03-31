@@ -1,13 +1,17 @@
 @props(['key', 'data', 'block'])
 
-<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" x-data :key="$key">
+<x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" :key="$key">
     <x-prodigy::editor.label :data="$data" :key="$key" for="block.content.{{$key}}"/>
 
 
     <div class="pro-flex pro-flex-col" x-data="">
         @forelse($block->children as $child_block)
+
+            @php
+                $label = $child_block->content[$data['field_label']] ?? __('Item ') . $loop->index + 1;
+            @endphp
             <x-prodigy::editor.block-row :block="$child_block"
-                                         :label="'Item ' . $loop->index + 1"
+                                         :label="$label"
                                          draggable="true"
                                          x-on:dragstart="event.dataTransfer.setData('text/plain', {{ $child_block->id }});"
                                          x-on:drop.prevent="$wire.reorder(event.dataTransfer.getData('text/plain'), {{ $loop->index }}); $el.classList.remove('pro-bg-blue-500'); $el.classList.add('pro-bg-white');"
@@ -21,7 +25,7 @@
                         Edit
                     </button>
                     <button class="pro-text-gray-500 hover:pro-text-red-500 pro-relative pro-top-[0.2rem]"
-                            x-on:click="alert('todo')">
+                            x-on:click="Livewire.emit('deleteLink', {{ $child_block->link->id }})">
                         <x-prodigy::icons.close class="pro-w-4"/>
                     </button>
                 </x-slot:actions>
@@ -29,7 +33,7 @@
         @empty
         @endforelse
         <x-prodigy::editor.button
-                x-on:click="Livewire.emit('addChildBlockThenEdit', 'repeater', {{ $block->id }});">+ {{ _('Add New') }}
+                x-on:click="Livewire.emit('addChildBlockThenEdit', 'repeater', '{{ $block->model }}', {{ $block->id }});">+ {{ _('Add New') }}
         </x-prodigy::editor.button>
     </div>
 
