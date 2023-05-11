@@ -8,7 +8,11 @@
         @forelse($block->children as $child_block)
 
             @php
-                $label = $child_block->content[$data['field_label']] ?? __('Item ') . $loop->index + 1;
+                if(isset($data['field_label'])) {
+                    $label = $child_block->content[$data['field_label']];
+                } else {
+                    $label = __('Item ') . $loop->index + 1;
+                }
             @endphp
             <x-prodigy::editor.block-row :block="$child_block"
                                          :label="$label"
