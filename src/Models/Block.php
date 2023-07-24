@@ -128,11 +128,14 @@ class Block extends Model implements HasMedia {
         }
     }
 
-    public function syncMedia(Block $oldBlock, Block $newBlock): Media
+    public function syncMedia(Block $oldBlock, Block $newBlock): self
     {
-        $media = $oldBlock->getFirstMedia('prodigy');
+        $oldBlockMedia = $oldBlock->getMedia('prodigy');
+        foreach($oldBlockMedia as $media){
+            $media->copy($newBlock, 'prodigy');
+        }
 
-        return $media->copy($newBlock, 'prodigy');
+        return $this;
     }
 
     public function content($key)
