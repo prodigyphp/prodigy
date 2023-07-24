@@ -8,9 +8,12 @@
         @forelse($block->children as $child_block)
 
             @php
+            $label = '';
                 if(isset($data['field_label'])) {
-                    $label = $child_block->content[$data['field_label']];
-                } else {
+                    $label = $child_block->content[$data['field_label']] ?? '';
+                }
+
+                if(!$label) {
                     $label = __('Item ') . $loop->index + 1;
                 }
             @endphp
