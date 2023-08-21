@@ -41,7 +41,7 @@
                 type="button"
                 class="pro-flex pro-font-semibold pro-text-[16px] pro-items-center pro-gap-2 pro-bg-white pro-px-5 pro-py-2.5 pro-rounded-md pro-shadow"
         >
-            {{ _('Done') }}
+            Done
         </button>
 
         <div
@@ -57,12 +57,12 @@
             <x-prodigy::editor.button
                     class="pro-flex-grow pro-font-semibold"
                     x-on:click="Livewire.emit('closeProdigyPanel')">
-                {{ _('Close Editor') }}
+                Close Editor
             </x-prodigy::editor.button>
             <x-prodigy::editor.button
                     class="pro-flex-grow pro-font-semibold"
                     x-on:click="confirmDiscardChanges({{$page->id}});">
-                {{ _('Discard Changes') }}
+                Discard Changes
             </x-prodigy::editor.button>
 
             <x-prodigy::editor.button wire:click="$emit('publishDraft', {{ $page->id }})"

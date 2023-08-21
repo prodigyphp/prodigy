@@ -112,7 +112,7 @@ abstract class BlockGroup implements ProdigyBlockGroupContract
 
         $directories->push(collect([
             'slug' => '',
-            'title' => _('Uncategorized'),
+            'title' => 'Uncategorized',
         ]));
 
         return $directories;

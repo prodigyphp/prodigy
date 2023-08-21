@@ -15,7 +15,7 @@
                             </div>
                             <button wire:click="toggleGlobalBlock(true)"
                                     class="pro-border pro-border-gray-200 hover:pro-border-blue-500 pro-text-sm pro-px-3 pro-py-1 pro-rounded-sm pro-text-gray-600 hover:pro-text-blue-700">
-                                {{ _('Local') }}
+                                Local
                             </button>
 
                         </div>
@@ -31,7 +31,7 @@
                             </div>
                             <button wire:click="toggleGlobalBlock(false)"
                                     class="pro-border pro-border-orange-600 hover:pro-border-blue-500 pro-text-sm pro-px-3 pro-py-1 pro-rounded-sm pro-text-orange-600 hover:pro-text-blue-700">
-                                {{ _('Global') }}
+                                Global
                             </button>
                         </div>
 
@@ -39,7 +39,7 @@
                             <x-prodigy::editor.input x-model.lazy="global_title"/>
                             <x-prodigy::editor.button x-on:click="locally_editing_title = false"
                                                       class="pro-min-w-[120px]">
-                                {{ _('Set Title') }}
+                                Set Title
                             </x-prodigy::editor.button>
                         </div>
                     </div>
@@ -64,10 +64,10 @@
     @endif
     <div class="pro-flex pro-gap-2 pro-p-2 pro-w-full">
         <x-prodigy::editor.button class="pro-flex-grow" wire:click="save">
-            {{ __('Save') }}
+            Save
         </x-prodigy::editor.button>
         <x-prodigy::editor.button class="pro-flex-grow" wire:click="close">
-            {{ __('Cancel') }}
+            Cancel
         </x-prodigy::editor.button>
     </div>
 </div>

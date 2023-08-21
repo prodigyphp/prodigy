@@ -86,7 +86,7 @@
                     @if($editing)
                         <x-prodigy::structure.dropzone block_order="0"
                                                        :style="($blocks->count()) ? 'regular' : 'expanded'">
-                            {{ _('Drag and drop a block.') }}
+                            Drag and drop a block
                         </x-prodigy::structure.dropzone>
                     @endif
                 @endforelse

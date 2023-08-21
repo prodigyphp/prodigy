@@ -2,7 +2,7 @@
     <x-prodigy::editor.nav :label="$title" :page="$block" currentState="pageEditor">
         <button class="pro-text-red-500 hover:pro-text-red-700 pro-text-[14px] pro-font-semibold"
                 x-on:click="deletePage({{ $block->id }})">
-            {{ _('Delete') }}
+           Delete
         </button>
     </x-prodigy::editor.nav>
     <div class="pro-flex-grow pro-overflow-scroll pro-px-4">
@@ -23,7 +23,7 @@
         </x-prodigy::editor.field-wrapper>
 
         <x-prodigy::editor.field-wrapper>
-            <x-prodigy::editor.label :label="_('Page Status')" for="title"></x-prodigy::editor.label>
+            <x-prodigy::editor.label label="Page Status" for="title"></x-prodigy::editor.label>
             <div class="pro-flex" x-cloak x-data="{
                     toggle: false,
                     published_at: @entangle("block.published_at"),
@@ -49,9 +49,9 @@
                     <input type="checkbox" x-model="toggle" x-on:click="toggleValue()" :checked="toggle" class="pro-sr-only pro-peer">
                     <div class="pro-w-11 pro-h-6 pro-bg-gray-200 peer-focus:pro-outline-none peer-focus:pro-ring-4 peer-focus:pro-ring-blue-300 pro-rounded-full pro-peer peer-checked:after:pro-translate-x-full peer-checked:after:pro-border-white after:pro-content-[''] after:pro-absolute after:pro-top-[2px] after:pro-left-[2px] after:pro-bg-white after:pro-border-gray-300 after:pro-border after:pro-rounded-full after:pro-h-5 after:pro-w-5 after:pro-transition-all peer-checked:pro-bg-blue-600"></div>
                     <span class="pro-ml-3 pro-text-sm pro-font-medium pro-text-gray-900 pro-dark:text-gray-300"
-                          x-show="toggle">{{ _('Published') }}</span>
+                          x-show="toggle">Published</span>
                     <span class="pro-ml-3 pro-text-sm pro-font-medium pro-text-gray-900 pro-dark:text-gray-300"
-                          x-show="!toggle">{{ _('Draft') }}</span>
+                          x-show="!toggle">Draft</span>
                 </label>
             </div>
         </x-prodigy::editor.field-wrapper>

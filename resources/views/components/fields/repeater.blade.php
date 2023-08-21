@@ -14,7 +14,7 @@
                 }
 
                 if(!$label) {
-                    $label = __('Item ') . $loop->index + 1;
+                    $label = 'Item ' . $loop->index + 1;
                 }
             @endphp
             <x-prodigy::editor.block-row :block="$child_block"
@@ -40,7 +40,7 @@
         @empty
         @endforelse
         <x-prodigy::editor.button
-                x-on:click="Livewire.emit('addChildBlockThenEdit', 'repeater', '{{ $block->model }}', {{ $block->id }});">+ {{ _('Add New') }}
+                x-on:click="Livewire.emit('addChildBlockThenEdit', 'repeater', '{{ $block->model }}', {{ $block->id }});">+ 'Add New'
         </x-prodigy::editor.button>
     </div>
 

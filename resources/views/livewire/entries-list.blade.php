@@ -39,10 +39,10 @@
         @empty
             <div class="">
                 <p class="pro-mb-4">{{ $entry_schema['labels']['plural'] ?? str($entry_schema['type'])->title() }}
-                    {{ _('not found') }}.</p>
+                    not found.</p>
                 <x-prodigy::editor.button class="pro-flex-grow"
                                           wire:click="$emit('createEntryByType', '{{$entry_schema['type']}}')">
-                    {{ _('Create One') }}
+                    Create One
                 </x-prodigy::editor.button>
             </div>
 

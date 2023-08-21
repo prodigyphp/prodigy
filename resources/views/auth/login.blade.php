@@ -20,7 +20,7 @@
             <div>
                 @if ($errors->any())
                     <div class="pro-font-medium pro-text-red-600">
-                        {{ __('Whoops! Something went wrong.') }}
+                       Whoops! Something went wrong.
                     </div>
 
                     <ul class="pro-mt-3 pro-list-disc pro-list-inside pro-text-sm pro-text-red-600">
@@ -51,14 +51,14 @@
 
             <button type="submit"
                     class="pro-bg-gradient-to-bl pro-from-blue-400 pro-to-blue-600 pro-border pro-border-blue-700 hover:pro-from-blue-600 hover:pro-to-blue-700 pro-text-white pro-mb-8 pro-font-bold pro-px-2 pro-py-2 pro-rounded-md hover:pro-ring-2 hover:pro-ring-blue-300">
-                {{ __('Log In') }}
+                Log in
             </button>
 
             <div class="pro-flex pro-items-center pro-justify-center pro-mt-4 pro-hidden">
                 @if (Route::has('password.request'))
                     <a class="text-md text-gray-400 hover:text-gray-900 dark:hover:text-white"
                        href="{{ route('password.request') }}">
-                        {{ __('Forgot password?') }}
+                        Forgot password?
                     </a>
                 @endif
             </div>

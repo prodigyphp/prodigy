@@ -8,14 +8,14 @@
             <button x-on:click="active_tab = 'blocks'"
                     :class="{'pro-text-blue-600 pro-font-semibold': active_tab == 'blocks'}"
                     class="hover:pro-text-blue-700 pro-whitespace-nowrap pro-py-4 pro-px-1 pro-text-sm">
-                {{ _('Blocks') }}
+                Blocks
             </button>
 
             <button x-on:click="active_tab = 'global'"
                     :class="{'pro-text-blue-600 pro-font-semibold': active_tab == 'global'}"
                     class="hover:pro-text-blue-700 pro-whitespace-nowrap pro-py-4 pro-px-1 pro-text-sm"
                     aria-current="page">
-                {{ _('Global Content') }}
+                Global Content
             </button>
         </nav>
         <div class="pro-px-4" x-show="active_tab == 'blocks'">

@@ -24,13 +24,13 @@ class LoginController
     {
         if (! Auth::attempt($request->only(['email', 'password']), true)) {
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => 'Auth Failed',
             ]);
         }
 
         if (! Gate::check('viewProdigy', auth()->user())) {
             throw ValidationException::withMessages([
-                'email' => _('You do not have permission to use Prodigy. Add your email address to config/prodigy.php under `access_emails`.'),
+                'email' => 'You do not have permission to use Prodigy. Add your email address to config/prodigy.php under `access_emails`.',
             ]);
         }
         session()->regenerate();

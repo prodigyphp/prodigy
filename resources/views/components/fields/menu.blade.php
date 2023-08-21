@@ -106,7 +106,7 @@
         </ul>
         <x-prodigy::editor.button
                 class="pro-mt-2 pro-text-sm"
-                x-on:click="addItem()">+ {{ _('Add Menu Item') }}
+                x-on:click="addItem()">+ Add New Menu Item
         </x-prodigy::editor.button>
     </div>
 

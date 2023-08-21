@@ -60,13 +60,13 @@
                 <x-prodigy::editor.nav-button
                         :active="$currentState == 'blocksList'"
                         x-on:click="Livewire.emit('updateState', 'blocksList')">
-                    {{ _('Edit Current Page') }}
+                   Edit Current Page
                 </x-prodigy::editor.nav-button>
                 <x-prodigy::editor.nav-button x-on:click="Livewire.emit('editPageSettings', {{ $page->id }})">
-                    {{ _('Current Page Settings') }}
+                    Current Page Settings
                 </x-prodigy::editor.nav-button>
                 <x-prodigy::editor.nav-button x-on:click="Livewire.emit('duplicatePageFromDraft', {{ $page->id }})">
-                    {{ _('Duplicate') }}
+                    Duplicate
                 </x-prodigy::editor.nav-button>
 
                 <x-prodigy::editor.nav-separator/>
@@ -76,7 +76,7 @@
             <x-prodigy::editor.nav-button
                     :active="$currentState == 'pagesList'"
                     x-on:click="Livewire.emit('updateState','pagesList')">
-                {{ _('All Pages') }}
+                All Pages
             </x-prodigy::editor.nav-button>
 
             @php
@@ -102,7 +102,7 @@
             <form method="post" action="/prodigy/logout">
                 @csrf
                 <x-prodigy::editor.nav-button type="submit" class="pro-text-gray-500">
-                    {{ _('Log out') }}
+                    Log out
                 </x-prodigy::editor.nav-button>
             </form>
         </div>

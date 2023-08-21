@@ -1,8 +1,8 @@
 @props(['key', 'data'])
 
 @php
-    $value_if_true = $data['label_for_true'] ?? _('True');
-    $value_if_false = $data['label_for_false'] ?? _('False');
+    $value_if_true = $data['label_for_true'] ?? 'True';
+    $value_if_false = $data['label_for_false'] ?? 'False';
 @endphp
 
 <x-prodigy::editor.field-wrapper :width="$data['width'] ?? 100" x-data :key="$key">
